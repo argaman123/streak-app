@@ -1,0 +1,21 @@
+# Run the Streakling backend on a Raspberry Pi (or any Docker host):
+#
+#   docker compose up -d
+#
+# Data is persisted in ./data/data.json on the host (mounted as a volume).
+
+services:
+  backend:
+    build: ./backend
+    container_name: streakling-backend
+    restart: unless-stopped
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./data:/data
+    environment:
+      - PORT=3333
+      - DATA_FILE=/data/data.json
+      # Uncomment to also serve the built frontend from this container:
+      # - SERVE_FRONTEND=1
+      # - FRONTEND_DIST=/app/public

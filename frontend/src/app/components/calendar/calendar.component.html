@@ -1,0 +1,41 @@
+<div class="calendar" [class.is-month]="mode() === 'month'">
+  <div class="cal-head">
+    <button type="button" class="cal-arrow" (click)="prev()" aria-label="Previous">‹</button>
+    <button type="button" class="cal-title" (click)="goToday()">{{ title() }}</button>
+    <button type="button" class="cal-arrow" (click)="next()" aria-label="Next">›</button>
+  </div>
+
+  @if (mode() === 'month') {
+    <div class="cal-weekdays">
+      @for (w of T.weekdayShort; track w) {
+        <div class="cal-weekday">{{ w }}</div>
+      }
+    </div>
+  }
+
+  <div class="cal-grid">
+    @for (d of days(); track d.iso) {
+      <button type="button"
+              class="cal-day"
+              [class.out]="!d.inRange"
+              [class.today]="d.isToday"
+              [class.selected]="d.isSelected"
+              [class.has-marker]="d.hasMarker"
+              [class.is-rest]="d.isRest"
+              (click)="pick(d.iso)">
+        @if (mode() === 'week') {
+          <span class="dow">{{ T.weekdayShort[$index].charAt(0) }}</span>
+        }
+        <span class="num">{{ d.num }}</span>
+        @if (d.hasMarker) { <span class="dot"></span> }
+        @if (d.isRest) { <span class="rest-dot">🌿</span> }
+      </button>
+    }
+  </div>
+
+  <div class="cal-footer">
+    <button type="button" class="mode-toggle" (click)="toggleMode()">
+      {{ mode() === 'week' ? T.monthView : T.weekView }}
+    </button>
+  </div>
+</div>

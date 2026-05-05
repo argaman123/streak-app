@@ -1,0 +1,439 @@
+/* ==========================================================================
+ * STREAKLING — global styles
+ *
+ * Palette: bold and a little chaotic. Saffron orange is the hero (it's what
+ * Adely would wear), frog green is the success/streak signal, hot pink is
+ * the celebration accent, cyan is the cool quiet third. Light mode is a
+ * sunny cream-orange. Dark mode is a deep frog pond at midnight.
+ *
+ * Type: Fraunces (display, optical-size 144 wght 800) + Atkinson Hyperlegible
+ * (body) + Caveat (handwritten accents). No Inter, Roboto, Space Grotesk.
+ * ========================================================================== */
+
+/* ───── Tokens ───────────────────────────────────────────────────────── */
+
+:root,
+:root[data-theme="light"] {
+  /* Hero — saffron orange. The colour you can't ignore. */
+  --hero:        #FF7A1A;
+  --hero-deep:   #D85800;
+  --hero-soft:   #FFD9B8;
+  --hero-tint:   #FFEFDF;
+
+  /* Frog green — success, streak, the engine */
+  --frog:        #4ECC71;
+  --frog-deep:   #2BAE52;
+  --frog-soft:   #C8F0D5;
+  --frog-tint:   #E5F8EB;
+  --frog-text:   #16572D;
+
+  /* Hot pink — celebration, "in a row", coral replacement */
+  --pop:         #FF3D7F;
+  --pop-deep:    #C9215A;
+  --pop-soft:    #FFD1E2;
+  --pop-tint:    #FFEAF1;
+  --pop-text:    #821038;
+
+  /* Cyan — the cool third, used for muted highlights */
+  --cool:        #2EC2D8;
+  --cool-deep:   #1490A4;
+  --cool-soft:   #C8EEF5;
+
+  /* Yolk yellow — sparingly, for rewards */
+  --yolk:        #FFD23F;
+  --yolk-soft:   #FFF1B5;
+  --yolk-deep:   #C49000;
+
+  /* Backgrounds, ink */
+  --cream:       #FFF4E0;
+  --cream-deep:  #FFE3B8;
+  --paper:       #FFFFFF;
+  --paper-tint:  #FFF9EE;
+
+  --contrast: #ffffff;
+
+  --ink:         #1B1410;
+  --ink-soft:    #6B4F3F;
+  --ink-mute:    #B89882;
+  --line:        #F2D6B5;
+
+  /* Outline + key-shadow color used by the chunky offset borders/shadows
+     throughout. Light mode: deep coffee brown so it reads as "the line".
+     Dark mode below uses a deep pond green so it doesn't go white. */
+  --outline:     #2D1F18;
+  --shadow-key:  #2D1F18;
+
+  --shadow:       0 4px 0 rgba(216, 88, 0, 0.18), 0 8px 24px rgba(216, 88, 0, 0.12);
+  --shadow-soft:  0 2px 0 rgba(216, 88, 0, 0.10), 0 4px 12px rgba(216, 88, 0, 0.08);
+  --shadow-pop:   0 4px 0 var(--pop-deep), 0 6px 16px rgba(201, 33, 90, 0.30);
+}
+
+:root[data-theme="dark"] {
+  /* Frog pond at night: deep teal-green base, with the same hero/pop/yolk
+     accents popping against it. Frog the loudest of all. */
+  --hero:        #FFA040;
+  --hero-deep:   #FFC182;
+  --hero-soft:   #4A2810;
+  --hero-tint:   #2A180A;
+
+  --frog:        #65DD8A;
+  --frog-deep:   #92ECAE;
+  --frog-soft:   #1A3528;
+  --frog-tint:   #0E1D16;
+  --frog-text:   #92ECAE;
+
+  --pop:         #FF5896;
+  --pop-deep: #f15c8f;
+  --pop-soft:    #3F1428;
+  --pop-tint:    #260A18;
+  --pop-text:    #FFA8C2;
+
+  --cool:        #4DD8EE;
+  --cool-deep:   #88E8F4;
+  --cool-soft:   #0E2C32;
+
+  --yolk:        #FFD23F;
+  --yolk-soft:   #2A1F08;
+  --yolk-deep:   #FFE38A;
+
+  /* Deep frog pond background */
+  --cream:       #0A1810;
+  --cream-deep:  #050E08;
+  --paper:       #112318;
+  --paper-tint:  #15291C;
+
+  --contrast: #151515;
+
+  --ink:         #EAFAF0;
+  --ink-soft:    #A5C8B0;
+  --ink-mute:    #5C7866;
+  --line:        #1F3826;
+
+  /* Outline + key-shadow: a deep pond color, slightly lighter than the
+     darkest paper so chunky borders read as "an even deeper green-black"
+     and never show up as a white outline. */
+  --outline:     #061410;
+  --shadow-key:  #04100C;
+
+  --shadow:       0 4px 0 rgba(0, 0, 0, 0.45), 0 10px 24px rgba(0, 0, 0, 0.55);
+  --shadow-soft:  0 2px 0 rgba(0, 0, 0, 0.30), 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-pop:   0 4px 0 var(--pop-deep), 0 6px 16px rgba(255, 88, 150, 0.40);
+}
+
+:root {
+  /* Shape tokens */
+  --r-sm: 10px;
+  --r:    18px;
+  --r-lg: 26px;
+  --r-xl: 34px;
+  --pill: 999px;
+
+  /* Type stack — two fonts only.
+     Fraunces does double duty: display (large, opsz 144 wght 800) and body
+     (small, opsz 9 wght 400). Variable axes give it character at both sizes.
+     Caveat handles handwritten accents. No generic Inter/Roboto here. */
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-hand:    'Caveat', cursive;
+  --font-body:    'Fraunces', 'Georgia', serif;
+}
+
+/* ───── Reset ────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; }
+html {
+  background: var(--cream);
+  /* Safe-area background — extends behind the iOS / Android system bars
+     so they match the page colour instead of going white. */
+}
+body {
+  font-family: var(--font-body);
+  font-variation-settings: "opsz" 9, "SOFT" 50, "WONK" 0;
+  font-weight: 450;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  overflow-x: hidden;
+  background: transparent;
+}
+input, textarea, .selectable, .plan-check-text, .plan-text, .session-notes,
+.elapsed, .bubble-text {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* ───── Background — bold layered gradients, NO animation ──────────── */
+
+:root[data-theme="light"] html,
+:root html {
+  background:
+    radial-gradient(60% 50% at 100% 0%,   rgba(255, 122, 26, 0.35) 0%, transparent 60%),
+    radial-gradient(55% 45% at 0% 100%,   rgba(78, 204, 113, 0.28) 0%, transparent 60%),
+    radial-gradient(45% 35% at 50% 50%,   rgba(255, 61, 127, 0.10) 0%, transparent 65%),
+    var(--cream);
+  background-attachment: fixed;
+}
+
+:root[data-theme="dark"] html {
+  background:
+    radial-gradient(70% 50% at 100% 0%,   rgba(78, 204, 113, 0.25) 0%, transparent 60%),
+    radial-gradient(60% 45% at 0% 100%,   rgba(46, 194, 216, 0.18) 0%, transparent 60%),
+    radial-gradient(50% 35% at 50% 50%,   rgba(255, 61, 127, 0.08) 0%, transparent 65%),
+    var(--cream);
+  background-attachment: fixed;
+}
+
+/* Subtle dot grid texture in the background. Static, GPU-cheap. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
+  background-size: 26px 26px;
+  color: var(--ink);
+  opacity: 0.05;
+}
+[data-theme="dark"] body::before { opacity: 0.07; }
+
+/* ───── Type ─────────────────────────────────────────────────────────── */
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin: 0 0 0.4em;
+  color: var(--ink);
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.1rem; }
+p  { margin: 0 0 0.5em; }
+.muted { color: var(--ink-mute); }
+.hand  { font-family: var(--font-hand); font-weight: 700; }
+
+a {
+  color: var(--hero-deep);
+  text-decoration: none;
+  font-weight: 700;
+}
+[data-theme="dark"] a { color: var(--hero); }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; }
+input, textarea { font-family: inherit; color: var(--ink); }
+
+/* ───── Cards ────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--paper);
+  border-radius: var(--r-lg);
+  padding: 1.2rem;
+  border: 2.5px solid var(--outline);
+  box-shadow: 0 4px 0 var(--shadow-key);
+  position: relative;
+}
+[data-theme="dark"] .card {
+  background: linear-gradient(160deg, var(--paper) 0%, var(--paper-tint) 100%);
+}
+
+/* ───── Buttons ──────────────────────────────────────────────────────── */
+
+/* Bold, chunky buttons with a hard "key shadow" — clearly tactile. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.78rem 1.4rem;
+  border-radius: var(--r);
+  font-family: var(--font-body);
+  font-variation-settings: "opsz" 9, "SOFT" 50, "WONK" 0;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  background: var(--frog);
+  color: #07301A;
+  border: 2.5px solid var(--outline);
+  box-shadow: 0 4px 0 var(--shadow-key);
+  transition: transform 0.12s cubic-bezier(0.34, 1.6, 0.64, 1),
+              box-shadow 0.12s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--shadow-key);
+}
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--shadow-key);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+  box-shadow: 0 4px 0 var(--shadow-key);
+}
+
+.btn-secondary {
+  background: var(--paper);
+  color: var(--ink);
+}
+[data-theme="dark"] .btn-secondary { background: var(--paper-tint); color: var(--ink); }
+
+.btn-danger {
+  background: var(--pop);
+  color: #FFFFFF;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--pill);
+  font-weight: 700;
+  border: none;
+  box-shadow: none;
+  text-transform: lowercase;
+  transition: background 0.15s ease;
+}
+.btn-ghost:hover { background: var(--cream-deep); color: var(--ink); }
+.btn-ghost.small { padding: 0.32rem 0.7rem; font-size: 0.85rem; }
+.btn-ghost.danger { color: var(--pop-text); }
+[data-theme="dark"] .btn-ghost.danger { color: var(--pop); }
+.btn-ghost.danger:hover { background: var(--pop-soft); color: var(--pop-deep); }
+[data-theme="dark"] .btn-ghost.danger:hover { background: var(--pop-soft); color: var(--pop-deep); }
+
+/* ───── Inputs ───────────────────────────────────────────────────────── */
+
+.input, .textarea {
+  width: 100%;
+  padding: 0.7rem 0.95rem;
+  border: 2.5px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--cream);
+  color: var(--ink);
+  outline: none;
+  font-size: 16px;
+  font-family: inherit;
+  font-variation-settings: "opsz" 9, "SOFT" 50, "WONK" 0;
+  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+}
+[data-theme="dark"] .input,
+[data-theme="dark"] .textarea {
+  background: var(--cream);
+  border-color: var(--line);
+}
+.input:focus, .textarea:focus {
+  border-color: var(--hero);
+  transform: translateY(-1px);
+}
+[data-theme="dark"] .input:focus,
+[data-theme="dark"] .textarea:focus {
+  background: var(--paper-tint);
+}
+.textarea { resize: vertical; min-height: 70px; }
+
+.input[type="date"],
+.input[type="time"],
+.input[type="datetime-local"],
+.input[type="number"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 44px;
+  line-height: 1.2;
+}
+.input[type="date"]::-webkit-date-and-time-value,
+.input[type="time"]::-webkit-date-and-time-value {
+  text-align: left;
+  min-height: 1.2em;
+}
+.input[type="number"]::-webkit-inner-spin-button,
+.input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.field { margin-bottom: 0.95rem; }
+.row   { display: flex; gap: 0.5rem; }
+.row > * { flex: 1; min-width: 0; }
+
+/* ───── Chips ────────────────────────────────────────────────────────── */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.75rem;
+  background: var(--frog);
+  color: #07301A;
+  border: 2px solid var(--outline);
+  border-radius: var(--pill);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  transform: rotate(-1.5deg);
+  transition: transform 0.18s cubic-bezier(0.34, 1.65, 0.64, 1);
+}
+.chip:hover { transform: rotate(-3deg) scale(1.08); }
+.chip.pop { background: var(--pop); color: #FFFFFF; }
+.chip.cool { background: var(--cool); color: #06303A; }
+.chip.yolk { background: var(--yolk); color: #3D2C00; }
+.chip.coral { background: var(--pop); color: #FFFFFF; }
+
+/* ───── Shell ────────────────────────────────────────────────────────── */
+
+.shell {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.2rem 1rem 7.5rem;
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 900px) {
+  .shell { padding: 2rem 2rem 7.5rem; }
+}
+@supports (padding: max(0px)) {
+  .shell { padding-bottom: max(7.5rem, env(safe-area-inset-bottom) + 6rem); }
+}
+
+/* ───── Page-load reveal ─────────────────────────────────────────────── */
+
+/* Page-load reveal — TRANSFORM ONLY, no opacity. Opacity transitions on
+   anything stacked above the mascot make the mascot visible through the
+   element while it fades in. We just slide the element in. */
+@keyframes fadeUp {
+  from { transform: translateY(14px); }
+  to   { transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.45s cubic-bezier(0.34, 1.5, 0.64, 1) both; }
+
+/* Wiggle accent — used on hand-written text for personality */
+@keyframes wiggle-in {
+  0%   { transform: rotate(-6deg) scale(0.7); }
+  50%  { transform: rotate(3deg)  scale(1.08); }
+  100% { transform: rotate(-1.5deg) scale(1); }
+}
+.wiggle-in { animation: wiggle-in 0.55s cubic-bezier(0.34, 1.6, 0.64, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

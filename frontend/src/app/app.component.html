@@ -1,0 +1,46 @@
+<!-- Status badge: top-LEFT now (theme button took top-right on home).
+     Auto-hides after a couple seconds when status returns to idle. -->
+<div class="status-badge"
+     [class.is-local]="status() === 'local'"
+     [class.is-saving]="status() === 'saving'"
+     [class.is-loading]="status() === 'loading'"
+     [class.is-idle]="status() === 'idle'"
+     [title]="statusTitle()">
+  @switch (status()) {
+    @case ('saving')  { <span class="badge-icon spin">↻</span><span class="badge-text">saving…</span> }
+    @case ('loading') { <span class="badge-icon spin">↻</span><span class="badge-text">loading…</span> }
+    @case ('local')   { <span class="badge-icon">💾</span><span class="badge-text">local only</span> }
+    @case ('idle')    { <span class="badge-icon">✓</span><span class="badge-text">saved</span> }
+  }
+</div>
+
+<!-- Theme toggle: only shows on the home page, top-right.
+     Other pages don't need it cluttering the top corner. -->
+@if (showThemeToggle()) {
+  <button class="theme-btn" [class.hidden]="modalOpen()" (click)="toggleTheme()"
+          [title]="isDark() ? T.light : T.dark">
+    {{ isDark() ? '☀️' : '🌙' }}
+  </button>
+}
+
+<div class="shell">
+  <router-outlet />
+</div>
+
+<nav class="bottom-nav" [class.hidden]="modalOpen()">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+     #navTodayLink (click)="onNavPress(navTodayLink)">
+    <span class="nav-emoji">🐸</span>
+    <span class="label">{{ T.navToday }}</span>
+  </a>
+  <a routerLink="/planner" routerLinkActive="active"
+     #navPlannerLink (click)="onNavPress(navPlannerLink)">
+    <span class="nav-emoji">📒</span>
+    <span class="label">{{ T.navPlanner }}</span>
+  </a>
+  <a routerLink="/history" routerLinkActive="active"
+     #navHistoryLink (click)="onNavPress(navHistoryLink)">
+    <span class="nav-emoji">🛣️</span>
+    <span class="label">{{ T.navHistory }}</span>
+  </a>
+</nav>

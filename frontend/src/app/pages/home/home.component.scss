@@ -1,0 +1,542 @@
+/* ============================================================
+ * HOME PAGE
+ * ============================================================ */
+
+/* ───── Greeting ─────────────────────────────────────────────────── */
+.hello { margin-bottom: 0.85rem; }
+.date-line {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.greeting {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-hand);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ───── Streak card — "engine" celebration ───────────────────────── */
+
+.streak-card-wrap {
+  position: relative;
+  margin-bottom: 1.4rem;
+  padding-bottom: 32px;
+  isolation: isolate;
+}
+
+.streak-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.2rem 1.2rem 1.1rem;
+  border-radius: var(--r-xl);
+  /* Frog-themed gradient — green dominant, hero/yolk warm sweep accent */
+  background:
+    radial-gradient(120% 90% at 0% 0%, var(--frog) 0%, var(--frog-deep) 60%, transparent 100%),
+    linear-gradient(135deg, var(--frog-deep) 0%, var(--hero) 100%);
+  box-shadow:
+          0 0 0 2.5px var(--outline),
+          0 6px 0 1px var(--shadow-key);
+  min-height: 110px;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+[data-theme="dark"] .streak-card {
+  background:
+    radial-gradient(120% 90% at 0% 0%, var(--frog) 0%, var(--frog-deep) 50%, transparent 100%),
+    linear-gradient(135deg, var(--frog-deep) 0%, var(--hero) 110%);
+}
+
+.streak-numbers {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+}
+
+.streak-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.streak-main .num {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 900;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+  color: var(--contrast);
+  line-height: 1;
+  display: inline-block;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.22);
+  animation: num-pop 0.6s cubic-bezier(0.34, 1.6, 0.64, 1);
+}
+@keyframes num-pop {
+  0%   { transform: scale(0.6) rotate(-6deg); }
+  60%  { transform: scale(1.18) rotate(2deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.streak-main .num-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--contrast);
+  opacity: 0.92;
+  text-transform: lowercase;
+}
+
+/* "X in a row" — handwritten coral pill, must read on the green card.
+   Pure white on coral so it pops and never looks invisible in dark. */
+.streak-row {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-left: 0.25rem;
+  display: inline-block;
+  background: var(--pop-deep);
+  padding: 0.05rem 0.75rem;
+  border-radius: var(--pill);
+  border: 2px solid var(--outline);
+  transform: rotate(-2deg);
+  box-shadow: 0 2px 0 var(--shadow-key);
+  animation: wiggle-in 0.6s cubic-bezier(0.34, 1.6, 0.64, 1);
+}
+[data-theme="dark"] .streak-row { background: var(--pop); color: #1A0510; }
+
+/* Mascot peek slot */
+.streak-mascot {
+  position: absolute;
+  bottom: 0;
+  right: 14px;
+  width: 102px;
+  height: 110px;
+  z-index: 2;
+}
+
+/* ───── Timer card ───────────────────────────────────────────────── */
+
+.timer-card {
+  background: var(--paper);
+  border-radius: var(--r-xl);
+  padding: 1.6rem 1.3rem;
+  text-align: center;
+  border: 2.5px solid var(--outline);
+  box-shadow: 0 6px 0 var(--shadow-key);
+  margin-bottom: 1.2rem;
+  position: relative;
+  overflow: hidden;  /* contain the tier inner glow */
+}
+/* In dark mode, lift the timer card slightly above the page so it doesn't
+   feel like a flat hole. */
+[data-theme="dark"] .timer-card { background: var(--paper-tint); }
+
+/* Tier inner-glow pseudo — sits behind content, NEVER changes the actual
+   border/shadow color (so no white-outline weirdness). */
+.timer-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  background: radial-gradient(80% 60% at 50% 30%, var(--frog-soft) 0%, transparent 80%);
+}
+.timer-card[data-tier="1"]::before {
+  opacity: 0.55;
+  background: radial-gradient(80% 60% at 50% 30%, var(--frog-soft) 0%, transparent 80%);
+}
+.timer-card[data-tier="2"]::before {
+  opacity: 0.6;
+  background: radial-gradient(80% 60% at 50% 30%, var(--yolk-soft) 0%, transparent 80%);
+}
+.timer-card[data-tier="3"]::before {
+  opacity: 0.65;
+  background: radial-gradient(80% 60% at 50% 30%, var(--hero-soft) 0%, transparent 80%);
+}
+.timer-card[data-tier="4"]::before {
+  opacity: 0.7;
+  background: radial-gradient(80% 60% at 50% 30%, var(--pop-soft) 0%, transparent 80%);
+}
+
+/* Tier ring on the border — a colored inner ring instead of changing the
+   outer border color (which would look weird hopping between offsets). */
+.timer-card[data-tier="1"] { box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--frog); }
+.timer-card[data-tier="2"] { box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--yolk); }
+.timer-card[data-tier="3"] { box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--hero); }
+.timer-card[data-tier="4"] {
+  box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--pop);
+  animation: tier4-tilt 1.6s cubic-bezier(0.34, 1.5, 0.64, 1) infinite;
+}
+@keyframes tier4-tilt {
+  0%, 100% { transform: rotate(0); }
+  50%       { transform: rotate(0.7deg); }
+}
+
+/* Make sure all timer card children sit above the inner-glow ::before */
+.timer-card > * { position: relative; z-index: 1; }
+
+.status {
+  margin: 0 0 0.4rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--frog-deep);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+[data-theme="dark"] .status { color: var(--frog); }
+.status.muted { color: var(--ink-mute); font-weight: 600; }
+.dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--frog);
+  display: inline-block;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+.elapsed {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 1;
+  font-weight: 900;
+  font-size: 4rem;
+  color: var(--ink);
+  margin: 0 0 0.6rem;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  transition: color 0.4s ease, font-size 0.4s ease;
+}
+.timer-card[data-tier="2"] .elapsed { color: var(--yolk-deep); font-size: 4.1rem; }
+.timer-card[data-tier="3"] .elapsed { color: var(--hero-deep); font-size: 4.2rem; }
+.timer-card[data-tier="4"] .elapsed { color: var(--pop-deep);  font-size: 4.3rem; }
+[data-theme="dark"] .timer-card[data-tier="2"] .elapsed { color: var(--yolk); }
+[data-theme="dark"] .timer-card[data-tier="3"] .elapsed { color: var(--hero); }
+[data-theme="dark"] .timer-card[data-tier="4"] .elapsed { color: var(--pop); }
+
+.timer-tier-msg {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: -0.25rem 0 1rem;
+  opacity: 0;
+  transition: opacity 0.4s ease, color 0.4s ease;
+}
+.timer-card[data-tier="1"] .timer-tier-msg { opacity: 1; color: var(--frog-deep); }
+.timer-card[data-tier="2"] .timer-tier-msg { opacity: 1; color: var(--yolk-deep); }
+.timer-card[data-tier="3"] .timer-tier-msg { opacity: 1; color: var(--hero-deep); }
+.timer-card[data-tier="4"] .timer-tier-msg { opacity: 1; color: var(--pop-deep);  font-size: 1.25rem; }
+[data-theme="dark"] .timer-card[data-tier="2"] .timer-tier-msg { color: var(--yolk); }
+[data-theme="dark"] .timer-card[data-tier="3"] .timer-tier-msg { color: var(--hero); }
+[data-theme="dark"] .timer-card[data-tier="4"] .timer-tier-msg { color: var(--pop); }
+
+.todays-total {
+  font-size: 1rem;
+  margin: 0 0 0.85rem;
+  color: var(--ink-soft);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+.todays-total strong {
+  color: var(--frog-text);
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144;
+  font-weight: 900;
+  font-size: 1.25em;
+}
+[data-theme="dark"] .todays-total strong { color: var(--frog); }
+
+/* ───── Big button (start / stop) ────────────────────────────────── */
+
+.big-btn {
+  width: 100%;
+  padding: 1.2rem 1.25rem;
+  border-radius: var(--r-lg);
+  background: var(--frog);
+  color: #07301A;
+  font-family: var(--font-body);
+  font-variation-settings: "opsz" 9, "WONK" 0;
+  font-weight: 800;
+  font-size: 1.35rem;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  border: 2.5px solid var(--outline);
+  box-shadow: 0 6px 0 var(--shadow-key);
+  transition: transform 0.12s cubic-bezier(0.34, 1.6, 0.64, 1),
+              box-shadow 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+.big-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--shadow-key); }
+.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--shadow-key); }
+.big-btn:disabled { cursor: default; pointer-events: none; opacity: 0.85; }
+
+.big-btn.stop {
+  background: var(--pop);
+  color: #FFFFFF;
+}
+
+/* ===== START CEREMONY ===== */
+/* Whole timer card squishes into jelly. NO background colour wash, no
+   gradient slop — just a shape transformation. The user's #1 ask. */
+.timer-card.is-starting {
+  animation: card-jelly 750ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes card-jelly {
+  0%   { transform: scale(1, 1); }
+  18%  { transform: scale(1.06, 0.88); }
+  36%  { transform: scale(0.92, 1.10) translateY(-4px); }
+  54%  { transform: scale(1.04, 0.96) translateY(0); }
+  72%  { transform: scale(0.98, 1.02); }
+  100% { transform: scale(1, 1); }
+}
+
+.timer-card.is-starting .big-btn {
+  animation: btn-fire 750ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+@keyframes btn-fire {
+  0%   { transform: scale(1) rotate(0); box-shadow: 0 6px 0 var(--shadow-key); }
+  20%  { transform: scale(0.92, 1.08) rotate(-1deg); box-shadow: 0 2px 0 var(--shadow-key); }
+  45%  { transform: scale(1.12, 0.92) rotate(1deg); box-shadow: 0 10px 0 var(--shadow-key); }
+  70%  { transform: scale(0.98, 1.02) rotate(0); box-shadow: 0 5px 0 var(--shadow-key); }
+  100% { transform: scale(1) rotate(0); box-shadow: 0 6px 0 var(--shadow-key); }
+}
+
+/* ===== STOP — calm, not rewarding ===== */
+.timer-card.is-stopping .big-btn.stop {
+  animation: btn-stop-quiet 350ms ease;
+  pointer-events: none;
+}
+@keyframes btn-stop-quiet {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.96) translateY(2px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timer-card.is-starting,
+  .timer-card.is-stopping,
+  .timer-card[data-tier="4"],
+  .big-btn { animation: none !important; }
+}
+
+/* ───── Plans card ───────────────────────────────────────────────── */
+
+.plans-card { margin-bottom: 1rem; }
+.plans-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  text-transform: lowercase;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.7rem;
+}
+
+.plan-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--r-sm);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  transition: background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  margin-bottom: 0.15rem;
+}
+.plan-check-row:hover { background: var(--cream-deep); }
+[data-theme="dark"] .plan-check-row:hover { background: var(--paper-tint); }
+
+.plan-checkbox {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 2.5px solid var(--outline);
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  margin-top: 1px;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+[data-theme="dark"] .plan-checkbox { background: var(--paper-tint); }
+
+.plan-checkbox .check-icon {
+  width: 16px; height: 16px;
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  transition: stroke-dashoffset 0.25s ease 0.05s;
+}
+.plan-checkbox.checked {
+  background: var(--frog);
+  animation: check-pop 0.4s cubic-bezier(0.34, 1.7, 0.64, 1);
+}
+@keyframes check-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.3); box-shadow: 0 0 0 8px rgba(78, 204, 113, 0.32); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(78, 204, 113, 0); }
+}
+.plan-checkbox.checked .check-icon { stroke: #07301A; stroke-dashoffset: 0; }
+
+.plan-check-text {
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--ink);
+  flex: 1;
+}
+.plan-check-row.checked .plan-check-text {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--frog-deep);
+  color: var(--ink-mute);
+}
+
+.no-plan-line {
+  margin: 0 0 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+.no-plan-line a { margin-left: 0.3rem; }
+
+/* ───── Today's sessions ─────────────────────────────────────────── */
+
+.sessions-card { margin-bottom: 1rem; }
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.section-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  text-transform: lowercase;
+  letter-spacing: -0.01em;
+}
+
+/* Session row — a list row with a hover strip, NOT a square card. The user
+   said the previous square hover looked weird — go full-width pill instead. */
+.session-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--r-sm);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  transition: background 0.15s ease;
+  margin-bottom: 0.1rem;
+  -webkit-tap-highlight-color: transparent;
+}
+.session-row:hover { background: var(--cream-deep); }
+[data-theme="dark"] .session-row:hover { background: var(--paper-tint); }
+
+.session-left { flex: 1; min-width: 0; }
+.session-headline {
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.session-sub {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 0.1rem;
+  line-height: 1.4;
+}
+.dotsep { margin: 0 0.35rem; opacity: 0.6; }
+.notes-inline {
+  font-style: italic;
+}
+
+.edit-hint {
+  flex-shrink: 0;
+  color: var(--ink-mute);
+  font-size: 1rem;
+  align-self: center;
+  opacity: 0.5;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.session-row:hover .edit-hint { opacity: 1; transform: rotate(-12deg); }
+
+/* ───── Add past session ─────────────────────────────────────────── */
+
+.add-past { text-align: center; margin-top: 0.8rem; }
+.add-past-btn {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+/* ───── Skip-day mode ────────────────────────────────────────────── */
+
+.skip-card {
+  margin-top: 1rem;
+  padding: 2rem 1.5rem 1.6rem;
+  text-align: center;
+  background: var(--paper);
+  border-radius: var(--r-xl);
+  border: 2.5px solid var(--outline);
+  box-shadow: 0 6px 0 var(--shadow-key);
+}
+[data-theme="dark"] .skip-card { background: var(--paper-tint); }
+
+.skip-greeting {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--cool-deep);
+  margin: 0 0 0.4rem;
+}
+[data-theme="dark"] .skip-greeting { color: var(--cool); }
+.skip-sub { color: var(--ink-soft); margin: 0 0 1.2rem; }
+.skip-mascot { width: 130px; height: 130px; margin: 0 auto 1rem; }
+
+.skip-link {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--frog-deep);
+  font-weight: 800;
+  text-transform: lowercase;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--pill);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: background 0.15s ease;
+}
+.skip-link:hover { background: var(--frog-tint); }
+[data-theme="dark"] .skip-link { color: var(--frog); }

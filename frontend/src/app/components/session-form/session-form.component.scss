@@ -1,0 +1,52 @@
+.session-form { display: block; }
+
+/* ───── Mode pill (start/end ↔ duration) ─────────────────────────── */
+
+.mode-toggle {
+  display: flex;
+  gap: 0.3rem;
+  background: var(--cream-deep);
+  padding: 0.3rem;
+  border-radius: var(--pill);
+  border: 2.5px solid var(--line);
+  margin-bottom: 1rem;
+}
+[data-theme="dark"] .mode-toggle { background: var(--paper); }
+
+.mode-btn {
+  flex: 1;
+  padding: 0.55rem 0.5rem;
+  border-radius: var(--pill);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  transition: all 0.18s ease;
+}
+.mode-btn:hover { color: var(--ink); }
+.mode-btn.active {
+  background: var(--paper);
+  color: var(--frog-text);
+  box-shadow: 0 2px 0 var(--shadow-key);
+}
+[data-theme="dark"] .mode-btn.active {
+  background: var(--paper-tint);
+  color: var(--frog);
+}
+
+/* ───── Action row at the bottom ─────────────────────────────────── */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+}
+.actions-spacer { flex: 1; }
+.delete-btn { font-size: 0.85rem; }

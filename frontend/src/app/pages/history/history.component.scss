@@ -1,0 +1,108 @@
+/* ============================================================
+ * HISTORY PAGE — list view (one card per day, rows inside)
+ * ============================================================ */
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 0.75rem;
+  padding-right: 8px;
+  padding-top: 0.25rem;
+}
+.page-head h1 {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "WONK" 1;
+}
+
+.empty {
+  padding: 1.6rem;
+  margin-top: 1rem;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  color: var(--ink-mute);
+}
+.empty .center { text-align: center; }
+.empty strong { color: var(--ink); }
+
+/* ───── A day group (header + card with sessions inside) ─────────── */
+
+.day-group { margin-top: 1.2rem; }
+
+.day-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+}
+.day-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "WONK" 1;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* Session card per day — outer wrapper. Sessions inside are simple rows. */
+.sessions-card { padding: 0.5rem 0.5rem; }
+
+/* Session row — simple list row with hover strip (NOT a square card) */
+.session-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--r-sm);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  border-top: 2px dotted var(--line);
+  transition: background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.session-row:first-of-type { border-top: none; }
+.session-row:hover { background: var(--cream-deep); }
+[data-theme="dark"] .session-row:hover { background: var(--paper-tint); }
+
+.session-left { flex: 1; min-width: 0; }
+.session-headline {
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.session-sub {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 0.1rem;
+  line-height: 1.4;
+}
+.dotsep { margin: 0 0.35rem; opacity: 0.6; }
+.notes-inline { font-style: italic; }
+
+.edit-hint {
+  flex-shrink: 0;
+  color: var(--ink-mute);
+  font-size: 1rem;
+  align-self: center;
+  opacity: 0.5;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.session-row:hover .edit-hint { opacity: 1; transform: rotate(-12deg); }

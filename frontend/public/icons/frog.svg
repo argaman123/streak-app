@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle with cream color -->
+  <rect width="512" height="512" rx="96" fill="#FAF7EE"/>
+  <!-- Frog body -->
+  <ellipse cx="256" cy="320" rx="170" ry="140" fill="#7BB661"/>
+  <!-- Frog belly -->
+  <ellipse cx="256" cy="350" rx="110" ry="80" fill="#F4E9C9"/>
+  <!-- Eye whites -->
+  <circle cx="186" cy="200" r="60" fill="#7BB661"/>
+  <circle cx="326" cy="200" r="60" fill="#7BB661"/>
+  <circle cx="186" cy="200" r="48" fill="#FAF7EE"/>
+  <circle cx="326" cy="200" r="48" fill="#FAF7EE"/>
+  <!-- Pupils -->
+  <circle cx="186" cy="208" r="22" fill="#2D3A2A"/>
+  <circle cx="326" cy="208" r="22" fill="#2D3A2A"/>
+  <!-- Eye shine -->
+  <circle cx="194" cy="198" r="7" fill="#FAF7EE"/>
+  <circle cx="334" cy="198" r="7" fill="#FAF7EE"/>
+  <!-- Cheek blush -->
+  <ellipse cx="140" cy="320" rx="22" ry="14" fill="#F4A2B5" opacity="0.55"/>
+  <ellipse cx="372" cy="320" rx="22" ry="14" fill="#F4A2B5" opacity="0.55"/>
+  <!-- Mouth -->
+  <path d="M 200 340 Q 256 380 312 340" stroke="#2D3A2A" stroke-width="6" fill="none" stroke-linecap="round"/>
+</svg>

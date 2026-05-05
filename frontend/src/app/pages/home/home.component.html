@@ -1,0 +1,138 @@
+@if (showSkipUi()) {
+  <!-- ====== SKIP DAY UI ====== -->
+  <section class="skip-card fade-up">
+    <div class="skip-mascot"><app-mascot [freeStanding]="true" /></div>
+    <h1 class="hand skip-greeting">{{ T.skipDayGreeting }}</h1>
+    <p class="skip-sub">{{ T.skipDaySub }}</p>
+    <button class="skip-link" (click)="showStartFromSkip()">{{ T.skipDayMaybeStart }}</button>
+  </section>
+
+} @else {
+  <!-- ====== NORMAL DAY ====== -->
+  <header class="hello fade-up">
+    <p class="date-line muted">{{ prettyToday() }}</p>
+    <h1 class="hand greeting">{{ T.hello }} ✨</h1>
+  </header>
+
+  <!-- Streak card — engine metaphor -->
+  <div class="streak-card-wrap fade-up" [style.animation-delay.ms]="50">
+    <section class="streak-card">
+      <div class="streak-numbers">
+        <div class="streak-main">
+          <span class="num">{{ streak().total }}</span>
+          <span class="num-label">{{ streak().total === 1 ? 'day' : 'days' }}</span>
+          @if (streak().inRow > 1) {
+            <span class="streak-row hand">{{ streak().inRow }} in a row</span>
+          }
+        </div>
+        <!-- One engine bar with its own label - no duplication elsewhere -->
+        <app-engine [total]="streak().total" [inRow]="streak().inRow" />
+      </div>
+    </section>
+    <!-- Mascot outside the card so it can peek above/below freely -->
+    <div class="streak-mascot">
+      <app-mascot [streakTotal]="streak().total" />
+    </div>
+  </div>
+
+  <!-- The big button — ALWAYS first, above everything else -->
+  <section class="timer-card fade-up" [style.animation-delay.ms]="80"
+           [attr.data-tier]="timer.isRunning() ? timerTier() : null"
+           [class.is-starting]="ceremonyState() === 'starting'"
+           [class.is-stopping]="ceremonyState() === 'stopping'">
+    @if (displayRunning()) {
+      <p class="status">
+        <span class="dot"></span> {{ T.learning }}
+      </p>
+      <p class="elapsed hand">{{ elapsedDisplay() }}</p>
+      <p class="timer-tier-msg">{{ tierMsg() }}</p>
+      <button class="big-btn stop"
+              [disabled]="ceremonyState() !== 'idle'"
+              (click)="onPrimaryClick()">{{ T.stopSession }}</button>
+    } @else {
+      @if (todayMinutes() > 0) {
+        <p class="todays-total">{{ T.todayTotal }}: <strong>{{ formatDur(todayMinutes()) }}</strong></p>
+      } @else {
+        <p class="status muted">{{ T.readyWhenYouAre }}</p>
+      }
+      <button class="big-btn"
+              [disabled]="ceremonyState() !== 'idle'"
+              (click)="onPrimaryClick()">{{ T.startLearning }}</button>
+    }
+  </section>
+
+  <!-- Today's plan (below the button) -->
+  @if (todayPlans().length > 0) {
+    <section class="card plans-card fade-up" [style.animation-delay.ms]="120">
+      <h3>{{ T.todaysPlan }}</h3>
+      @for (plan of todayPlans(); track plan.id) {
+        <button type="button"
+                class="plan-check-row"
+                [class.checked]="isPlanChecked(plan.id)"
+                (click)="togglePlanCheck(plan.id)">
+          <span class="plan-checkbox" [class.checked]="isPlanChecked(plan.id)">
+            <svg viewBox="0 0 24 24" class="check-icon" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7" />
+            </svg>
+          </span>
+          <span class="plan-check-text">{{ plan.text }}</span>
+        </button>
+      }
+    </section>
+  } @else if (!isSkipToday()) {
+    <p class="no-plan-line muted fade-up" [style.animation-delay.ms]="120">
+      {{ T.noPlanForToday }}
+      <a routerLink="/planner">{{ T.planOne }} →</a>
+    </p>
+  }
+
+  <!-- Today's sessions -->
+  @if (todaySessions().length > 0) {
+    <section class="card sessions-card fade-up" [style.animation-delay.ms]="160">
+      <div class="section-head">
+        <h3>{{ T.sessionsToday }}</h3>
+        <span class="chip">{{ todaySessions().length }}</span>
+      </div>
+      @for (s of todaySessions(); track s.id) {
+        <button type="button" class="session-row" (click)="openEdit(s)">
+          <div class="session-left">
+            <div class="session-headline">{{ sessionHeadline(s) }}</div>
+            <div class="session-sub muted">
+              {{ sessionTimeLabel(s) }}
+              @if (sessionSecondary(s)) {
+                <span class="dotsep">·</span><span>{{ sessionSecondary(s) }}</span>
+              }
+              @if (s.notes) {
+                <span class="dotsep">·</span><span class="notes-inline">{{ s.notes }}</span>
+              }
+            </div>
+          </div>
+          <span class="edit-hint">✎</span>
+        </button>
+      }
+    </section>
+  }
+
+  <!-- Add past session -->
+  <section class="add-past fade-up" [style.animation-delay.ms]="200">
+    <button class="btn-ghost add-past-btn" (click)="openAddModal()">
+      {{ T.addPastSession }}
+    </button>
+  </section>
+}
+
+<!-- Modals -->
+@if (showAddModal()) {
+  <app-modal [title]="T.addPastSession" (close)="closeAddModal()">
+    <app-session-form (save)="onAddSave($event)" (cancel)="closeAddModal()" />
+  </app-modal>
+}
+@if (editingSession()) {
+  <app-modal [title]="T.edit" (close)="closeEdit()">
+    <app-session-form
+      [initial]="editingSession()!"
+      (save)="onEditSave($event)"
+      (cancel)="closeEdit()"
+      (deleteRequested)="onEditDelete()" />
+  </app-modal>
+}

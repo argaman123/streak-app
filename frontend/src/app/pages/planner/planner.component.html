@@ -1,0 +1,75 @@
+<header class="page-head fade-up">
+  <h1>{{ T.plannerTitle }} 📒</h1>
+</header>
+
+<section class="fade-up" [style.animation-delay.ms]="50">
+  <app-calendar
+    [selected]="selectedDate()"
+    [markedDates]="markedDates()"
+    [restDates]="restDateSet()"
+    (selectDate)="onSelectDate($event)" />
+</section>
+
+<section class="day-card fade-up" [class.is-today]="isToday()" [style.animation-delay.ms]="100">
+  <div class="day-card-head">
+    <h3>
+      {{ prettySelected() }}
+      @if (isToday()) { <span class="chip">{{ T.today }}</span> }
+      @if (isSkipSelected()) { <span class="chip coral">🌿 {{ T.skipDay }}</span> }
+    </h3>
+  </div>
+
+  <!-- No-learning day toggle -->
+  <div class="skip-toggle-row">
+    @if (isSkipSelected()) {
+      <button class="btn-ghost small" (click)="toggleSkipDay()">↺ {{ T.unmarkSkipDay }}</button>
+    } @else {
+      <button class="skip-toggle" (click)="toggleSkipDay()">
+        {{ T.markSkipDay }}
+      </button>
+      <p class="muted hint-line">{{ T.skipDayHint }}</p>
+    }
+  </div>
+
+  <!-- Plans list -->
+  @if (orderedPlans().length > 0) {
+    <div class="plans-list"
+         appDragList
+         [appDragListIds]="orderedIds()"
+         (appDragReorder)="onReorder($event)">
+      @for (plan of orderedPlans(); track plan.id) {
+        <div class="plan-row"
+             appDragItem
+             [appDragItemId]="plan.id"
+             [attr.data-drag-id]="plan.id">
+          @if (editingId() === plan.id) {
+            <textarea class="textarea inline-edit" rows="2" [(ngModel)]="editingText"></textarea>
+            <div class="inline-actions">
+              <button class="btn-ghost small" (click)="cancelEdit()">{{ T.cancel }}</button>
+              <button class="btn small" (click)="saveEdit(plan)">{{ T.save }}</button>
+            </div>
+          } @else {
+            <span class="drag-handle" data-drag-handle>⠿</span>
+            <div class="plan-text">{{ plan.text }}</div>
+            <div class="plan-actions">
+              <button class="btn-ghost small" (click)="startEdit(plan)">{{ T.edit }}</button>
+              <button class="btn-ghost small danger" (click)="onDelete(plan)">×</button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="muted no-plans">{{ T.noPlans }}</p>
+  }
+
+  <!-- Add form -->
+  <div class="add-plan">
+    <textarea class="textarea" rows="2"
+              [(ngModel)]="newText"
+              [placeholder]="T.goalPlaceholder"></textarea>
+    <button class="btn add-btn" (click)="onAdd()" [disabled]="!newText.trim()">
+      {{ T.addPlan }}
+    </button>
+  </div>
+</section>

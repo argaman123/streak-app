@@ -1,0 +1,59 @@
+<div class="session-form">
+  <div class="field">
+    <label for="date">{{ T.date }}</label>
+    <input id="date" class="input" type="date" [(ngModel)]="date" />
+  </div>
+
+  <div class="mode-toggle">
+    <button type="button"
+            class="mode-btn"
+            [class.active]="mode === 'times'"
+            (click)="mode = 'times'">
+      {{ T.sessionStartEnd }}
+    </button>
+    <button type="button"
+            class="mode-btn"
+            [class.active]="mode === 'duration'"
+            (click)="mode = 'duration'">
+      {{ T.sessionDuration }}
+    </button>
+  </div>
+
+  @if (mode === 'times') {
+    <div class="row">
+      <div class="field">
+        <label for="start">{{ T.startTime }}</label>
+        <input id="start" class="input" type="time" [(ngModel)]="startTime" />
+      </div>
+      <div class="field">
+        <label for="end">{{ T.endTime }}</label>
+        <input id="end" class="input" type="time" [(ngModel)]="endTime" />
+      </div>
+    </div>
+  } @else {
+    <div class="field">
+      <label for="dur">{{ T.howManyMinutes }}</label>
+      <input id="dur" class="input" type="number" min="1" step="5" [(ngModel)]="durationMinutes" />
+    </div>
+  }
+
+  <div class="field">
+    <label for="notes">
+      {{ T.whatDidYouLearn }}
+      <span class="muted">({{ T.optional }})</span>
+    </label>
+    <textarea id="notes" class="textarea" rows="2" [(ngModel)]="notes"
+              [placeholder]="T.notesPlaceholder"></textarea>
+  </div>
+
+  <div class="actions">
+    @if (initial) {
+      <button type="button" class="btn-ghost danger small delete-btn" (click)="deleteRequested.emit()">
+        {{ T.delete }}
+      </button>
+    }
+    <span class="actions-spacer"></span>
+    <button type="button" class="btn btn-secondary" (click)="cancel.emit()">{{ T.cancel }}</button>
+    <button type="button" class="btn" (click)="onSubmit()">{{ T.save }}</button>
+  </div>
+</div>

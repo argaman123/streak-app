@@ -1,0 +1,8 @@
+<div class="mascot-wrap"
+     [class.peeking]="visible()"
+     [class.free-standing]="freeStanding">
+  @if (visible() && line()) {
+    <div class="bubble">{{ line() }}</div>
+  }
+  <img class="mascot-img" src="mascot/argaman.png" alt="" aria-hidden="true" />
+</div>
