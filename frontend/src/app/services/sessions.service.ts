@@ -38,7 +38,7 @@ export class SessionsService {
       .sort((a, b) => {
         const ta = a.startTime ? timeToMin(a.startTime) : 9999;
         const tb = b.startTime ? timeToMin(b.startTime) : 9999;
-        return ta - tb;
+        return tb - ta;
       });
   }
 

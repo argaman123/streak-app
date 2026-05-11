@@ -46,7 +46,7 @@
 
   /* Backgrounds, ink */
   --cream:       #FFF4E0;
-  --cream-deep:  #FFE3B8;
+  --cream-deep:  #F4EAD8;   /* soft sand — used as a subtle accent, no peach */
   --paper:       #FFFFFF;
   --paper-tint:  #FFF9EE;
 
@@ -77,13 +77,13 @@
   --hero-tint:   #2A180A;
 
   --frog:        #65DD8A;
-  --frog-deep:   #92ECAE;
+  --frog-deep: #3cda6f;
   --frog-soft:   #1A3528;
   --frog-tint:   #0E1D16;
   --frog-text:   #92ECAE;
 
   --pop:         #FF5896;
-  --pop-deep: #f15c8f;
+  --pop-deep:    #FF8FB6;
   --pop-soft:    #3F1428;
   --pop-tint:    #260A18;
   --pop-text:    #FFA8C2;
@@ -96,18 +96,19 @@
   --yolk-soft:   #2A1F08;
   --yolk-deep:   #FFE38A;
 
-  /* Deep frog pond background */
+  /* Frog pond — slightly warmer to take the sunset bloom on the bg */
   --cream:       #0A1810;
   --cream-deep:  #050E08;
-  --paper:       #112318;
-  --paper-tint:  #15291C;
+  --paper:       #142A1D;
+  --paper-tint:  #1A3324;
 
   --contrast: #151515;
 
-  --ink:         #EAFAF0;
-  --ink-soft:    #A5C8B0;
-  --ink-mute:    #5C7866;
-  --line:        #1F3826;
+  /* Brighter text so contrast is comfortable everywhere */
+  --ink:         #F2FBF4;
+  --ink-soft:    #B8D0BE;
+  --ink-mute:    #6F8A78;
+  --line:        #284535;
 
   /* Outline + key-shadow: a deep pond color, slightly lighter than the
      darkest paper so chunky borders read as "an even deeper green-black"
@@ -179,11 +180,14 @@ input, textarea, .selectable, .plan-check-text, .plan-text, .session-notes,
   background-attachment: fixed;
 }
 
+/* Dark mode — frog pond with a sunset bloom: warm hero glow top-right,
+   pop pink touch bottom, cyan whisper. Layered, NOT monochrome. */
 :root[data-theme="dark"] html {
   background:
-    radial-gradient(70% 50% at 100% 0%,   rgba(78, 204, 113, 0.25) 0%, transparent 60%),
-    radial-gradient(60% 45% at 0% 100%,   rgba(46, 194, 216, 0.18) 0%, transparent 60%),
-    radial-gradient(50% 35% at 50% 50%,   rgba(255, 61, 127, 0.08) 0%, transparent 65%),
+    radial-gradient(60% 45% at 100% 0%,   rgba(255, 160, 64, 0.30) 0%, transparent 60%),
+    radial-gradient(55% 40% at 0% 100%,   rgba(255, 88, 150, 0.22) 0%, transparent 60%),
+    radial-gradient(50% 35% at 0% 0%,     rgba(77, 216, 238, 0.16) 0%, transparent 60%),
+    radial-gradient(45% 35% at 50% 50%,   rgba(101, 221, 138, 0.12) 0%, transparent 65%),
     var(--cream);
   background-attachment: fixed;
 }
@@ -401,12 +405,15 @@ label {
 .shell {
   max-width: 680px;
   margin: 0 auto;
-  padding: 1.2rem 1rem 7.5rem;
+  padding:
+    calc(1.2rem + env(safe-area-inset-top, 0px))
+    1rem
+    7.5rem;
   position: relative;
   z-index: 1;
 }
 @media (min-width: 900px) {
-  .shell { padding: 2rem 2rem 7.5rem; }
+  .shell { padding: calc(2rem + env(safe-area-inset-top, 0px)) 2rem 7.5rem; }
 }
 @supports (padding: max(0px)) {
   .shell { padding-bottom: max(7.5rem, env(safe-area-inset-bottom) + 6rem); }
@@ -416,12 +423,13 @@ label {
 
 /* Page-load reveal — TRANSFORM ONLY, no opacity. Opacity transitions on
    anything stacked above the mascot make the mascot visible through the
-   element while it fades in. We just slide the element in. */
+   element while it fades in. We just slide the element in. Short duration
+   so iOS doesn't lag on route changes. */
 @keyframes fadeUp {
-  from { transform: translateY(14px); }
+  from { transform: translateY(8px); }
   to   { transform: translateY(0); }
 }
-.fade-up { animation: fadeUp 0.45s cubic-bezier(0.34, 1.5, 0.64, 1) both; }
+.fade-up { animation: fadeUp 0.28s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
 
 /* Wiggle accent — used on hand-written text for personality */
 @keyframes wiggle-in {

@@ -1,6 +1,6 @@
 .session-form { display: block; }
 
-/* ───── Mode pill (start/end ↔ duration) ─────────────────────────── */
+/* ───── Mode pill (start/end ↔ duration) — soft, no chunky outline ─── */
 
 .mode-toggle {
   display: flex;
@@ -8,8 +8,8 @@
   background: var(--cream-deep);
   padding: 0.3rem;
   border-radius: var(--pill);
-  border: 2.5px solid var(--line);
   margin-bottom: 1rem;
+  /* No border, no key-shadow — keeps it light */
 }
 [data-theme="dark"] .mode-toggle { background: var(--paper); }
 
@@ -30,14 +30,14 @@
 }
 .mode-btn:hover { color: var(--ink); }
 .mode-btn.active {
-  background: var(--paper);
-  color: var(--frog-text);
-  box-shadow: 0 2px 0 var(--shadow-key);
+  background: var(--frog);
+  color: #07301A;
 }
-[data-theme="dark"] .mode-btn.active {
-  background: var(--paper-tint);
-  color: var(--frog);
-}
+[data-theme="dark"] .mode-btn.active { background: var(--frog); color: #07301A; }
+
+/* ───── Notes textarea: bigger on mobile so editing is comfortable ── */
+
+.notes-area { min-height: 100px; }
 
 /* ───── Action row at the bottom ─────────────────────────────────── */
 

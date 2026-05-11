@@ -115,10 +115,19 @@
   cursor: grab;
   color: var(--ink-mute);
   font-size: 1.1rem;
-  padding: 0.15rem 0.3rem 0;
+  padding: 0.45rem 0.55rem 0.3rem;
+  margin-left: -0.4rem;
   user-select: none;
   -webkit-user-select: none;
   flex-shrink: 0;
+  /* CRITICAL for mobile: tell the browser this region produces pointer
+     events for our drag, NOT page scroll. Without this, the browser
+     interprets the vertical drag as a scroll and cancels our pointermove. */
+  touch-action: none;
+  -webkit-touch-callout: none;
+  /* Slightly bigger tap target */
+  min-width: 32px;
+  text-align: center;
 }
 .drag-handle:active { cursor: grabbing; }
 

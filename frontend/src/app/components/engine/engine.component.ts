@@ -39,7 +39,10 @@ export class EngineComponent {
   }
 
   get state(): EngineState {
+    // If she's got an active streak, the engine is at least running — even
+    // on day 1 the engine is ON (running > warming).
     if (this.total === 0)  return 'stalled';
+    if (this.inRow >= 1 && this.total <= 3)  return 'running';
     if (this.total <= 3)   return 'warming';
     if (this.total <= 7)   return 'running';
     if (this.total < 14)   return 'cruising';

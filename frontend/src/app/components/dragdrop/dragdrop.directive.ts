@@ -57,6 +57,7 @@ export class DragItemDirective {
     const target = e.target as HTMLElement;
     if (!target.closest('[data-drag-handle]')) return;
     e.preventDefault();
+    e.stopPropagation();
 
     const container = this.host.nativeElement.parentElement;
     if (!container) return;
@@ -65,9 +66,8 @@ export class DragItemDirective {
     this.originalIndex = this.siblings.indexOf(this.host.nativeElement);
     if (this.originalIndex === -1) return;
 
-    // Use the actual row height (with margin) so spacing during slide matches.
     const rect = this.host.nativeElement.getBoundingClientRect();
-    this.rowHeight = rect.height + 6;  // small extra for visual gap
+    this.rowHeight = rect.height + 6;
 
     this.dragging = true;
     this.startY = e.clientY;

@@ -1,16 +1,11 @@
 /* ============================================================
- * PROGRESS CHART — bar (week) and line (all-time)
+ * PROGRESS CHART
  * ============================================================ */
 
 .chart-card {
-  background: var(--paper);
-  border: 2.5px solid var(--outline);
-  border-radius: var(--r-lg);
-  padding: 1rem;
-  box-shadow: 0 4px 0 var(--shadow-key);
   margin-bottom: 1rem;
+  /* card base styles handled by .card in styles.scss */
 }
-[data-theme="dark"] .chart-card { background: var(--paper-tint); }
 
 .chart-head {
   display: flex;
@@ -95,7 +90,6 @@
 }
 .bar-amt.show { opacity: 1; }
 [data-theme="dark"] .bar-amt { color: var(--frog); }
-.bar-col.is-rest .bar-amt { color: var(--ink-mute); }
 
 .bar-track {
   flex: 1;
@@ -113,8 +107,6 @@
   min-height: 3px;
 }
 .bar.good { background: var(--frog); }
-.bar.low  { background: var(--frog); }
-[data-theme="dark"] .bar.low { background: var(--frog-deep); }
 .bar.zero {
   background: var(--line);
   height: 3px !important;
@@ -122,14 +114,35 @@
   min-height: 3px;
   border: none;
 }
-.bar-col.is-rest .bar.good,
-.bar-col.is-rest .bar.low {
+
+/* Free-day marker (no learning, but it was a free day):
+   tall, clearly-signed striped block with the leaf emoji on top so it
+   reads as "this was a rest day, NOT a missed day". */
+.bar-rest {
+  width: 100%;
+  height: 70%;
+  border-radius: 7px 7px 2px 2px;
+  border: 2px dashed var(--frog);
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4px;
+  font-size: 0.85rem;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+
+/* Free day WITH learning — shows the bar but in striped cool tones */
+.bar-col.is-rest:not(.is-rest-empty) .bar.good,
+.bar-col.is-rest:not(.is-rest-empty) .bar.zero {
   background: repeating-linear-gradient(
     45deg,
-    var(--cool-soft) 0,
-    var(--cool-soft) 4px,
-    var(--cool) 4px,
-    var(--cool) 8px
+    var(--frog-soft) 0,
+    var(--frog-soft) 4px,
+    var(--frog) 4px,
+    var(--frog) 8px
   );
 }
 
@@ -145,15 +158,11 @@
 
 /* ───── Line graph (all-time) ────────────────────────────────────── */
 
+.line-chart { padding-top: 0.4rem; }
 .line-svg { width: 100%; height: 130px; display: block; }
-.line-path {
-  fill: none;
-  stroke: var(--frog);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.line-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  margin-top: 0.4rem;
 }
-.line-fill { fill: var(--frog-tint); opacity: 0.5; }
-[data-theme="dark"] .line-fill { fill: var(--frog-soft); opacity: 0.7; }
-.line-dot { fill: var(--frog-deep); }
-[data-theme="dark"] .line-dot { fill: var(--frog); }

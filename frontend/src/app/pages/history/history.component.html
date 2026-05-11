@@ -17,19 +17,26 @@
   <section class="day-group fade-up" [style.animation-delay.ms]="80 + i * 25">
     <div class="day-head">
       <h3>{{ day.pretty }}
-        @if (day.isSkip) { <span class="chip coral">🌿</span> }
+        @if (day.isSkip) { <span class="chip cool">🌿</span> }
       </h3>
-      <span class="chip">{{ formatDur(day.totalMinutes) }}</span>
+      <div class="day-head-right">
+        <span class="day-total">{{ formatDur(day.totalMinutes) }}</span>
+        <button class="day-add-btn"
+                (click)="addToDay(day.date)"
+                [attr.aria-label]="T.addToDay">+</button>
+      </div>
     </div>
     <div class="card sessions-card">
       @for (s of day.items; track s.id) {
         <button type="button" class="session-row" (click)="openEdit(s)">
           <div class="session-left">
             <div class="session-headline">{{ sessionHeadlineFor(s) }}</div>
-            <div class="session-sub muted">
-              {{ sessionTimeLabel(s) }}
-              @if (s.notes) { <span class="dotsep">·</span><span class="notes-inline">{{ s.notes }}</span> }
+            <div class="session-meta">
+              <span>{{ sessionTimeLabel(s) }}</span>
             </div>
+            @if (s.notes) {
+              <p class="session-notes">{{ s.notes }}</p>
+            }
           </div>
           <span class="edit-hint">✎</span>
         </button>
@@ -50,6 +57,6 @@
 
 @if (showAdd()) {
   <app-modal [title]="T.add" (close)="closeAdd()">
-    <app-session-form (save)="onAddSave($event)" (cancel)="closeAdd()" />
+    <app-session-form [defaultDate]="addDate()" (save)="onAddSave($event)" (cancel)="closeAdd()" />
   </app-modal>
 }

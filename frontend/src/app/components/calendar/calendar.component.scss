@@ -87,6 +87,8 @@
   gap: 4px;
 }
 
+/* Default day: clear soft cream block so days are visible as buttons,
+   not just floating numbers. */
 .cal-day {
   aspect-ratio: 1;
   border-radius: 10px;
@@ -95,9 +97,9 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
+  font-family: inherit;
   font-size: 0.85rem;
   font-weight: 700;
-  font-family: inherit;
   color: var(--ink);
   background: var(--cream-deep);
   cursor: pointer;
@@ -118,7 +120,6 @@
   font-size: 1.05rem;
 }
 
-/* States — clear backgrounds, not just text colour */
 .cal-day .num { font-weight: 700; line-height: 1; }
 .cal-day .dow {
   font-size: 0.6rem;
@@ -136,12 +137,14 @@
   background: var(--frog-soft);
 }
 
+/* OUT-OF-RANGE (other-month days in month view): muted */
 .cal-day.out {
   color: var(--ink-mute);
-  opacity: 0.45;
+  background: transparent;
+  opacity: 0.5;
 }
 
-/* TODAY: clear coloured background — hero orange tint */
+/* TODAY: clear hero-orange background — distinct from selected */
 .cal-day.today {
   background: var(--hero-soft);
   color: var(--hero-deep);
@@ -149,7 +152,7 @@
   font-weight: 900;
 }
 [data-theme="dark"] .cal-day.today {
-  background: var(--hero-soft);
+  background: rgba(255, 160, 64, 0.15);
   color: var(--hero);
   border-color: var(--hero);
 }
@@ -167,7 +170,7 @@
   color: #07301A;
 }
 
-/* Marker dot (has-session) — sits below the number */
+/* Marker dot (has plan) */
 .cal-day .dot {
   width: 5px;
   height: 5px;
@@ -176,13 +179,15 @@
   display: block;
 }
 .cal-day.selected .dot { background: var(--outline); }
+[data-theme="dark"] .cal-day .dot { background: var(--frog); }
+[data-theme="dark"] .cal-day.selected .dot { background: var(--outline); }
 
 /* Rest day */
 .cal-day.is-rest { color: var(--cool-deep); }
 [data-theme="dark"] .cal-day.is-rest { color: var(--cool); }
 .cal-day.is-rest .rest-dot { font-size: 0.7rem; line-height: 1; }
 
-/* ───── Footer (mode toggle button) ──────────────────────────────── */
+/* ───── Footer (mode toggle button) — centered ───────────────────── */
 
 .cal-footer {
   margin-top: 0.85rem;

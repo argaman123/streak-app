@@ -15,15 +15,25 @@
   @if (range() === 'week') {
     <div class="bars">
       @for (d of days(); track d.iso) {
-        <div class="bar-col" [class.is-today]="d.isToday" [class.is-rest]="d.isRest">
+        <div class="bar-col"
+             [class.is-today]="d.isToday"
+             [class.is-rest]="d.isRest"
+             [class.is-rest-empty]="d.isRest && d.minutes === 0">
           <div class="bar-amt" [class.show]="d.minutes > 0">{{ roundedMins(d.minutes) }}m</div>
           <div class="bar-track">
-            <div class="bar"
-                 [class.good]="d.emphasis === 'good'"
-                 [class.low]="d.emphasis === 'low'"
-                 [class.zero]="d.emphasis === 'zero'"
-                 [style.height.%]="barHeight(d)"
-                 [attr.title]="formatDur(d.minutes)"></div>
+            <!-- Free day with no learning: clear striped tall marker so it
+                 doesn't look like she just didn't learn that day. -->
+            @if (d.isRest && d.minutes === 0) {
+              <div class="bar bar-rest"
+                   [style.height.%]="100"
+                   [attr.title]="T.freeDay">🌿</div>
+            } @else {
+              <div class="bar"
+                   [class.good]="d.emphasis === 'good'"
+                   [class.zero]="d.emphasis === 'zero'"
+                   [style.height.%]="barHeight(d)"
+                   [attr.title]="formatDur(d.minutes)"></div>
+            }
           </div>
           <div class="bar-label" [class.is-today]="d.isToday">{{ d.weekday }}</div>
         </div>
@@ -31,7 +41,7 @@
     </div>
   }
 
-  <!-- All-time view: smooth line graph -->
+  <!-- All-time view: smooth line graph (only learning days, free days skipped) -->
   @if (range() === 'all') {
     <div class="line-chart">
       <svg viewBox="0 0 600 120" preserveAspectRatio="none" class="line-svg">
@@ -41,35 +51,26 @@
             <stop offset="100%" stop-color="var(--frog)"  stop-opacity="0.02"/>
           </linearGradient>
         </defs>
-        <!-- Fill area -->
         <path [attr.d]="fillPath()" fill="url(#lineGrad)" />
-        <!-- Line -->
         <path [attr.d]="linePath()"
               fill="none"
               stroke="var(--frog)"
               stroke-width="2.5"
               stroke-linecap="round"
               stroke-linejoin="round" />
-        <!-- Dots on good days -->
         @for (pt of linePoints(); track pt.d.iso) {
-          @if (pt.d.emphasis === 'good') {
-            <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="4"
-                    fill="var(--frog)" />
-          } @else if (pt.d.minutes > 0) {
-            <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="2.5"
-                    fill="var(--frog)" opacity="0.55" />
-          }
+          <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="3.5"
+                  fill="var(--frog)" />
           @if (pt.d.isToday) {
-            <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="5.5"
+            <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="6"
                     fill="none" stroke="var(--frog)" stroke-width="1.5" opacity="0.7" />
           }
         }
       </svg>
-      <!-- Date labels for first and last -->
-      @if (days().length > 0) {
+      @if (linePoints().length > 0) {
         <div class="line-labels">
-          <span class="muted">{{ days()[0].weekday }} {{ days()[0].iso.slice(5) }}</span>
-          <span class="muted">{{ days()[days().length-1].weekday }} {{ days()[days().length-1].iso.slice(5) }}</span>
+          <span class="muted">{{ linePoints()[0].d.weekday }} {{ linePoints()[0].d.iso.slice(5) }}</span>
+          <span class="muted">{{ linePoints()[linePoints().length-1].d.weekday }} {{ linePoints()[linePoints().length-1].d.iso.slice(5) }}</span>
         </div>
       }
     </div>

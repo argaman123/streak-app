@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, computed, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, computed, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { T } from '../../services/strings';
@@ -42,13 +42,13 @@ export class CalendarComponent {
   @Input() set selected(v: string) {
     if (!v) return;
     this._selected.set(v);
-    // Move the anchor to keep selected visible.
     this.anchor.set(v);
   }
   protected _selected = signal<string>(todayIso());
 
-  @Input() markedDates: Set<string> = new Set();
-  @Input() restDates: Set<string> = new Set();
+  /** As input signals so the computed below reacts when the parent updates. */
+  readonly markedDates = input<Set<string>>(new Set());
+  readonly restDates   = input<Set<string>>(new Set());
 
   @Output() selectDate = new EventEmitter<string>();
 
@@ -60,11 +60,12 @@ export class CalendarComponent {
   private weekDays(): CalDay[] {
     const a = parseIsoDate(this.anchor());
     const startOfWeek = new Date(a);
-    // Sunday-first: subtract day-of-week from the date.
     startOfWeek.setDate(a.getDate() - a.getDay());
 
     const today = todayIso();
     const sel = this._selected();
+    const marks = this.markedDates();
+    const rests = this.restDates();
 
     const out: CalDay[] = [];
     for (let i = 0; i < 7; i++) {
@@ -76,8 +77,8 @@ export class CalendarComponent {
         inRange: true,
         isToday: iso === today,
         isSelected: iso === sel,
-        hasMarker: this.markedDates.has(iso),
-        isRest: this.restDates.has(iso)
+        hasMarker: marks.has(iso),
+        isRest: rests.has(iso)
       });
     }
     return out;
@@ -89,6 +90,8 @@ export class CalendarComponent {
     const m = a.getMonth();
     const today = todayIso();
     const sel = this._selected();
+    const marks = this.markedDates();
+    const rests = this.restDates();
 
     const first = new Date(y, m, 1);
     const startWeekday = first.getDay();
@@ -104,8 +107,8 @@ export class CalendarComponent {
         inRange: d.getMonth() === m,
         isToday: iso === today,
         isSelected: iso === sel,
-        hasMarker: this.markedDates.has(iso),
-        isRest: this.restDates.has(iso)
+        hasMarker: marks.has(iso),
+        isRest: rests.has(iso)
       });
     }
     return out;
@@ -118,7 +121,6 @@ export class CalendarComponent {
       const first = parseIsoDate(days[0].iso);
       const last = parseIsoDate(days[6].iso);
       const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
-      // If both fall in the same month, only label the month once.
       if (first.getMonth() === last.getMonth()) {
         return `${first.toLocaleDateString(undefined, { month: 'short' })} ${first.getDate()}–${last.getDate()}`;
       }

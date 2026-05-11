@@ -1,15 +1,17 @@
-// Streakling backend. One JSON file, three collection endpoints.
+// Streakling backend.
 //
-// Each collection (sessions / plans / restDays) has its own PUT endpoint so
-// we only send what actually changed. The client is still the source of
-// truth — we just store whatever it sends for a collection. No merging.
+// Per-collection PUT endpoints (/api/sessions, /api/plans, /api/rest-days)
+// so the client only sends what changed. Versioning uses a per-collection
+// updatedAt timestamp (epoch ms) instead of a single incrementing version,
+// so the client can ask "did sessions change since X?" without coupling.
 //
 // Endpoints:
-//   GET /api/state              -> { sessions, plans, restDays, version }
-//   PUT /api/sessions           -> replaces sessions array, bumps version
-//   PUT /api/plans              -> replaces plans array, bumps version
-//   PUT /api/rest-days          -> replaces restDays array, bumps version
-//   GET /api/health             -> { ok: true }
+//   GET  /api/state          -> { sessions, plans, restDays, updatedAt: {sessions,plans,restDays} }
+//   GET  /api/version        -> { updatedAt: {sessions,plans,restDays} }   (lightweight poll)
+//   PUT  /api/sessions       -> replaces sessions array, bumps sessions.updatedAt
+//   PUT  /api/plans          -> replaces plans array,    bumps plans.updatedAt
+//   PUT  /api/rest-days      -> replaces restDays array, bumps restDays.updatedAt
+//   GET  /api/health         -> { ok: true }
 
 const fs      = require('fs');
 const path    = require('path');
@@ -21,19 +23,25 @@ const PORT      = process.env.PORT || 3333;
 
 fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
 
+function emptyTimes() {
+  return { sessions: 0, plans: 0, restDays: 0 };
+}
+
 function read() {
   try {
-    if (!fs.existsSync(DATA_FILE)) return { sessions: [], plans: [], restDays: [], version: 0 };
+    if (!fs.existsSync(DATA_FILE)) {
+      return { sessions: [], plans: [], restDays: [], updatedAt: emptyTimes() };
+    }
     const p = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
     return {
       sessions: p.sessions || [],
       plans:    p.plans    || [],
       restDays: p.restDays || [],
-      version:  p.version  || 0
+      updatedAt: { ...emptyTimes(), ...(p.updatedAt || {}) }
     };
   } catch (e) {
     console.error('read failed:', e.message);
-    return { sessions: [], plans: [], restDays: [], version: 0 };
+    return { sessions: [], plans: [], restDays: [], updatedAt: emptyTimes() };
   }
 }
 
@@ -50,46 +58,32 @@ app.use(express.json({ limit: '4mb' }));
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 
-// Version-only check — called every 30s. Returns just the current version number.
-// The client only fetches full state if this version is higher than what it has.
-// Cheap to call; no data transferred when nothing changed.
+// Lightweight poll — returns just per-collection timestamps (small payload).
+// Client uses this to decide what (if anything) to refetch.
 app.get('/api/version', (req, res) => {
   const s = read();
-  res.json({ version: s.version });
+  res.json({ updatedAt: s.updatedAt });
 });
 
-// Full state read (initial load + when version check says we're behind)
+// Full state (initial boot, or when version says we're stale)
 app.get('/api/state', (req, res) => res.json(read()));
 
-// Replace just sessions
-app.put('/api/sessions', (req, res) => {
-  if (!Array.isArray(req.body)) return res.status(400).json({ error: 'expected array' });
-  const s = read();
-  s.sessions = req.body;
-  s.version++;
-  write(s);
-  res.json({ version: s.version });
-});
+function putCollection(field) {
+  return (req, res) => {
+    if (!Array.isArray(req.body)) {
+      return res.status(400).json({ error: 'expected array' });
+    }
+    const s = read();
+    s[field] = req.body;
+    s.updatedAt[field] = Date.now();
+    write(s);
+    res.json({ updatedAt: s.updatedAt });
+  };
+}
 
-// Replace just plans
-app.put('/api/plans', (req, res) => {
-  if (!Array.isArray(req.body)) return res.status(400).json({ error: 'expected array' });
-  const s = read();
-  s.plans = req.body;
-  s.version++;
-  write(s);
-  res.json({ version: s.version });
-});
-
-// Replace just rest days
-app.put('/api/rest-days', (req, res) => {
-  if (!Array.isArray(req.body)) return res.status(400).json({ error: 'expected array' });
-  const s = read();
-  s.restDays = req.body;
-  s.version++;
-  write(s);
-  res.json({ version: s.version });
-});
+app.put('/api/sessions',  putCollection('sessions'));
+app.put('/api/plans',     putCollection('plans'));
+app.put('/api/rest-days', putCollection('restDays'));
 
 if (process.env.SERVE_FRONTEND === '1') {
   const dist = process.env.FRONTEND_DIST
@@ -103,5 +97,5 @@ if (process.env.SERVE_FRONTEND === '1') {
 }
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🐸 running on :${PORT}  data: ${DATA_FILE}`);
+  console.log(`🐸 streakling running on :${PORT}  data: ${DATA_FILE}`);
 });

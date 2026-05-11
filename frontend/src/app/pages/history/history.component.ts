@@ -28,6 +28,7 @@ export class HistoryComponent {
   protected T = T;
   protected editing = signal<Session | null>(null);
   protected showAdd = signal(false);
+  protected addDate = signal<string | undefined>(undefined);
 
   protected readonly grouped = computed<DayGroup[]>(() => {
     const map = new Map<string, Session[]>();
@@ -59,7 +60,14 @@ export class HistoryComponent {
     if (!confirm(T.delete + '?')) return;
     this.sessions.delete(cur.id); this.closeEdit();
   }
-  protected openAdd(): void { this.showAdd.set(true); }
+  protected openAdd(): void {
+    this.addDate.set(undefined);
+    this.showAdd.set(true);
+  }
+  protected addToDay(date: string): void {
+    this.addDate.set(date);
+    this.showAdd.set(true);
+  }
   protected closeAdd(): void { this.showAdd.set(false); }
   protected async onAddSave(input: Omit<Session, 'id'>): Promise<void> {
     this.sessions.create(input); this.closeAdd();

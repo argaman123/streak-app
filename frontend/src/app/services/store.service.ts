@@ -7,14 +7,17 @@ import { Plan } from '../models/plan.model';
 import { API_BASE } from './api.config';
 
 const LS_KEY      = 'fs.state';
-const DEBOUNCE_MS = 1800;
-const REFRESH_MS  = 30000;
+const DEBOUNCE_MS = 1500;
+const POLL_MS     = 12000;
+
+interface UpdatedAt { sessions: number; plans: number; restDays: number; }
+const ZERO_TIMES: UpdatedAt = { sessions: 0, plans: 0, restDays: 0 };
 
 interface PersistedState {
   sessions: Session[];
   plans:    Plan[];
   restDays: string[];
-  version:  number;
+  updatedAt: UpdatedAt;
 }
 
 interface DirtyFlags { sessions: boolean; plans: boolean; restDays: boolean; }
@@ -22,23 +25,24 @@ interface DirtyFlags { sessions: boolean; plans: boolean; restDays: boolean; }
 export type Status = 'idle' | 'saving' | 'local' | 'loading';
 
 /**
- * Single store for everything.
+ * Single store for everything. Per-collection updatedAt timestamps mean
+ * the client can know exactly which collection is stale and only refetch
+ * the things that changed.
  *
- * Writes:
- *  - On every mutation: write to localStorage immediately, mark the changed
- *    collection dirty, schedule a 1.8s debounced push to the server.
- *  - Rapid changes coalesce into one PUT containing the latest state.
- *  - Only the changed collection is sent (sessions / plans / restDays),
- *    never the whole state.
- *  - If a mutation lands during a server call, another push is scheduled
- *    after that one finishes — nothing is dropped.
+ * Sync model:
+ *  - Mutations write localStorage immediately, debounce 1.5s, then push
+ *    only the changed collection(s).
+ *  - The PUT response carries the new updatedAt map so the client never
+ *    races itself.
+ *  - Background poll: every 12s, fetch /api/version. If any collection's
+ *    server time is newer than ours AND that collection isn't dirty
+ *    locally, refetch the whole state and adopt it.
+ *  - On focus / visibility change / online event, poll immediately so a
+ *    second device's changes show up the moment the user looks at the app.
  *
- * Reads:
- *  - Every 30s tick: GET /api/version (a few bytes). If the server is ahead
- *    of us, GET /api/state to pull. If we have unsent changes, push instead.
- *  - On boot: load from localStorage immediately, then refresh in background.
- *
- * Status is exposed as a signal for the UI badge.
+ * Conflict policy: NEWEST WINS. If a collection is dirty locally and the
+ * server is also ahead, we keep our pending mutation (the user's most
+ * recent edit on this device) and let it overwrite on next push.
  */
 @Injectable({ providedIn: 'root' })
 export class StoreService {
@@ -49,14 +53,26 @@ export class StoreService {
   readonly restDays = signal<string[]>([]);
   readonly status   = signal<Status>('idle');
 
-  private version = 0;
+  private updatedAt: UpdatedAt = { ...ZERO_TIMES };
   private dirty: DirtyFlags = { sessions: false, plans: false, restDays: false };
   private timer: ReturnType<typeof setTimeout> | null = null;
+  private inFlight = false;
 
   constructor() {
     this.loadLocal();
-    this.refreshFromServer();
-    setInterval(() => this.tick(), REFRESH_MS);
+    // Defer first refresh slightly so the UI paints fast on cold load.
+    setTimeout(() => this.refreshFromServer(), 50);
+    setInterval(() => this.tick(), POLL_MS);
+
+    // Refresh-on-focus: when the user comes back to the tab/PWA, the other
+    // device may have made changes minutes/hours ago. Poll right now.
+    if (typeof window !== 'undefined') {
+      window.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') this.tick();
+      });
+      window.addEventListener('focus',  () => this.tick());
+      window.addEventListener('online', () => this.tick());
+    }
   }
 
   setSessions(list: Session[]): void { this.sessions.set(list); this.dirty.sessions = true; this.commit(); }
@@ -83,7 +99,7 @@ export class StoreService {
   private saveLocal(): void {
     const state: PersistedState = {
       sessions: this.sessions(), plans: this.plans(),
-      restDays: this.restDays(), version: this.version
+      restDays: this.restDays(), updatedAt: this.updatedAt
     };
     try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {}
   }
@@ -92,42 +108,49 @@ export class StoreService {
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (!raw) return;
-      const s = JSON.parse(raw) as PersistedState;
+      const s = JSON.parse(raw) as Partial<PersistedState> & { version?: number };
       this.sessions.set(s.sessions || []);
       this.plans.set   (s.plans    || []);
       this.restDays.set(s.restDays || []);
-      this.version = s.version || 0;
+      // Migrate from old single-version field — start fresh, server will provide.
+      this.updatedAt = { ...ZERO_TIMES, ...(s.updatedAt || {}) };
     } catch {}
   }
 
   private async pushDirty(): Promise<void> {
     this.timer = null;
     if (!this.anyDirty()) { this.status.set('idle'); return; }
+    if (this.inFlight) {
+      // Another push is already running — re-schedule ourselves at the end.
+      return;
+    }
+    this.inFlight = true;
 
     const sending = { ...this.dirty };
     this.dirty = { sessions: false, plans: false, restDays: false };
 
-    const calls: Array<{ key: keyof DirtyFlags; promise: Promise<{ version: number } | null> }> = [];
+    type Resp = { updatedAt: UpdatedAt } | null;
+    const calls: Array<{ key: keyof DirtyFlags; promise: Promise<Resp> }> = [];
     if (sending.sessions) calls.push({ key: 'sessions',
-      promise: firstValueFrom(this.http.put<{ version: number }>(`${API_BASE}/sessions`, this.sessions())).catch(() => null) });
+      promise: firstValueFrom(this.http.put<{ updatedAt: UpdatedAt }>(`${API_BASE}/sessions`, this.sessions())).catch(() => null) });
     if (sending.plans)    calls.push({ key: 'plans',
-      promise: firstValueFrom(this.http.put<{ version: number }>(`${API_BASE}/plans`, this.plans())).catch(() => null) });
+      promise: firstValueFrom(this.http.put<{ updatedAt: UpdatedAt }>(`${API_BASE}/plans`, this.plans())).catch(() => null) });
     if (sending.restDays) calls.push({ key: 'restDays',
-      promise: firstValueFrom(this.http.put<{ version: number }>(`${API_BASE}/rest-days`, this.restDays())).catch(() => null) });
+      promise: firstValueFrom(this.http.put<{ updatedAt: UpdatedAt }>(`${API_BASE}/rest-days`, this.restDays())).catch(() => null) });
 
     const results = await Promise.all(calls.map(c => c.promise));
     let failed = false;
-    let latestVersion = this.version;
     for (let i = 0; i < calls.length; i++) {
       const r = results[i];
       if (r === null) { this.dirty[calls[i].key] = true; failed = true; }
-      else            { latestVersion = Math.max(latestVersion, r.version); }
+      else            { this.updatedAt = { ...this.updatedAt, ...r.updatedAt }; }
     }
+
+    this.inFlight = false;
 
     if (failed) {
       this.status.set('local');
     } else {
-      this.version = latestVersion;
       this.saveLocal();
       this.status.set('idle');
     }
@@ -140,22 +163,33 @@ export class StoreService {
     }
   }
 
+  /**
+   * Poll the server and adopt anything newer that we haven't dirtied.
+   * Per-collection so a pending session change doesn't block a plan refresh.
+   */
   private async refreshFromServer(): Promise<void> {
-    if (this.anyDirty()) return;
     try {
-      const { version: serverVersion } = await firstValueFrom(
-        this.http.get<{ version: number }>(`${API_BASE}/version`)
+      const v = await firstValueFrom(
+        this.http.get<{ updatedAt: UpdatedAt }>(`${API_BASE}/version`)
       );
-      if (serverVersion <= this.version) {
-        if (this.status() !== 'idle') this.status.set('idle');
+      const server = { ...ZERO_TIMES, ...v.updatedAt };
+
+      const needSessions = server.sessions > this.updatedAt.sessions && !this.dirty.sessions;
+      const needPlans    = server.plans    > this.updatedAt.plans    && !this.dirty.plans;
+      const needRest     = server.restDays > this.updatedAt.restDays && !this.dirty.restDays;
+
+      if (!needSessions && !needPlans && !needRest) {
+        if (this.status() === 'local') this.status.set('idle');
         return;
       }
+
       this.status.set('loading');
-      const s = await firstValueFrom(this.http.get<PersistedState>(`${API_BASE}/state`));
-      this.sessions.set(s.sessions || []);
-      this.plans.set   (s.plans    || []);
-      this.restDays.set(s.restDays || []);
-      this.version = s.version;
+      const s = await firstValueFrom(
+        this.http.get<PersistedState>(`${API_BASE}/state`)
+      );
+      if (needSessions) { this.sessions.set(s.sessions || []); this.updatedAt.sessions = server.sessions; }
+      if (needPlans)    { this.plans.set   (s.plans    || []); this.updatedAt.plans    = server.plans;    }
+      if (needRest)     { this.restDays.set(s.restDays || []); this.updatedAt.restDays = server.restDays; }
       this.saveLocal();
       this.status.set('idle');
     } catch {

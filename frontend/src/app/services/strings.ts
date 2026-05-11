@@ -1,9 +1,9 @@
 export const T = {
   save: 'save', cancel: 'cancel', delete: 'delete', edit: 'edit', add: 'add',
-  done: 'done', optional: 'optional', today: 'today',
+  done: 'done', skip: 'skip', optional: 'optional', today: 'today',
   navToday: 'today', navPlanner: 'planner', navHistory: 'history',
   hello: 'hey there',
-  startLearning: "let's go 💪", stopSession: 'stop',
+  startLearning: "let's go ✨", stopSession: 'stop',
   learning: 'in the zone…',
   readyWhenYouAre: 'when you\'re ready 🫴',
   todayTotal: 'today',
@@ -12,9 +12,14 @@ export const T = {
   noPlanForToday: "no plan for today.",
   planOne: 'add one',
   addPastSession: '+ log a past session',
-  daysLearned: (n: number) => n === 1 ? '1 day' : `${n} days`,
-  inARow: (n: number) => `${n} in a row ✨`,
   freshStart: "let's get this engine started 🚗",
+
+  // Post-stop prompt — optional, can skip
+  postStopTitle: 'nice 🌱',
+  postStopAsk: 'what did you learn? (optional)',
+  postStopPlaceholder: 'just a line is fine…',
+  postStopSave: 'save',
+  postStopSkip: 'skip',
 
   plannerTitle: 'planner',
   goalPlaceholder: 'e.g. learn 10–12, biology ch 3, 2h math…',
@@ -24,7 +29,6 @@ export const T = {
   skipDay: 'not learning today',
   markSkipDay: 'mark as not-learning 🌿',
   unmarkSkipDay: "actually i am learning",
-  skipDayHint: "won't break your streak",
   skipDayGreeting: 'no learning today 🌿',
   skipDaySub: 'see you tomorrow ✨',
   skipDayMaybeStart: 'sneaking in a quick one? 👀',
@@ -43,6 +47,8 @@ export const T = {
   weekdayShort: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
   monthView: 'month', weekView: 'week',
   checkPlan: 'mark done',
+  addToDay: '+ session',
+  freeDay: 'free day',
 
   // ---- Mascot lines ----
   // Edit freely. One shown per visit (random each time).
@@ -67,4 +73,3 @@ export const T = {
     "ribbit ribbit",
   ],
 };
-export type Strings = typeof T;

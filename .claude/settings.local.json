@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)"
+    ]
+  },
+  "remote": {
+    "defaultEnvironmentId": "env_01EgAfMeraddZ7WkrvgR5gdd"
+  }
+}

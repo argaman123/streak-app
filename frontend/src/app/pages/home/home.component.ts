@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { SessionsService } from '../../services/sessions.service';
@@ -23,7 +24,7 @@ import { EngineComponent } from '../../components/engine/engine.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, ModalComponent, SessionFormComponent, MascotComponent, EngineComponent],
+  imports: [CommonModule, FormsModule, RouterLink, ModalComponent, SessionFormComponent, MascotComponent, EngineComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -42,15 +43,12 @@ export class HomeComponent {
   protected editingSession = signal<Session | null>(null);
   protected skipRestOverride = signal(false);
 
-  // Plan checkoff — stored on the plan itself (checkedDate field), syncs with backend.
-  // Toggling calls the plans service which marks plans dirty and triggers a save.
-  protected togglePlanCheck(id: string): void {
-    this.plans.toggleCheck(id, this.today());
-  }
+  // Post-stop "what did you learn?" prompt
+  protected postStopSession = signal<Session | null>(null);
+  protected postStopNotes = '';
 
-  protected isPlanChecked(id: string): boolean {
-    return this.plans.isChecked(id, this.today());
-  }
+  protected togglePlanCheck(id: string): void { this.plans.toggleCheck(id, this.today()); }
+  protected isPlanChecked(id: string): boolean { return this.plans.isChecked(id, this.today()); }
 
   protected readonly todaySessions = computed(() => this.sessions.forDate(this.today()));
   protected readonly todayMinutes = computed(() => this.sessions.totalMinutesForDate(this.today()));
@@ -70,10 +68,6 @@ export class HomeComponent {
 
   protected elapsedDisplay = computed(() => formatElapsed(this.timer.elapsedSeconds()));
 
-  /**
-   * Timer tier (1–4) escalates as the session gets longer. Drives the colour
-   * shift on the timer card and a small encouraging message under the time.
-   */
   protected timerTier = computed(() => {
     const min = Math.floor(this.timer.elapsedSeconds() / 60);
     if (min < 10) return 1;
@@ -91,31 +85,23 @@ export class HomeComponent {
   });
 
   // ---- Timer ceremony ----
-  // We gate the visual transition between start/stop on a separate signal
-  // so the press animation can complete BEFORE the @if branch in the template
-  // swaps. Otherwise pressing start would destroy the button mid-animation.
   protected ceremonyState = signal<'idle' | 'starting' | 'stopping'>('idle');
-
-  /** What the template should display: running or not. Lags behind the real
-      timer state during the ceremony (~750ms) so animations finish in place. */
   protected displayRunning = computed(() => {
-    if (this.ceremonyState() === 'starting') return false;  // still showing start button
-    if (this.ceremonyState() === 'stopping') return true;   // still showing stop button
+    if (this.ceremonyState() === 'starting') return false;
+    if (this.ceremonyState() === 'stopping') return true;
     return this.timer.isRunning();
   });
 
   protected onPrimaryClick(): void {
-    if (this.ceremonyState() !== 'idle') return;  // already in transition
+    if (this.ceremonyState() !== 'idle') return;
 
     if (this.timer.isRunning()) {
-      // STOP ceremony
       this.ceremonyState.set('stopping');
       setTimeout(() => {
         this.stopTimer();
         this.ceremonyState.set('idle');
       }, 700);
     } else {
-      // START ceremony
       this.ceremonyState.set('starting');
       setTimeout(() => {
         this.timer.start();
@@ -124,18 +110,42 @@ export class HomeComponent {
     }
   }
 
+  /**
+   * After stopping, save the session and immediately offer a small popup
+   * asking what she learned. She can fill it in or skip — either is fine.
+   */
   private async stopTimer(): Promise<void> {
     const result = this.timer.stop();
     if (!result) return;
     const start = new Date(result.startMs);
     const end = new Date(result.endMs);
-    this.sessions.create({
+    const created = this.sessions.create({
       date: toIsoDate(start),
       startTime: toIsoTime(start),
       endTime: toIsoTime(end),
       durationMinutes: result.durationMinutes,
       notes: ''
     });
+    if (created) {
+      this.postStopNotes = '';
+      this.postStopSession.set(created);
+    }
+  }
+
+  protected savePostStopNotes(): void {
+    const s = this.postStopSession();
+    if (!s) return;
+    const note = this.postStopNotes.trim();
+    if (note.length > 0) {
+      this.sessions.update(s.id, { ...s, notes: note });
+    }
+    this.postStopSession.set(null);
+    this.postStopNotes = '';
+  }
+
+  protected dismissPostStop(): void {
+    this.postStopSession.set(null);
+    this.postStopNotes = '';
   }
 
   protected showStartFromSkip(): void { this.skipRestOverride.set(true); }

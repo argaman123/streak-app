@@ -8,7 +8,7 @@ import { parseIsoDate, todayIso, toIsoDate, formatDuration, roundMinutesUp5 } fr
 
 interface DayData {
   iso: string; weekday: string; minutes: number;
-  isToday: boolean; isRest: boolean; emphasis: 'good' | 'low' | 'zero';
+  isToday: boolean; isRest: boolean; emphasis: 'good' | 'zero';
 }
 
 /** One point on the line graph — only for non-rest learning days. */
@@ -66,11 +66,6 @@ export class ProgressChartComponent {
       }
     }
 
-    // Threshold for "good day": needs to be relative to actual learning days only
-    const nonzero = [...totals.values()].filter(v => v > 0).sort((a, b) => a - b);
-    const median = nonzero.length ? nonzero[Math.floor(nonzero.length / 2)] : 30;
-    const goodThreshold = Math.max(30, median * 0.7);
-
     const out: DayData[] = [];
     const cursor = new Date(start);
     while (cursor <= todayDate) {
@@ -80,7 +75,7 @@ export class ProgressChartComponent {
         iso, weekday: T.weekdayShort[cursor.getDay()],
         minutes, isToday: iso === today,
         isRest: this.restDays.isRest(iso),
-        emphasis: minutes === 0 ? 'zero' : minutes >= goodThreshold ? 'good' : 'low'
+        emphasis: minutes > 0 ? 'good' : 'zero'
       });
       cursor.setDate(cursor.getDate() + 1);
     }

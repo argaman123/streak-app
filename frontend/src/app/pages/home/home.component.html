@@ -22,20 +22,18 @@
           <span class="num">{{ streak().total }}</span>
           <span class="num-label">{{ streak().total === 1 ? 'day' : 'days' }}</span>
           @if (streak().inRow > 1) {
-            <span class="streak-row hand">{{ streak().inRow }} in a row</span>
+            <span class="streak-row">{{ streak().inRow }} in a row</span>
           }
         </div>
-        <!-- One engine bar with its own label - no duplication elsewhere -->
         <app-engine [total]="streak().total" [inRow]="streak().inRow" />
       </div>
     </section>
-    <!-- Mascot outside the card so it can peek above/below freely -->
     <div class="streak-mascot">
       <app-mascot [streakTotal]="streak().total" />
     </div>
   </div>
 
-  <!-- The big button — ALWAYS first, above everything else -->
+  <!-- Timer card -->
   <section class="timer-card fade-up" [style.animation-delay.ms]="80"
            [attr.data-tier]="timer.isRunning() ? timerTier() : null"
            [class.is-starting]="ceremonyState() === 'starting'"
@@ -61,7 +59,7 @@
     }
   </section>
 
-  <!-- Today's plan (below the button) -->
+  <!-- Today's plan -->
   @if (todayPlans().length > 0) {
     <section class="card plans-card fade-up" [style.animation-delay.ms]="120">
       <h3>{{ T.todaysPlan }}</h3>
@@ -97,15 +95,15 @@
         <button type="button" class="session-row" (click)="openEdit(s)">
           <div class="session-left">
             <div class="session-headline">{{ sessionHeadline(s) }}</div>
-            <div class="session-sub muted">
-              {{ sessionTimeLabel(s) }}
+            <div class="session-meta">
+              <span>{{ sessionTimeLabel(s) }}</span>
               @if (sessionSecondary(s)) {
                 <span class="dotsep">·</span><span>{{ sessionSecondary(s) }}</span>
               }
-              @if (s.notes) {
-                <span class="dotsep">·</span><span class="notes-inline">{{ s.notes }}</span>
-              }
             </div>
+            @if (s.notes) {
+              <p class="session-notes">{{ s.notes }}</p>
+            }
           </div>
           <span class="edit-hint">✎</span>
         </button>
@@ -121,7 +119,8 @@
   </section>
 }
 
-<!-- Modals -->
+<!-- ===== Modals ===== -->
+
 @if (showAddModal()) {
   <app-modal [title]="T.addPastSession" (close)="closeAddModal()">
     <app-session-form (save)="onAddSave($event)" (cancel)="closeAddModal()" />
@@ -134,5 +133,24 @@
       (save)="onEditSave($event)"
       (cancel)="closeEdit()"
       (deleteRequested)="onEditDelete()" />
+  </app-modal>
+}
+
+<!-- Post-stop "what did you learn?" prompt — small, optional, can skip -->
+@if (postStopSession()) {
+  <app-modal [title]="T.postStopTitle" (close)="dismissPostStop()">
+    <div class="post-stop-form">
+      <label for="poststop-notes">{{ T.postStopAsk }}</label>
+      <textarea
+        id="poststop-notes"
+        class="textarea"
+        rows="3"
+        [(ngModel)]="postStopNotes"
+        [placeholder]="T.postStopPlaceholder"></textarea>
+      <div class="post-stop-actions">
+        <button class="btn btn-secondary" (click)="dismissPostStop()">{{ T.postStopSkip }}</button>
+        <button class="btn" (click)="savePostStopNotes()">{{ T.postStopSave }}</button>
+      </div>
+    </div>
   </app-modal>
 }

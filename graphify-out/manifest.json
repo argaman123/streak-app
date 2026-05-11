@@ -1,0 +1,186 @@
+{
+  "C:\\Users\\argam\\Desktop\\streak-app\\backend\\server.js": {
+    "mtime": 1778436326.0,
+    "hash": "7746985ed6af44b79d2be5c9180f60fc"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\main.ts": {
+    "mtime": 1778436334.0,
+    "hash": "4ba2844aad931bdd926078c2f88cb237"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\app.component.ts": {
+    "mtime": 1778436332.0,
+    "hash": "e1e9ca38737647dd5bea7dac5bd038f9"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\app.config.ts": {
+    "mtime": 1778436332.0,
+    "hash": "227aa46949cf79223ce2e9e2125d49aa"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\app.routes.ts": {
+    "mtime": 1778436332.0,
+    "hash": "52d0642fd09141eaeaf2a928cac473c2"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\calendar\\calendar.component.ts": {
+    "mtime": 1778436330.0,
+    "hash": "e64f3ccc9544fa74501973f416268a79"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\dragdrop\\dragdrop.directive.ts": {
+    "mtime": 1778436332.0,
+    "hash": "85057036150726ed8f92b9688222a26f"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\engine\\engine.component.ts": {
+    "mtime": 1778436328.0,
+    "hash": "4999027e8ae2e03ababb891ef6a55b5c"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\mascot\\mascot.component.ts": {
+    "mtime": 1778436330.0,
+    "hash": "b2dcd49ec2a1a814db9ffa50ff9ac3d7"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\modal\\modal.component.ts": {
+    "mtime": 1778436330.0,
+    "hash": "662aba18fa416803d41285c52b681fa4"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\progress-chart\\progress-chart.component.ts": {
+    "mtime": 1778436332.0,
+    "hash": "b9b5c7ba031ec21abca8d16054dddcf4"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\session-form\\session-form.component.ts": {
+    "mtime": 1778436330.0,
+    "hash": "7287f07f166ba895d965c7e28f9ace0c"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\models\\plan.model.ts": {
+    "mtime": 1778436332.0,
+    "hash": "73419ad96da921e15c59e2534560ae59"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\models\\session.model.ts": {
+    "mtime": 1778436332.0,
+    "hash": "2e5a2977e28b1b05e84837b2ef3b9ef7"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\pages\\history\\history.component.ts": {
+    "mtime": 1778436334.0,
+    "hash": "e4815a09ac195a9ef4631d8f1513919d"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\pages\\home\\home.component.ts": {
+    "mtime": 1778436334.0,
+    "hash": "af7397f9f270c7729cfdf5172b7e5fba"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\pages\\planner\\planner.component.ts": {
+    "mtime": 1778436334.0,
+    "hash": "f0ce413c643f04513eb9df93e55f8268"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\api.config.ts": {
+    "mtime": 1778436332.0,
+    "hash": "688098e98161945fbdc257d6722fb640"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\date.utils.ts": {
+    "mtime": 1778436332.0,
+    "hash": "061ec60c466904d038e12484dd5a9e9b"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\plans.service.ts": {
+    "mtime": 1778436332.0,
+    "hash": "a7831869c83a218339f11b084a164138"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\rest-days.service.ts": {
+    "mtime": 1778436332.0,
+    "hash": "8b1eda0a508119fbea56f9be282e59eb"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\sessions.service.ts": {
+    "mtime": 1778474519.3174386,
+    "hash": "51d97e41ef9b9caa409abaa957221e32"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\settings.service.ts": {
+    "mtime": 1778436332.0,
+    "hash": "61e3d32156cb4a9a48b578290cfa4a2e"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\store.service.ts": {
+    "mtime": 1778436332.0,
+    "hash": "7ca85f45e14a346b5afac75d86b469e5"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\strings.ts": {
+    "mtime": 1778474814.9785323,
+    "hash": "29333fca37a365915ac9042bd41b10b7"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\timer.service.ts": {
+    "mtime": 1778436332.0,
+    "hash": "ad69e16f8a328de4397b6fc139590597"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\services\\ui.service.ts": {
+    "mtime": 1778436332.0,
+    "hash": "0a247fc6836db4453d941d4a23715f9a"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\CLAUDE.md": {
+    "mtime": 1778436326.0,
+    "hash": "7695cade81aa04a048606f7fbad9b2a4"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\CONTEXT.md": {
+    "mtime": 1778436326.0,
+    "hash": "0827033816f7c904285e79f1f0b66b79"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\docker-compose.yml": {
+    "mtime": 1778436326.0,
+    "hash": "a86637105784bbc7fbc2f7eb2e9e77e1"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\README.md": {
+    "mtime": 1778436326.0,
+    "hash": "633acf42097192ac6e89ad18a4349376"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\index.html": {
+    "mtime": 1778436328.0,
+    "hash": "fce9d094f961a06854a37e363fbccc30"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\app.component.html": {
+    "mtime": 1778436334.0,
+    "hash": "f5788bf6ea17c077d518f0ffbfb8f8ed"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\calendar\\calendar.component.html": {
+    "mtime": 1778436330.0,
+    "hash": "aed5253425dcef9bba2f91405c26d126"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\engine\\engine.component.html": {
+    "mtime": 1778436328.0,
+    "hash": "ea6741d7658e909353cb5722db0aab39"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\mascot\\mascot.component.html": {
+    "mtime": 1778436330.0,
+    "hash": "97bb00136477e6d556cf036b0f3dfc5a"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\progress-chart\\progress-chart.component.html": {
+    "mtime": 1778475129.1303039,
+    "hash": "a186f21677900ba3d1ea7b8cdae66452"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\components\\session-form\\session-form.component.html": {
+    "mtime": 1778436330.0,
+    "hash": "8467f11f2807d3c45df8af57d2377799"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\pages\\history\\history.component.html": {
+    "mtime": 1778436334.0,
+    "hash": "b14e26682e0fa8573f8a504497ae8f40"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\pages\\home\\home.component.html": {
+    "mtime": 1778474919.7146542,
+    "hash": "b0a57fd0f5ce0757809227fe7a59f04e"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\src\\app\\pages\\planner\\planner.component.html": {
+    "mtime": 1778436334.0,
+    "hash": "9502b49a2ad95809f62ebc6aa3d994de"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\public\\icons\\frog.svg": {
+    "mtime": 1778436336.0,
+    "hash": "fd196fb23c8c591b67eef7646870daf1"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\public\\icons\\icon-192.png": {
+    "mtime": 1778436336.0,
+    "hash": "2ee2f813bc216ed741cb76470830ea91"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\public\\icons\\icon-512.png": {
+    "mtime": 1778436336.0,
+    "hash": "411a7775f69a1c618ee03b379c76b6b0"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\public\\icons\\icon-maskable.png": {
+    "mtime": 1778436336.0,
+    "hash": "8102ff978d98b6631c9de668be23954b"
+  },
+  "C:\\Users\\argam\\Desktop\\streak-app\\frontend\\public\\mascot\\argaman.png": {
+    "mtime": 1778436336.0,
+    "hash": "47e08355298c0cc38bd80743ff41fec0"
+  }
+}
