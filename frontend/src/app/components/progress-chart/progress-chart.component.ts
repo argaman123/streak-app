@@ -120,9 +120,9 @@ export class ProgressChartComponent {
   // spaced evenly across the SVG width based on their position in the
   // non-rest-day sequence.
 
-  /** Only the non-rest days, for building the line graph. */
+  /** Only days with actual learning, for building the line graph. */
   private readonly learningDays = computed(() =>
-    this.days().filter(d => !d.isRest)
+    this.days().filter(d => d.minutes > 0)
   );
 
   private toLinePoints(): LinePoint[] {

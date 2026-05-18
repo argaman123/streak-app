@@ -1,45 +1,19 @@
-.session-form { display: block; }
+/* ============================================================
+ * SESSION FORM — used inside the modal.
+ * Mode picker uses the global .seg.full segmented-toggle pattern.
+ * The .session-form override gives the in-form .seg slightly larger
+ * tap targets than the small .seg used in chart heads.
+ * ============================================================ */
 
-/* ───── Mode pill (start/end ↔ duration) — soft, no chunky outline ─── */
-
-.mode-toggle {
-  display: flex;
-  gap: 0.3rem;
-  background: var(--cream-deep);
-  padding: 0.3rem;
-  border-radius: var(--pill);
+.session-form .seg {
   margin-bottom: 1rem;
-  /* No border, no key-shadow — keeps it light */
 }
-[data-theme="dark"] .mode-toggle { background: var(--paper); }
-
-.mode-btn {
-  flex: 1;
+.session-form .seg > button {
   padding: 0.55rem 0.5rem;
-  border-radius: var(--pill);
-  font-family: inherit;
-  font-weight: 800;
   font-size: 0.88rem;
-  color: var(--ink-soft);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-transform: lowercase;
-  letter-spacing: 0.02em;
-  transition: all 0.18s ease;
 }
-.mode-btn:hover { color: var(--ink); }
-.mode-btn.active {
-  background: var(--frog);
-  color: #07301A;
-}
-[data-theme="dark"] .mode-btn.active { background: var(--frog); color: #07301A; }
-
-/* ───── Notes textarea: bigger on mobile so editing is comfortable ── */
 
 .notes-area { min-height: 100px; }
-
-/* ───── Action row at the bottom ─────────────────────────────────── */
 
 .actions {
   display: flex;

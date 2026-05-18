@@ -11,11 +11,11 @@
   <!-- ====== NORMAL DAY ====== -->
   <header class="hello fade-up">
     <p class="date-line muted">{{ prettyToday() }}</p>
-    <h1 class="hand greeting">{{ T.hello }} ✨</h1>
+    <h1 class="hand greeting">{{ T.hello }}</h1>
   </header>
 
-  <!-- Streak card — engine metaphor -->
-  <div class="streak-card-wrap fade-up" [style.animation-delay.ms]="50">
+  <!-- Streak card — hero tier -->
+  <div class="streak-card-wrap">
     <section class="streak-card">
       <div class="streak-numbers">
         <div class="streak-main">
@@ -28,40 +28,59 @@
         <app-engine [total]="streak().total" [inRow]="streak().inRow" />
       </div>
     </section>
-    <div class="streak-mascot">
-      <app-mascot [streakTotal]="streak().total" />
-    </div>
   </div>
 
-  <!-- Timer card -->
-  <section class="timer-card fade-up" [style.animation-delay.ms]="80"
-           [attr.data-tier]="timer.isRunning() ? timerTier() : null"
-           [class.is-starting]="ceremonyState() === 'starting'"
-           [class.is-stopping]="ceremonyState() === 'stopping'">
-    @if (displayRunning()) {
+  <!-- Timer display — ambient, no card -->
+  @if (displayRunning()) {
+    <section class="timer-section fade-up" [style.animation-delay.ms]="80"
+             [attr.data-tier]="timerTier()">
       <p class="status">
         <span class="dot"></span> {{ T.learning }}
       </p>
-      <p class="elapsed hand">{{ elapsedDisplay() }}</p>
+      <p class="elapsed">{{ elapsedDisplay() }}</p>
       <p class="timer-tier-msg">{{ tierMsg() }}</p>
+    </section>
+  } @else if (todayMinutes() > 0) {
+    <p class="todays-total fade-up" [style.animation-delay.ms]="80">
+      {{ T.todayTotal }}: <strong>{{ formatDur(todayMinutes()) }}</strong>
+    </p>
+  } @else {
+    <p class="ready-line fade-up" [style.animation-delay.ms]="80">{{ T.readyWhenYouAre }}</p>
+  }
+
+  <!-- Start / stop button — no fade-up: frog jump IS the entrance for this section -->
+  <div class="btn-zone" #btnZone
+       [class.is-starting]="ceremonyState() === 'starting'"
+       [class.is-stopping]="ceremonyState() === 'stopping'">
+    <div class="mascot-on-btn" #mascotContainer>
+      <app-mascot [onButton]="true" [isRunning]="displayRunning()" [streakTotal]="streak().total" />
+    </div>
+    @if (displayRunning()) {
       <button class="big-btn stop"
+              [class.is-pressed]="pressed()"
               [disabled]="ceremonyState() !== 'idle'"
-              (click)="onPrimaryClick()">{{ T.stopSession }}</button>
+              (pointerdown)="onPressStart()"
+              (pointerup)="onPressEnd()"
+              (pointerleave)="onPressEnd()"
+              (pointercancel)="onPressEnd()"
+              (click)="onPrimaryClick()">
+        {{ T.stopSession }}
+      </button>
     } @else {
-      @if (todayMinutes() > 0) {
-        <p class="todays-total">{{ T.todayTotal }}: <strong>{{ formatDur(todayMinutes()) }}</strong></p>
-      } @else {
-        <p class="status muted">{{ T.readyWhenYouAre }}</p>
-      }
       <button class="big-btn"
+              [class.is-pressed]="pressed()"
               [disabled]="ceremonyState() !== 'idle'"
+              (pointerdown)="onPressStart()"
+              (pointerup)="onPressEnd()"
+              (pointerleave)="onPressEnd()"
+              (pointercancel)="onPressEnd()"
               (click)="onPrimaryClick()">{{ T.startLearning }}</button>
     }
-  </section>
+  </div>
 
   <!-- Today's plan -->
   @if (todayPlans().length > 0) {
-    <section class="card plans-card fade-up" [style.animation-delay.ms]="120">
+    <section class="card plans-card fade-up" [style.animation-delay.ms]="130">
       <h3>{{ T.todaysPlan }}</h3>
       @for (plan of todayPlans(); track plan.id) {
         <button type="button"
@@ -78,7 +97,7 @@
       }
     </section>
   } @else if (!isSkipToday()) {
-    <p class="no-plan-line muted fade-up" [style.animation-delay.ms]="120">
+    <p class="no-plan-line muted fade-up" [style.animation-delay.ms]="130">
       {{ T.noPlanForToday }}
       <a routerLink="/planner">{{ T.planOne }} →</a>
     </p>
@@ -86,7 +105,7 @@
 
   <!-- Today's sessions -->
   @if (todaySessions().length > 0) {
-    <section class="card sessions-card fade-up" [style.animation-delay.ms]="160">
+    <section class="card sessions-card fade-up" [style.animation-delay.ms]="165">
       <div class="section-head">
         <h3>{{ T.sessionsToday }}</h3>
         <span class="chip">{{ todaySessions().length }}</span>
@@ -94,11 +113,10 @@
       @for (s of todaySessions(); track s.id) {
         <button type="button" class="session-row" (click)="openEdit(s)">
           <div class="session-left">
-            <div class="session-headline">{{ sessionHeadline(s) }}</div>
-            <div class="session-meta">
-              <span>{{ sessionTimeLabel(s) }}</span>
-              @if (sessionSecondary(s)) {
-                <span class="dotsep">·</span><span>{{ sessionSecondary(s) }}</span>
+            <div class="session-headline">
+              <span class="session-dur">{{ sessionDuration(s) }}</span>
+              @if (sessionHours(s)) {
+                <span class="session-hrs">{{ sessionHours(s) }}</span>
               }
             </div>
             @if (s.notes) {
@@ -136,7 +154,6 @@
   </app-modal>
 }
 
-<!-- Post-stop "what did you learn?" prompt — small, optional, can skip -->
 @if (postStopSession()) {
   <app-modal [title]="T.postStopTitle" (close)="dismissPostStop()">
     <div class="post-stop-form">

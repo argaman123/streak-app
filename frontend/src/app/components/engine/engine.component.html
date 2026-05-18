@@ -1,6 +1,6 @@
 <div class="engine" [class]="'engine--' + state">
   <div class="engine-track">
-    <div class="engine-fill" [style.width.%]="fillPct"></div>
+    <div class="engine-fill" [style.transform]="'scaleX(' + fillPct / 100 + ')'"></div>
     <div class="engine-car" [class]="carClass" [style.left.%]="fillPct">🚗</div>
   </div>
   <div class="engine-label">{{ label }}</div>

@@ -1,8 +1,14 @@
 <div class="mascot-wrap"
-     [class.peeking]="visible()"
-     [class.free-standing]="freeStanding">
+     [class.peeking]="!onButton && visible()"
+     [class.free-standing]="freeStanding"
+     [class.on-button]="onButton"
+     [class.jumping]="jumping()"
+     [class.bobbing]="bobbing()"
+     [class.has-jumped]="hasJumped()">
   @if (visible() && line()) {
-    <div class="bubble">{{ line() }}</div>
+    <div class="bubble" [class.leaving]="bubbleLeaving()">{{ line() }}</div>
   }
-  <img class="mascot-img" src="mascot/argaman.png" alt="" aria-hidden="true" />
+  <img #img class="mascot-img" src="mascot/argaman.png" alt="" aria-hidden="true"
+       (load)="onImageLoad()"
+       (error)="onImageLoad()" />
 </div>

@@ -1,156 +1,145 @@
 /* ==========================================================================
- * STREAKLING — global styles
+ * STREAKLING — global design system  (light only)
  *
- * Palette: bold and a little chaotic. Saffron orange is the hero (it's what
- * Adely would wear), frog green is the success/streak signal, hot pink is
- * the celebration accent, cyan is the cool quiet third. Light mode is a
- * sunny cream-orange. Dark mode is a deep frog pond at midnight.
+ * Palette: a sunny garden. Frog green is the streak signal. Coral is the
+ * warm "look at me" accent. Sakura pink celebrates. Butter yolk rewards.
+ * Sky blue rests. Cream paper warms everything underneath.
  *
- * Type: Fraunces (display, optical-size 144 wght 800) + Atkinson Hyperlegible
- * (body) + Caveat (handwritten accents). No Inter, Roboto, Space Grotesk.
+ * Type: Caprasimo (chunky display serif) + Nunito (rounded friendly body)
+ *       + Caveat (handwritten accents). Three fonts, three jobs.
+ *
+ * NOTE: this file holds *all* shared visuals. Surfaces, shadows, buttons,
+ * pills, rows. If you find yourself writing a card chrome / chunky shadow /
+ * pill-toggle / icon-button in a component, reach for one of these first.
  * ========================================================================== */
 
-/* ───── Tokens ───────────────────────────────────────────────────────── */
-
-:root,
-:root[data-theme="light"] {
-  /* Hero — saffron orange. The colour you can't ignore. */
-  --hero:        #FF7A1A;
-  --hero-deep:   #D85800;
-  --hero-soft:   #FFD9B8;
-  --hero-tint:   #FFEFDF;
-
-  /* Frog green — success, streak, the engine */
-  --frog:        #4ECC71;
-  --frog-deep:   #2BAE52;
-  --frog-soft:   #C8F0D5;
-  --frog-tint:   #E5F8EB;
-  --frog-text:   #16572D;
-
-  /* Hot pink — celebration, "in a row", coral replacement */
-  --pop:         #FF3D7F;
-  --pop-deep:    #C9215A;
-  --pop-soft:    #FFD1E2;
-  --pop-tint:    #FFEAF1;
-  --pop-text:    #821038;
-
-  /* Cyan — the cool third, used for muted highlights */
-  --cool:        #2EC2D8;
-  --cool-deep:   #1490A4;
-  --cool-soft:   #C8EEF5;
-
-  /* Yolk yellow — sparingly, for rewards */
-  --yolk:        #FFD23F;
-  --yolk-soft:   #FFF1B5;
-  --yolk-deep:   #C49000;
-
-  /* Backgrounds, ink */
-  --cream:       #FFF4E0;
-  --cream-deep:  #F4EAD8;   /* soft sand — used as a subtle accent, no peach */
-  --paper:       #FFFFFF;
-  --paper-tint:  #FFF9EE;
-
-  --contrast: #ffffff;
-
-  --ink:         #1B1410;
-  --ink-soft:    #6B4F3F;
-  --ink-mute:    #B89882;
-  --line:        #F2D6B5;
-
-  /* Outline + key-shadow color used by the chunky offset borders/shadows
-     throughout. Light mode: deep coffee brown so it reads as "the line".
-     Dark mode below uses a deep pond green so it doesn't go white. */
-  --outline:     #2D1F18;
-  --shadow-key:  #2D1F18;
-
-  --shadow:       0 4px 0 rgba(216, 88, 0, 0.18), 0 8px 24px rgba(216, 88, 0, 0.12);
-  --shadow-soft:  0 2px 0 rgba(216, 88, 0, 0.10), 0 4px 12px rgba(216, 88, 0, 0.08);
-  --shadow-pop:   0 4px 0 var(--pop-deep), 0 6px 16px rgba(201, 33, 90, 0.30);
-}
-
-:root[data-theme="dark"] {
-  /* Frog pond at night: deep teal-green base, with the same hero/pop/yolk
-     accents popping against it. Frog the loudest of all. */
-  --hero:        #FFA040;
-  --hero-deep:   #FFC182;
-  --hero-soft:   #4A2810;
-  --hero-tint:   #2A180A;
-
-  --frog:        #65DD8A;
-  --frog-deep: #3cda6f;
-  --frog-soft:   #1A3528;
-  --frog-tint:   #0E1D16;
-  --frog-text:   #92ECAE;
-
-  --pop:         #FF5896;
-  --pop-deep:    #FF8FB6;
-  --pop-soft:    #3F1428;
-  --pop-tint:    #260A18;
-  --pop-text:    #FFA8C2;
-
-  --cool:        #4DD8EE;
-  --cool-deep:   #88E8F4;
-  --cool-soft:   #0E2C32;
-
-  --yolk:        #FFD23F;
-  --yolk-soft:   #2A1F08;
-  --yolk-deep:   #FFE38A;
-
-  /* Frog pond — slightly warmer to take the sunset bloom on the bg */
-  --cream:       #0A1810;
-  --cream-deep:  #050E08;
-  --paper:       #142A1D;
-  --paper-tint:  #1A3324;
-
-  --contrast: #151515;
-
-  /* Brighter text so contrast is comfortable everywhere */
-  --ink:         #F2FBF4;
-  --ink-soft:    #B8D0BE;
-  --ink-mute:    #6F8A78;
-  --line:        #284535;
-
-  /* Outline + key-shadow: a deep pond color, slightly lighter than the
-     darkest paper so chunky borders read as "an even deeper green-black"
-     and never show up as a white outline. */
-  --outline:     #061410;
-  --shadow-key:  #04100C;
-
-  --shadow:       0 4px 0 rgba(0, 0, 0, 0.45), 0 10px 24px rgba(0, 0, 0, 0.55);
-  --shadow-soft:  0 2px 0 rgba(0, 0, 0, 0.30), 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-pop:   0 4px 0 var(--pop-deep), 0 6px 16px rgba(255, 88, 150, 0.40);
-}
+/* ───── Tokens ─────────────────────────────────────────────────────── */
 
 :root {
-  /* Shape tokens */
-  --r-sm: 10px;
+  /* Frog (primary — streak, success, the engine) */
+  --frog:        #3FBE5C;
+  --frog-bright: #4ED670;
+  --frog-deep:   #1F7A36;
+  --frog-soft:   #C2EFCE;
+  --frog-tint:   #E6FAEC;
+  --frog-text:   #0F3E1F;
+
+  /* Coral (warm accent — today, primary CTAs against the green) */
+  --coral:        #FF6B47;
+  --coral-bright: #FF7A47;
+  --coral-deep:   #C03A1B;
+  --coral-soft:   #FFCCB8;
+  --coral-tint:   #FFEDE5;
+
+  /* Sakura pink (celebration — "in a row", danger soft, rest-day chip) */
+  --sakura:      #F05469;
+  --sakura-deep: #9a2f3d;
+  --sakura-soft: #FFD4DF;
+  --sakura-tint: #FFEFF3;
+
+  /* Butter (rewards, small highlights, tier 2 timer) */
+  --butter:      #FFCC4F;
+  --butter-deep: #A87600;
+  --butter-soft: #FFEAA8;
+  --butter-tint: #FFF7DD;
+
+  /* Paper + sand + ink */
+  --paper:       #FFF6E6;     /* warm cream — every card, modal, nav, badge */
+  --sand:        #F4E5C8;     /* depressed surface — inputs, tracks, toggle bg */
+  --ink:         #1A2E1C;     /* deep forest — text + outlines */
+  --ink-soft:    #3D5841;
+  --ink-mute:    #7A8E7E;
+  --rule:        rgba(26, 46, 28, 0.14);
+  --on-dark:     #FFFFFF;     /* text on dark/coral/sakura fills */
+
+  /* Outline + chunky-shadow key. ONE color, used on everything. */
+  --outline:     #1A2E1C;
+  --shadow-key:  #1A2E1C;
+
+  /* Shape scale */
+  --r-sm: 12px;
   --r:    18px;
-  --r-lg: 26px;
-  --r-xl: 34px;
+  --r-lg: 24px;
+  --r-xl: 32px;
   --pill: 999px;
 
-  /* Type stack — two fonts only.
-     Fraunces does double duty: display (large, opsz 144 wght 800) and body
-     (small, opsz 9 wght 400). Variable axes give it character at both sizes.
-     Caveat handles handwritten accents. No generic Inter/Roboto here. */
-  --font-display: 'Fraunces', 'Georgia', serif;
+  /* The depth scale — every hard offset shadow uses one of these */
+  --depth-sm:  3px;
+  --depth:     5px;
+
+  /* Border thickness — one value, everywhere */
+  --stroke:      3px;
+  --stroke-thin: 2.5px;
+  --stroke-line: 2px;
+
+  /* Fonts */
+  --font-display: 'Caprasimo', 'Georgia', serif;
   --font-hand:    'Caveat', cursive;
-  --font-body:    'Fraunces', 'Georgia', serif;
+  --font-body:    'Nunito', sans-serif;
+
+  /* ───── Composite recipes — assembled once, reused everywhere ─── */
+
+  /* The "paper highlight" gradient overlay — every paper surface has this */
+  --paper-grad:      linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.82) 100%);
+  --paper-fill:      var(--paper-grad), var(--paper);
+  --paper-highlight: inset 0 2px 0 rgba(255, 255, 255, 1);
+
+  /* Hard chunky offset shadow ladder — the single most repeated recipe */
+  --shadow-sm:       0 var(--depth-sm) 0 var(--shadow-key);
+  --shadow:          0 var(--depth)    0 var(--shadow-key);
+  --shadow-flat:     0 0     0 var(--shadow-key);
+  --shadow-press:    0 1px   0 var(--shadow-key);
+  --shadow-chip:     0 2px   0 var(--shadow-key);
+
+  /* Frog-deep variant of the ladder (used by calendar frame + arrows) */
+  --shadow-frog-sm:  0 var(--depth-sm) 0 var(--frog-deep);
+  --shadow-frog:     0 var(--depth)    0 var(--frog-deep);
+  --shadow-frog-flat:0 0     0 var(--frog-deep);
+
+  /* Sakura-deep variant (rest toggle) */
+  --shadow-sakura-sm:  0 var(--depth-sm) 0 var(--sakura-deep);
+  --shadow-sakura:     0 var(--depth)    0 var(--sakura-deep);
+  --shadow-sakura-flat:0 0     0 var(--sakura-deep);
+
+  /* Full "card box-shadow" — top highlight + drop shadow */
+  --card-shadow:     var(--paper-highlight), var(--shadow);
+  --card-shadow-sm:  var(--paper-highlight), var(--shadow-sm);
+  --card-shadow-frog: var(--paper-highlight), var(--shadow-frog);
+
+  /* Diagonal stripe overlay (forest ink on light fill) */
+  --stripe-overlay: repeating-linear-gradient(
+    -52deg,
+    transparent 0, transparent 11px,
+    rgba(15, 62, 31, 0.08) 11px, rgba(15, 62, 31, 0.08) 13px
+  );
+
+  /* Streak hero gradient — frog → butter → coral, brighter than tokens */
+  --hero-grad: linear-gradient(135deg, var(--frog-bright) 0%, var(--butter) 55%, var(--coral-bright) 100%);
+
+  /* Big rubber-button inner shadows — frog (start) and coral (stop) variants.
+     Idle/hover uses --rubber-*; pressed uses --rubber-*-press. */
+  --rubber-frog:        inset 0 3px 0 rgba(255, 255, 255, 0.40), inset 0 -4px 0 rgba(15, 62, 31, 0.34);
+  --rubber-coral:       inset 0 3px 0 rgba(255, 255, 255, 0.30), inset 0 -4px 0 rgba(110, 32, 8, 0.40);
+  --rubber-frog-press:  inset 0 6px 0 rgba(15, 62, 31, 0.28),    inset 0 -1px 0 rgba(255, 255, 255, 0.10);
+  --rubber-coral-press: inset 0 6px 0 rgba(110, 32, 8, 0.40),    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+
+  /* Springy easings — used everywhere */
+  --ease-spring: cubic-bezier(0.34, 1.6, 0.64, 1);
+  --ease-soft:   cubic-bezier(0.34, 1.5, 0.64, 1);
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Press transition (every chunky-shadow button uses this) */
+  --t-press: transform 0.18s var(--ease-spring), box-shadow 0.14s ease;
 }
 
-/* ───── Reset ────────────────────────────────────────────────────────── */
+/* ───── Reset ──────────────────────────────────────────────────────── */
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; min-height: 100%; }
-html {
-  background: var(--cream);
-  /* Safe-area background — extends behind the iOS / Android system bars
-     so they match the page colour instead of going white. */
-}
+html { background: var(--paper); }
 body {
   font-family: var(--font-body);
-  font-variation-settings: "opsz" 9, "SOFT" 50, "WONK" 0;
-  font-weight: 450;
+  font-weight: 600;
   font-size: 16px;
   line-height: 1.5;
   color: var(--ink);
@@ -168,90 +157,124 @@ input, textarea, .selectable, .plan-check-text, .plan-text, .session-notes,
   -webkit-user-select: text;
 }
 
-/* ───── Background — bold layered gradients, NO animation ──────────── */
+/* ───── Page background — sunny garden with sunset blush ──────────── */
 
-:root[data-theme="light"] html,
-:root html {
+html {
   background:
-    radial-gradient(60% 50% at 100% 0%,   rgba(255, 122, 26, 0.35) 0%, transparent 60%),
-    radial-gradient(55% 45% at 0% 100%,   rgba(78, 204, 113, 0.28) 0%, transparent 60%),
-    radial-gradient(45% 35% at 50% 50%,   rgba(255, 61, 127, 0.10) 0%, transparent 65%),
-    var(--cream);
+    radial-gradient(58% 50% at 100% 0%,   rgba(255, 107, 71, 0.22) 0%, transparent 60%),
+    radial-gradient(55% 45% at 0% 100%,   rgba(63, 190, 92, 0.20) 0%, transparent 60%),
+    radial-gradient(40% 32% at 80% 95%,   rgba(255, 133, 166, 0.16) 0%, transparent 65%),
+    radial-gradient(38% 28% at 8% 12%,    rgba(255, 204, 79, 0.12) 0%, transparent 65%),
+    var(--paper);
   background-attachment: fixed;
 }
 
-/* Dark mode — frog pond with a sunset bloom: warm hero glow top-right,
-   pop pink touch bottom, cyan whisper. Layered, NOT monochrome. */
-:root[data-theme="dark"] html {
-  background:
-    radial-gradient(60% 45% at 100% 0%,   rgba(255, 160, 64, 0.30) 0%, transparent 60%),
-    radial-gradient(55% 40% at 0% 100%,   rgba(255, 88, 150, 0.22) 0%, transparent 60%),
-    radial-gradient(50% 35% at 0% 0%,     rgba(77, 216, 238, 0.16) 0%, transparent 60%),
-    radial-gradient(45% 35% at 50% 50%,   rgba(101, 221, 138, 0.12) 0%, transparent 65%),
-    var(--cream);
-  background-attachment: fixed;
-}
-
-/* Subtle dot grid texture in the background. Static, GPU-cheap. */
+/* Static dot grid texture — handmade paper feel, GPU-cheap */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image:
-    radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
   background-size: 26px 26px;
   color: var(--ink);
   opacity: 0.05;
 }
-[data-theme="dark"] body::before { opacity: 0.07; }
 
-/* ───── Type ─────────────────────────────────────────────────────────── */
+/* ───── Typography ─────────────────────────────────────────────────── */
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  letter-spacing: -0.005em;
   line-height: 1.05;
   margin: 0 0 0.4em;
   color: var(--ink);
 }
-h1 { font-size: 2rem; }
+h1 { font-size: 2.2rem; }
 h2 { font-size: 1.5rem; }
-h3 { font-size: 1.1rem; }
+h3 { font-size: 1.15rem; }
 p  { margin: 0 0 0.5em; }
 .muted { color: var(--ink-mute); }
 .hand  { font-family: var(--font-hand); font-weight: 700; }
 
-a {
-  color: var(--hero-deep);
-  text-decoration: none;
-  font-weight: 700;
+/* Section heading — same display recipe used by every card header */
+.h-section {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.2rem;
+  text-transform: lowercase;
+  letter-spacing: -0.005em;
+  color: var(--ink);
 }
-[data-theme="dark"] a { color: var(--hero); }
+
+a {
+  color: var(--coral-deep);
+  text-decoration: none;
+  font-weight: 800;
+}
+a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; }
 input, textarea { font-family: inherit; color: var(--ink); }
 
-/* ───── Cards ────────────────────────────────────────────────────────── */
+/* ───── Shell ──────────────────────────────────────────────────────── */
+
+.shell {
+  max-width: 680px;
+  margin: 0 auto;
+  padding:
+    calc(1.2rem + env(safe-area-inset-top, 0px))
+    1rem
+    7.5rem;
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 900px) {
+  .shell { padding: calc(2rem + env(safe-area-inset-top, 0px)) 2rem 7.5rem; }
+}
+@supports (padding: max(0px)) {
+  .shell { padding-bottom: max(7.5rem, env(safe-area-inset-bottom) + 6rem); }
+}
+
+/* ==================================================================
+ * SURFACES — three flavors, one chunky recipe:
+ *   bg → paper-fill · border → stroke ink · shadow → hard offset ink
+ *
+ * .surface-paper sets just the chrome (bg + border + shadow). Use it
+ * when you need that look but want your own radius/padding/geometry.
+ * .card / .card-frame / .card-hero are the standard padded versions.
+ * ================================================================== */
+
+.surface-paper {
+  background: var(--paper-fill);
+  border: var(--stroke) solid var(--outline);
+  box-shadow: var(--card-shadow);
+  color: var(--ink);
+}
+.surface-paper-sm {
+  background: var(--paper-fill);
+  border: var(--stroke-thin) solid var(--outline);
+  box-shadow: var(--card-shadow-sm);
+  color: var(--ink);
+}
 
 .card {
-  background: var(--paper);
+  background: var(--paper-fill);
   border-radius: var(--r-lg);
   padding: 1.2rem;
-  border: 2.5px solid var(--outline);
-  box-shadow: 0 4px 0 var(--shadow-key);
+  border: var(--stroke) solid var(--outline);
+  box-shadow: var(--card-shadow);
   position: relative;
-}
-[data-theme="dark"] .card {
-  background: linear-gradient(160deg, var(--paper) 0%, var(--paper-tint) 100%);
+  color: var(--ink);
 }
 
-/* ───── Buttons ──────────────────────────────────────────────────────── */
+/* ==================================================================
+ * BUTTONS — one base, three fills, ghost + small + icon modifiers
+ * ================================================================== */
 
-/* Bold, chunky buttons with a hard "key shadow" — clearly tactile. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -260,89 +283,139 @@ input, textarea { font-family: inherit; color: var(--ink); }
   padding: 0.78rem 1.4rem;
   border-radius: var(--r);
   font-family: var(--font-body);
-  font-variation-settings: "opsz" 9, "SOFT" 50, "WONK" 0;
   font-weight: 800;
   font-size: 1rem;
   text-transform: lowercase;
   letter-spacing: 0.02em;
+  color: var(--frog-text);
   background: var(--frog);
-  color: #07301A;
-  border: 2.5px solid var(--outline);
-  box-shadow: 0 4px 0 var(--shadow-key);
-  transition: transform 0.12s cubic-bezier(0.34, 1.6, 0.64, 1),
-              box-shadow 0.12s ease;
+  border: var(--stroke) solid var(--outline);
+  box-shadow: var(--shadow);
+  transition: transform 0.12s var(--ease-spring), box-shadow 0.12s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 0 var(--shadow-key);
-}
-.btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 var(--shadow-key);
-}
+.btn:hover  { transform: translateY(-2px); box-shadow: 0 calc(var(--depth) + 2px) 0 var(--shadow-key); }
+.btn:active { transform: translateY(4px);  box-shadow: var(--shadow-press); }
 .btn:disabled {
   opacity: 0.5;
   cursor: default;
+  pointer-events: none;
   transform: none;
-  box-shadow: 0 4px 0 var(--shadow-key);
+  box-shadow: var(--shadow);
 }
 
 .btn-secondary {
   background: var(--paper);
   color: var(--ink);
 }
-[data-theme="dark"] .btn-secondary { background: var(--paper-tint); color: var(--ink); }
 
 .btn-danger {
-  background: var(--pop);
-  color: #FFFFFF;
+  background: var(--coral);
+  color: var(--on-dark);
 }
+
+.btn.small {
+  padding: 0.42rem 0.9rem;
+  font-size: 0.86rem;
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-sm);
+}
+.btn.small:hover  { box-shadow: var(--shadow); }
+.btn.small:active { box-shadow: var(--shadow-press); }
 
 .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--pill);
   background: transparent;
   color: var(--ink-soft);
-  padding: 0.45rem 0.85rem;
-  border-radius: var(--pill);
-  font-weight: 700;
   border: none;
   box-shadow: none;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.92rem;
   text-transform: lowercase;
-  transition: background 0.15s ease;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
 }
-.btn-ghost:hover { background: var(--cream-deep); color: var(--ink); }
-.btn-ghost.small { padding: 0.32rem 0.7rem; font-size: 0.85rem; }
-.btn-ghost.danger { color: var(--pop-text); }
-[data-theme="dark"] .btn-ghost.danger { color: var(--pop); }
-.btn-ghost.danger:hover { background: var(--pop-soft); color: var(--pop-deep); }
-[data-theme="dark"] .btn-ghost.danger:hover { background: var(--pop-soft); color: var(--pop-deep); }
+.btn-ghost:hover  { background: var(--sand); color: var(--ink); }
+.btn-ghost.small  { padding: 0.32rem 0.72rem; font-size: 0.82rem; }
+.btn-ghost.danger { color: var(--coral-deep); }
+.btn-ghost.danger:hover { background: var(--sakura-tint); color: var(--coral-deep); }
 
-/* ───── Inputs ───────────────────────────────────────────────────────── */
+/* ==================================================================
+ * ICON BUTTON — round, chunky border, springy press.
+ *   .btn-icon            paper fill, ink stroke (default)
+ *   .btn-icon.frog       frog fill, ink stroke (history "+", etc.)
+ *   .btn-icon.frog-frame frog-tint fill, frog-deep stroke (calendar arrows)
+ *   .btn-icon.sand       sand fill, ink stroke (modal close)
+ *   .btn-icon.sm         30×30 size
+ *   .btn-icon.spin-on-hover rotates on hover (e.g. + → ×)
+ * ================================================================== */
+
+.btn-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--stroke) solid var(--outline);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 0.18s var(--ease-spring),
+              box-shadow 0.14s ease,
+              background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-icon:hover  { transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn-icon:active { transform: translateY(2px);  box-shadow: var(--shadow-flat); }
+
+.btn-icon.frog       { background: var(--frog); color: var(--frog-text); }
+.btn-icon.frog-frame {
+  background: var(--frog-tint);
+  color: var(--frog-deep);
+  border-color: var(--frog-deep);
+  border-width: var(--stroke-thin);
+  box-shadow: var(--shadow-frog-sm);
+}
+.btn-icon.frog-frame:hover  { background: var(--frog-soft); box-shadow: var(--shadow-frog); }
+.btn-icon.frog-frame:active { box-shadow: var(--shadow-frog-flat); }
+.btn-icon.sand { background: var(--sand); }
+
+.btn-icon.sm  { width: 30px; height: 30px; font-size: 1.05rem; border-width: var(--stroke-thin); }
+.btn-icon.spin-on-hover:hover { transform: translateY(-1px) rotate(90deg); }
+
+/* ==================================================================
+ * INPUTS — sand bg, same chunky stroke as everything else
+ * ================================================================== */
 
 .input, .textarea {
   width: 100%;
-  padding: 0.7rem 0.95rem;
-  border: 2.5px solid var(--line);
+  padding: 0.72rem 0.95rem;
+  border: var(--stroke) solid var(--outline);
   border-radius: var(--r-sm);
-  background: var(--cream);
+  background: var(--sand);
   color: var(--ink);
   outline: none;
   font-size: 16px;
-  font-family: inherit;
-  font-variation-settings: "opsz" 9, "SOFT" 50, "WONK" 0;
+  font-family: var(--font-body);
+  font-weight: 600;
   transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
 }
-[data-theme="dark"] .input,
-[data-theme="dark"] .textarea {
-  background: var(--cream);
-  border-color: var(--line);
-}
 .input:focus, .textarea:focus {
-  border-color: var(--hero);
+  border-color: var(--coral);
+  background: var(--paper);
   transform: translateY(-1px);
-}
-[data-theme="dark"] .input:focus,
-[data-theme="dark"] .textarea:focus {
-  background: var(--paper-tint);
 }
 .textarea { resize: vertical; min-height: 70px; }
 
@@ -365,79 +438,245 @@ input, textarea { font-family: inherit; color: var(--ink); }
 
 label {
   display: block;
-  font-size: 0.78rem;
+  font-family: var(--font-body);
+  font-size: 0.74rem;
   color: var(--ink-soft);
   font-weight: 800;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.32rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 .field { margin-bottom: 0.95rem; }
 .row   { display: flex; gap: 0.5rem; }
 .row > * { flex: 1; min-width: 0; }
 
-/* ───── Chips ────────────────────────────────────────────────────────── */
+/* ==================================================================
+ * CHIPS — wonky little frog stickers
+ *   Always rotated; hover wiggles them out further.
+ * ================================================================== */
 
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.28rem 0.75rem;
+  padding: 0.22rem 0.75rem;
   background: var(--frog);
-  color: #07301A;
-  border: 2px solid var(--outline);
+  color: var(--frog-text);
+  border: var(--stroke-thin) solid var(--outline);
   border-radius: var(--pill);
+  font-family: var(--font-body);
   font-size: 0.78rem;
   font-weight: 800;
   text-transform: lowercase;
   letter-spacing: 0.02em;
-  transform: rotate(-1.5deg);
-  transition: transform 0.18s cubic-bezier(0.34, 1.65, 0.64, 1);
+  transform: rotate(-2deg);
+  box-shadow: var(--shadow-chip);
+  transition: transform 0.18s var(--ease-spring);
 }
-.chip:hover { transform: rotate(-3deg) scale(1.08); }
-.chip.pop { background: var(--pop); color: #FFFFFF; }
-.chip.cool { background: var(--cool); color: #06303A; }
-.chip.yolk { background: var(--yolk); color: #3D2C00; }
-.chip.coral { background: var(--pop); color: #FFFFFF; }
+.chip:hover  { transform: rotate(-4deg) scale(1.08); }
+.chip.pop    { background: var(--sakura);  color: var(--on-dark); }
+.chip.coral  { background: var(--coral);   color: var(--on-dark); }
+.chip.butter { background: var(--butter);  color: var(--butter-deep); }
 
-/* ───── Shell ────────────────────────────────────────────────────────── */
+/* ==================================================================
+ * PILL TOGGLE — single-button pill with the chunky shadow recipe.
+ * Variants: .frog (calendar mode toggle), .sakura (planner skip toggle).
+ * Used wherever you need a single tappable pill that isn't part of a .seg.
+ * ================================================================== */
 
-.shell {
-  max-width: 680px;
-  margin: 0 auto;
-  padding:
-    calc(1.2rem + env(safe-area-inset-top, 0px))
-    1rem
-    7.5rem;
-  position: relative;
-  z-index: 1;
+.pill-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 1.05rem;
+  border-radius: var(--pill);
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--stroke-thin) solid var(--outline);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  transition: var(--t-press), background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
-@media (min-width: 900px) {
-  .shell { padding: calc(2rem + env(safe-area-inset-top, 0px)) 2rem 7.5rem; }
+.pill-toggle:hover  { transform: translateY(-1px); box-shadow: var(--shadow); }
+.pill-toggle:active { transform: translateY(2px);  box-shadow: var(--shadow-flat); }
+
+.pill-toggle.frog {
+  background: var(--frog-tint);
+  color: var(--frog-deep);
+  border-color: var(--frog-deep);
+  box-shadow: var(--shadow-frog-sm);
 }
-@supports (padding: max(0px)) {
-  .shell { padding-bottom: max(7.5rem, env(safe-area-inset-bottom) + 6rem); }
+.pill-toggle.frog:hover  { background: var(--frog-soft); box-shadow: var(--shadow-frog); }
+.pill-toggle.frog:active { box-shadow: var(--shadow-frog-flat); }
+
+.pill-toggle.sakura {
+  background: var(--sakura-soft);
+  color: var(--sakura-deep);
+  border-color: var(--sakura-deep);
+  box-shadow: var(--shadow-sakura-sm);
+  padding: 0.55rem 1.05rem;
+  font-size: 0.92rem;
+}
+.pill-toggle.sakura:hover  { background: var(--sakura-tint); box-shadow: var(--shadow-sakura); }
+.pill-toggle.sakura:active { box-shadow: var(--shadow-sakura-flat); }
+
+/* ==================================================================
+ * SEGMENT TOGGLES — calendar/chart/form use this same pattern
+ * ================================================================== */
+
+.seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.22rem;
+  background: var(--sand);
+  border: var(--stroke-thin) solid var(--outline);
+  border-radius: var(--pill);
+  flex-shrink: 0;
+}
+.seg.full { display: flex; width: 100%; }
+
+.seg > button {
+  padding: 0.32rem 0.85rem;
+  border-radius: var(--pill);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--ink-soft);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.seg.full > button { flex: 1; }
+.seg > button:hover  { color: var(--ink); }
+.seg > button.active {
+  background: var(--frog);
+  color: var(--frog-text);
 }
 
-/* ───── Page-load reveal ─────────────────────────────────────────────── */
+/* ==================================================================
+ * BUBBLE — paper speech bubble. One look, used by mascot + confirm prompts.
+ *   Add modifier classes for tail direction & rotation.
+ * ================================================================== */
 
-/* Page-load reveal — TRANSFORM ONLY, no opacity. Opacity transitions on
-   anything stacked above the mascot make the mascot visible through the
-   element while it fades in. We just slide the element in. Short duration
-   so iOS doesn't lag on route changes. */
-@keyframes fadeUp {
-  from { transform: translateY(8px); }
-  to   { transform: translateY(0); }
+.bubble {
+  background: var(--paper-fill);
+  color: var(--ink);
+  padding: 0.55rem 0.9rem;
+  border-radius: 16px 16px 4px 16px;
+  border: var(--stroke-thin) solid var(--outline);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
-.fade-up { animation: fadeUp 0.28s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
 
-/* Wiggle accent — used on hand-written text for personality */
+/* ==================================================================
+ * SESSION ROW — used by history page and home page's "today" list.
+ * Built as a transparent button row with dotted separators.
+ * ================================================================== */
+
+.session-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--r-sm);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  border-top: var(--stroke-line) dotted var(--rule);
+  margin-bottom: 0.1rem;
+  transition: background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.session-row:first-of-type { border-top: none; }
+
+@media (hover: hover) {
+  .session-row:hover { background: var(--frog-tint); }
+  .session-row:hover .edit-hint { opacity: 1; transform: rotate(-12deg); }
+}
+
+.session-left { flex: 1; min-width: 0; }
+.session-headline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.session-dur {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.session-hrs {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+
+.session-notes {
+  margin: 0.4rem 0 0;
+  padding: 0.5rem 0.7rem;
+  background: var(--frog-tint);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border-left: 3px solid var(--frog);
+}
+
+.edit-hint {
+  flex-shrink: 0;
+  color: var(--ink-mute);
+  font-size: 0.95rem;
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  opacity: 0.4;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* ==================================================================
+ * ANIMATIONS — shared
+ * ================================================================== */
+
+@keyframes wiggleUp {
+  0%   { transform: translateY(18px); }
+  68%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+.fade-up { animation: wiggleUp 0.44s var(--ease-out) both; }
+
 @keyframes wiggle-in {
   0%   { transform: rotate(-6deg) scale(0.7); }
   50%  { transform: rotate(3deg)  scale(1.08); }
-  100% { transform: rotate(-1.5deg) scale(1); }
+  100% { transform: rotate(-2deg) scale(1); }
 }
-.wiggle-in { animation: wiggle-in 0.55s cubic-bezier(0.34, 1.6, 0.64, 1) both; }
+.wiggle-in { animation: wiggle-in 0.55s var(--ease-spring) both; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

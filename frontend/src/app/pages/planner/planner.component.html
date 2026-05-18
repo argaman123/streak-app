@@ -15,7 +15,7 @@
     <h3>
       {{ prettySelected() }}
       @if (isToday()) { <span class="chip">{{ T.today }}</span> }
-      @if (isSkipSelected()) { <span class="chip coral">🌿 {{ T.skipDay }}</span> }
+      @if (isSkipSelected()) { <span class="chip pop">{{ T.skipDay }}</span> }
     </h3>
   </div>
 
@@ -24,7 +24,7 @@
     @if (isSkipSelected()) {
       <button class="btn-ghost small" (click)="toggleSkipDay()">↺ {{ T.unmarkSkipDay }}</button>
     } @else {
-      <button class="skip-toggle" (click)="toggleSkipDay()">
+      <button class="pill-toggle sakura" (click)="toggleSkipDay()">
         {{ T.markSkipDay }}
       </button>
     }
@@ -40,9 +40,10 @@
         <div class="plan-row"
              appDragItem
              [appDragItemId]="plan.id"
-             [attr.data-drag-id]="plan.id">
+             [attr.data-drag-id]="plan.id"
+             [class.is-editing]="editingId() === plan.id">
           @if (editingId() === plan.id) {
-            <textarea class="textarea inline-edit" rows="2" [(ngModel)]="editingText"></textarea>
+            <textarea class="textarea inline-edit" rows="3" [(ngModel)]="editingText"></textarea>
             <div class="inline-actions">
               <button class="btn-ghost small" (click)="cancelEdit()">{{ T.cancel }}</button>
               <button class="btn small" (click)="saveEdit(plan)">{{ T.save }}</button>

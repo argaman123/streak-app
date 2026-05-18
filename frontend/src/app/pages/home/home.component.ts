@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -10,8 +10,7 @@ import { RestDaysService } from '../../services/rest-days.service';
 import { T } from '../../services/strings';
 import {
   todayIso, prettyDate, formatDuration, formatElapsed,
-  calculateStreak, toIsoTime, toIsoDate,
-  sessionHeadline, sessionDurationSecondary
+  calculateStreak, toIsoTime, toIsoDate
 } from '../../services/date.utils';
 
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -28,12 +27,43 @@ import { EngineComponent } from '../../components/engine/engine.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
+  @ViewChild('mascotContainer') private mascotContainer?: ElementRef<HTMLElement>;
+
   protected sessions = inject(SessionsService);
   protected plans = inject(PlansService);
   protected timer = inject(TimerService);
   protected restDays = inject(RestDaysService);
   protected T = T;
+
+  ngAfterViewInit(): void {
+    this.setMascotLift();
+  }
+
+  // Compute how far up the frog must sit so its feet land exactly on the streak
+  // card's top edge. Uses offsetTop (layout coords, unaffected by CSS animations)
+  // so the measurement is correct even while fade-up animations are running.
+  private setMascotLift(): void {
+    const container = this.mascotContainer?.nativeElement;
+    if (!container) return;
+    const streakCard = document.querySelector('.streak-card') as HTMLElement | null;
+    if (!streakCard) return;
+
+    const streakCardTop = this.absTop(streakCard);
+    // container.top = absTop(container), container.bottom = absTop(container) + offsetHeight
+    // With transform-origin: bottom center, translateY(-lift) moves the BOTTOM up by lift.
+    // We want: container.bottom - lift = streakCard.top + 4 (4 px below card top = "sits on it")
+    const containerBottom = this.absTop(container) + container.offsetHeight;
+    const lift = Math.max(containerBottom - streakCardTop, 60);
+    container.style.setProperty('--mascot-lift', `${lift}px`);
+  }
+
+  private absTop(el: HTMLElement): number {
+    let top = 0;
+    let cur: HTMLElement | null = el;
+    while (cur) { top += cur.offsetTop; cur = cur.offsetParent as HTMLElement | null; }
+    return top;
+  }
 
   protected readonly today = computed(() => { this.timer.now(); return todayIso(); });
   protected readonly prettyToday = computed(() => prettyDate(this.today()));
@@ -91,6 +121,38 @@ export class HomeComponent {
     if (this.ceremonyState() === 'stopping') return true;
     return this.timer.isRunning();
   });
+
+  // Class-based press state for the big button. Guarantees the
+  // squish-in is visible for at least PRESS_MIN_MS even on the
+  // briefest tap — :active alone truncates and the release
+  // transition makes the button look like it's springing AWAY.
+  protected pressed = signal(false);
+  private pressStartMs = 0;
+  private pressReleaseTimer: ReturnType<typeof setTimeout> | null = null;
+  private static readonly PRESS_MIN_MS = 140;
+
+  protected onPressStart(): void {
+    if (this.pressReleaseTimer) {
+      clearTimeout(this.pressReleaseTimer);
+      this.pressReleaseTimer = null;
+    }
+    this.pressStartMs = performance.now();
+    this.pressed.set(true);
+  }
+
+  protected onPressEnd(): void {
+    if (!this.pressed()) return;
+    const held = performance.now() - this.pressStartMs;
+    const remaining = Math.max(0, HomeComponent.PRESS_MIN_MS - held);
+    if (remaining === 0) {
+      this.pressed.set(false);
+    } else {
+      this.pressReleaseTimer = setTimeout(() => {
+        this.pressed.set(false);
+        this.pressReleaseTimer = null;
+      }, remaining);
+    }
+  }
 
   protected onPrimaryClick(): void {
     if (this.ceremonyState() !== 'idle') return;
@@ -169,11 +231,10 @@ export class HomeComponent {
   }
 
   // ---- Session display ----
-  protected sessionTimeLabel(s: Session): string {
+  protected sessionDuration(s: Session): string { return formatDuration(s.durationMinutes); }
+  protected sessionHours(s: Session): string | null {
     if (s.startTime && s.endTime) return `${s.startTime} – ${s.endTime}`;
-    return formatDuration(s.durationMinutes);
+    return null;
   }
-  protected sessionHeadline = (s: Session) => sessionHeadline(s.durationMinutes);
-  protected sessionSecondary = (s: Session) => sessionDurationSecondary(s.durationMinutes);
   protected formatDur = formatDuration;
 }

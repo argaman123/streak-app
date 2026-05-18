@@ -3,7 +3,7 @@ export const T = {
   done: 'done', skip: 'skip', optional: 'optional', today: 'today',
   navToday: 'today', navPlanner: 'planner', navHistory: 'history',
   hello: 'hey there',
-  startLearning: "let's go ✨", stopSession: 'stop',
+  startLearning: "let's go", stopSession: 'stop',
   learning: 'in the zone…',
   readyWhenYouAre: 'when you\'re ready 🫴',
   todayTotal: 'today',
@@ -38,38 +38,22 @@ export const T = {
   howManyMinutes: 'how many minutes?',
   whatDidYouLearn: 'what did you work on?',
   notesPlaceholder: 'e.g. algebra, chapter 3…',
-  shortSession: 'short session',
-  longSession: 'long session',
   historyTitle: 'history',
   past7: '7 days', allTime: 'all time',
   totalThisWeek: 'this week',
-  light: 'light ☀️', dark: 'dark 🌙',
   weekdayShort: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
   monthView: 'month', weekView: 'week',
   checkPlan: 'mark done',
   addToDay: '+ session',
   freeDay: 'free day',
 
-  // ---- Mascot lines ----
-  // Edit freely. One shown per visit (random each time).
-  // Tone: chatty, lightly insistent, jokingly bossy. Never mean. Never about
-  // her body or appearance. Lines stay under ~30 chars so the bubble fits.
   mascotLines: [
     "cmon cmon i know you're there",
-    "nah u can do it 💪",
-    "the engine wants ON 🔥",
-    "five minutes. just five.",
-    "okay frog says GO",
-    "let's keep this going ✨",
-    "even a little counts",
+    "u can do it 💪",
+    "pls 🥺👉👈",
+    "anything at all 😫",
     "you better! 🩴",  // כפכף צדק
     "👁️ i'm watching",
-    "you literally can",
-    "go go go go go 🚗",
-    "back so soon? good ✨",
-    "let's gooooo 🌟",
-    "engine warming, hop in 🐸",
-    "a tiny start works",
     "ribbit ribbit",
   ],
 };

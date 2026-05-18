@@ -1,8 +1,8 @@
-<div class="calendar" [class.is-month]="mode() === 'month'">
+<div class="calendar card" [class.is-month]="mode() === 'month'">
   <div class="cal-head">
-    <button type="button" class="cal-arrow" (click)="prev()" aria-label="Previous">‹</button>
+    <button type="button" class="btn-icon" (click)="prev()" aria-label="Previous">‹</button>
     <button type="button" class="cal-title" (click)="goToday()">{{ title() }}</button>
-    <button type="button" class="cal-arrow" (click)="next()" aria-label="Next">›</button>
+    <button type="button" class="btn-icon" (click)="next()" aria-label="Next">›</button>
   </div>
 
   @if (mode() === 'month') {
@@ -28,13 +28,12 @@
         }
         <span class="num">{{ d.num }}</span>
         @if (d.hasMarker) { <span class="dot"></span> }
-        @if (d.isRest) { <span class="rest-dot">🌿</span> }
       </button>
     }
   </div>
 
   <div class="cal-footer">
-    <button type="button" class="mode-toggle" (click)="toggleMode()">
+    <button type="button" class="pill-toggle" (click)="toggleMode()">
       {{ mode() === 'week' ? T.monthView : T.weekView }}
     </button>
   </div>

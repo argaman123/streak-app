@@ -1,7 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python *)"
+      "Bash(python *)",
+      "Bash(npm install *)",
+      "Bash(node -e \"const db = require\\('better-sqlite3'\\)\\(':memory:'\\); console.log\\('ok', db.prepare\\('SELECT 1+1 as n'\\).get\\(\\)\\);\")",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"require\\('./db'\\); require\\('./migrate'\\); console.log\\('modules load ok'\\);\")",
+      "Bash(grep -rn \"#[0-9A-Fa-f]\\\\{3,8\\\\}\" C:/Users/argam/Desktop/streak-app/frontend/src/app/components/progress-chart/ C:/Users/argam/Desktop/streak-app/frontend/src/app/components/session-form/)",
+      "Bash(npx ng *)",
+      "PowerShell(cd \"C:\\\\Users\\\\argam\\\\Desktop\\\\streak-app\\\\frontend\"; npx ng build --watch=$false 2>&1 | Select-Object -Last 25)",
+      "Bash(findstr \"chart-card\" \"C:\\\\Users\\\\argam\\\\Desktop\\\\streak-app\\\\frontend\\\\src\\\\app\\\\components\\\\progress-chart\\\\progress-chart.component.html\")",
+      "PowerShell(cd \"C:\\\\Users\\\\argam\\\\Desktop\\\\streak-app\\\\frontend\"; npx ng build --watch=$false 2>&1 | Select-Object -Last 15)",
+      "PowerShell(cd \"C:\\\\Users\\\\argam\\\\Desktop\\\\streak-app\\\\frontend\"; npx ng build --watch=$false 2>&1 | Select-Object -Last 8)",
+      "Bash(npm run *)",
+      "Bash(git stash *)"
     ]
   },
   "remote": {

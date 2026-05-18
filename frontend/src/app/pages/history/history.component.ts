@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SessionsService } from '../../services/sessions.service';
 import { RestDaysService } from '../../services/rest-days.service';
 import { T } from '../../services/strings';
-import { formatDuration, prettyDate, sessionHeadline } from '../../services/date.utils';
+import { formatDuration, prettyDate } from '../../services/date.utils';
 
 import { ModalComponent } from '../../components/modal/modal.component';
 import { SessionFormComponent } from '../../components/session-form/session-form.component';
@@ -74,10 +74,10 @@ export class HistoryComponent {
   }
 
   protected formatDur = formatDuration;
-  protected sessionHeadlineFor = (s: Session) => sessionHeadline(s.durationMinutes);
-  protected sessionTimeLabel(s: Session): string {
+  protected sessionDuration(s: Session): string { return formatDuration(s.durationMinutes); }
+  protected sessionHours(s: Session): string | null {
     if (s.startTime && s.endTime) return `${s.startTime} – ${s.endTime}`;
-    return formatDuration(s.durationMinutes);
+    return null;
   }
   private timeToMin(hhmm: string): number {
     const [h, m] = hhmm.split(':').map(Number); return h * 60 + m;

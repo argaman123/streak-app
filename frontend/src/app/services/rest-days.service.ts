@@ -11,11 +11,10 @@ export class RestDaysService {
   }
 
   toggle(date: string): void {
-    const current = this.days();
-    if (current.includes(date)) {
-      this.store.setRestDays(current.filter(d => d !== date));
+    if (this.days().includes(date)) {
+      this.store.removeRestDay(date);
     } else {
-      this.store.setRestDays([...current, date]);
+      this.store.addRestDay(date);
     }
   }
 }

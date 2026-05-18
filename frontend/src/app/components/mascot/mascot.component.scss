@@ -1,5 +1,7 @@
 /* ============================================================
- * MASCOT — Argaman the frog peeking from behind the streak card
+ * MASCOT — Argaman the frog.
+ * Animation choreography is intentional — do not change.
+ * Bubble surface uses the global .bubble recipe (see styles.scss).
  * ============================================================ */
 
 .mascot-wrap {
@@ -12,23 +14,14 @@
   justify-content: flex-end;
   transform: translateY(60%);
   transform-origin: bottom center;
-  /* The descent uses transition; the spring entry uses keyframes */
-  transition: transform 1.0s cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   pointer-events: none;
 }
 
-/* Peeking class:
-   1. Sets the target transform directly (`translateY(-5%)`) so when the
-      class is REMOVED, the transition smoothly slides the mascot back down
-      from -5% to 60%. No snap.
-   2. Plays a multi-stage spring keyframe ON ENTRY so the entry feels fun
-      (small peek, drop, full pop). The keyframe's final state matches the
-      target transform so there's no jump when it finishes. */
 .mascot-wrap.peeking {
   transform: translateY(-5%);
-  animation: mascot-peek 1.4s cubic-bezier(0.34, 1.5, 0.64, 1);
+  animation: mascot-peek 1.4s var(--ease-soft);
 }
 @keyframes mascot-peek {
   0%   { transform: translateY(60%); }
@@ -47,34 +40,19 @@
   object-position: center bottom;
   pointer-events: none;
   user-select: none;
-  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.18));
 }
 
-/* ───── Speech bubble ────────────────────────────────────────────── */
-/* Always white background with black text — readable against any theme.
-   System font for emoji rendering. */
+/* ───── Speech bubble — positioned overrides on global .bubble ─ */
 
 .bubble {
   position: absolute;
-  /* Sits to the upper-LEFT of the mascot, roughly aligned with its mouth */
   bottom: 80%;
   right: 78%;
-  background: #FFFFFF;
-  color: #1A1410;
-  padding: 0.55rem 0.9rem;
-  border-radius: 16px 16px 4px 16px;
-  border: 2.5px solid var(--outline);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  font-size: 0.92rem;
-  font-weight: 600;
-  white-space: nowrap;
-  box-shadow: 0 3px 0 var(--shadow-key);
-  animation: bubble-pop 0.4s cubic-bezier(0.34, 1.65, 0.64, 1);
+  margin-right: 50%;
+  animation: bubble-pop 0.4s var(--ease-spring);
   z-index: 20;
   pointer-events: none;
-  letter-spacing: -0.005em;
 }
-
 
 @keyframes bubble-pop {
   0%   { transform: scale(0.5) rotate(-6deg); }
@@ -82,17 +60,82 @@
   100% { transform: scale(1) rotate(-1deg); }
 }
 
-/* Free-standing mode (skip-day card etc.) — gentle float */
+.bubble.leaving {
+  animation: bubble-exit 0.2s cubic-bezier(0.4, 0, 0.8, 0.6) forwards;
+}
+
+@keyframes bubble-exit {
+  0%   { transform: scale(1)    rotate(-1deg); opacity: 1; }
+  18%  { transform: scale(1.16) rotate(4deg);  opacity: 1; }
+  38%  { transform: scale(1.10) rotate(-2deg); opacity: 1; }
+  65%  { transform: scale(0.55) rotate(5deg);  opacity: 0.7; }
+  100% { transform: scale(0)    rotate(-10deg); opacity: 0; }
+}
+
 .mascot-wrap.free-standing {
   transform: none !important;
-  animation: float 4s ease-in-out infinite;
 }
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50%       { transform: translateY(-8px) rotate(2deg); }
+
+/* ───── On-button mode (frog sits on the start button) ─────── */
+
+.mascot-wrap.on-button {
+  transform: translateY(calc(-1 * var(--mascot-lift, 200px))) scaleX(0.24) scaleY(0.20);
+  opacity: 1;
+  transition: none;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none;
+}
+
+.mascot-wrap.on-button.has-jumped {
+  transform: none;
+  opacity: 1;
+}
+
+.mascot-wrap.on-button.jumping {
+  animation: frog-jump-in 1000ms linear forwards;
+}
+@keyframes frog-jump-in {
+  0%, 15% { transform: translateY(calc(-1.000 * var(--mascot-lift, 200px))) scaleX(0.24) scaleY(0.20); }
+  21%  { transform: translateY(calc(-1.000 * var(--mascot-lift, 200px))) scaleX(0.20) scaleY(0.14); }
+  27%  { transform: translateY(calc(-1.000 * var(--mascot-lift, 200px))) scaleX(0.21) scaleY(0.13); }
+  33%  { transform: translateY(calc(-1.000 * var(--mascot-lift, 200px))) scaleX(0.22) scaleY(0.13); }
+  39%  { transform: translateY(calc(-1.000 * var(--mascot-lift, 200px))) scaleX(0.23) scaleY(0.12); }
+  45%  { transform: translateY(calc(-1.000 * var(--mascot-lift, 200px))) scaleX(0.24) scaleY(0.12); }
+  49%  { transform: translateY(calc(-1.090 * var(--mascot-lift, 200px))) scaleX(0.14) scaleY(0.62); }
+  51%  { transform: translateY(calc(-1.094 * var(--mascot-lift, 200px))) scaleX(0.16) scaleY(0.64); }
+  53%  { transform: translateY(calc(-1.090 * var(--mascot-lift, 200px))) scaleX(0.18) scaleY(0.66); }
+  58%  { transform: translateY(calc(-0.920 * var(--mascot-lift, 200px))) scaleX(0.30) scaleY(0.72); }
+  63%  { transform: translateY(calc(-0.710 * var(--mascot-lift, 200px))) scaleX(0.48) scaleY(0.80); }
+  68%  { transform: translateY(calc(-0.490 * var(--mascot-lift, 200px))) scaleX(0.65) scaleY(0.86); }
+  73%  { transform: translateY(calc(-0.260 * var(--mascot-lift, 200px))) scaleX(0.81) scaleY(0.92); }
+  77%  { transform: translateY(calc(-0.090 * var(--mascot-lift, 200px))) scaleX(0.92) scaleY(0.97); }
+  80%  { transform: translateY(calc(-0.012 * var(--mascot-lift, 200px))) scaleX(0.98) scaleY(1.00); }
+  82%  { transform: translateY(0) scaleX(1.14) scaleY(0.78); }
+  87%  { transform: translateY(0) scaleX(1.32) scaleY(0.60); }
+  92%  { transform: translateY(0) scaleX(1.08) scaleY(0.88); }
+  96%  { transform: translateY(0) scaleX(1.01) scaleY(0.99); }
+  98%  { transform: translateY(0) scaleX(1.00) scaleY(1.00); }
+  100% { transform: translateY(0) scaleX(1)    scaleY(1); }
+}
+
+/* Bubble repositioned on-button — anchored right, extends LEFT.
+   Never `right: auto; left: 50%` — that pushes past the viewport edge. */
+.mascot-wrap.on-button .bubble {
+  bottom: 105%;
+  left: auto;
+  right: 0;
+  max-width: 210px;
+  width: max-content;
+  white-space: normal;
+  text-align: center;
+  border-radius: 14px 14px 4px 14px;
+  padding: 0.55rem 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mascot-wrap.peeking { animation: none; transform: translateY(-5%); }
-  .mascot-wrap.free-standing { animation: none; }
+  .mascot-wrap.peeking            { animation: none; transform: translateY(-5%); }
+  .mascot-wrap.on-button          { transform: none; }
+  .mascot-wrap.on-button.jumping  { animation: none; transform: none; }
+  .mascot-wrap.on-button.bobbing  { animation: none; }
 }

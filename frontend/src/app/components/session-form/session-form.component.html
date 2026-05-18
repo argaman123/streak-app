@@ -4,15 +4,13 @@
     <input id="date" class="input" type="date" [(ngModel)]="date" />
   </div>
 
-  <div class="mode-toggle">
+  <div class="seg full">
     <button type="button"
-            class="mode-btn"
             [class.active]="mode === 'times'"
             (click)="mode = 'times'">
       {{ T.sessionStartEnd }}
     </button>
     <button type="button"
-            class="mode-btn"
             [class.active]="mode === 'duration'"
             (click)="mode = 'duration'">
       {{ T.sessionDuration }}

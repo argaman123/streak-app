@@ -25,3 +25,5 @@ out/
 Thumbs.db
 .angular
 .idea
+data.db*
+data.json

@@ -1,53 +1,24 @@
 /* ============================================================
- * CALENDAR
+ * CALENDAR — frame card (paper-fill + frog-deep border + shadow).
+ * Arrows use the global .btn-icon.frog-frame recipe (markup-level).
+ * Mode toggle uses .pill-toggle.frog.
+ * Tiles do the color work: frog default · coral today · sakura rest.
  * ============================================================ */
 
-.calendar {
-  background: var(--paper);
-  border-radius: var(--r-lg);
-  padding: 1rem 1rem 0.7rem;
-  border: 2.5px solid var(--outline);
-  box-shadow: 0 4px 0 var(--shadow-key);
-}
-[data-theme="dark"] .calendar { background: var(--paper-tint); }
-
-/* ───── Header (prev / title / next) ─────────────────────────────── */
+/* ───── Header ──────────────────────────────────────────────── */
 
 .cal-head {
   display: grid;
-  grid-template-columns: 36px 1fr 36px;
+  grid-template-columns: 38px 1fr 38px;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.7rem;
 }
 
-.cal-arrow {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2.5px solid var(--outline);
-  background: var(--cream-deep);
-  font-family: inherit;
-  font-size: 1.3rem;
-  font-weight: 800;
-  cursor: pointer;
-  line-height: 1;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  color: var(--ink);
-  transition: transform 0.18s cubic-bezier(0.34, 1.5, 0.64, 1), box-shadow 0.15s ease;
-  box-shadow: 0 2px 0 var(--shadow-key);
-}
-.cal-arrow:hover { transform: translateY(-1px) scale(1.05); box-shadow: 0 3px 0 var(--shadow-key); }
-.cal-arrow:active { transform: translateY(2px); box-shadow: 0 0 0 var(--shadow-key); }
-[data-theme="dark"] .cal-arrow { background: var(--paper); }
-
 .cal-title {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144, "WONK" 1;
-  font-weight: 900;
-  font-size: 1.2rem;
+  font-weight: 400;
+  font-size: 1.35rem;
   text-transform: lowercase;
   text-align: center;
   background: transparent;
@@ -58,28 +29,28 @@
   border-radius: var(--r-sm);
   transition: background 0.15s ease;
 }
-.cal-title:hover { background: var(--cream-deep); }
-[data-theme="dark"] .cal-title:hover { background: var(--paper); }
+.cal-title:hover { background: var(--frog-tint); }
 
-/* ───── Weekday header row (month view only) ─────────────────────── */
+/* ───── Weekday row ─────────────────────────────────────────── */
 
 .cal-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 3px;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 .cal-weekday {
   text-align: center;
+  font-family: var(--font-body);
   font-size: 0.62rem;
   font-weight: 800;
   color: var(--ink-mute);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   padding: 0.2rem 0;
 }
 
-/* ───── Grid of days ─────────────────────────────────────────────── */
+/* ───── Day grid ────────────────────────────────────────────── */
 
 .cal-grid {
   display: grid;
@@ -87,8 +58,6 @@
   gap: 4px;
 }
 
-/* Default day: clear soft cream block so days are visible as buttons,
-   not just floating numbers. */
 .cal-day {
   aspect-ratio: 1;
   border-radius: 10px;
@@ -97,124 +66,80 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--ink);
-  background: var(--cream-deep);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--frog-deep);
+  background: var(--frog-tint);
   cursor: pointer;
-  border: 2px solid transparent;
-  padding: 4px 2px;
+  border: var(--stroke-line) solid transparent;
+  padding: 3px 2px;
   min-height: 38px;
-  transition: transform 0.15s cubic-bezier(0.34, 1.5, 0.64, 1),
+  transition: transform 0.15s var(--ease-soft),
               background 0.15s ease,
               border-color 0.15s ease;
 }
-[data-theme="dark"] .cal-day { background: var(--paper); }
-
-/* Week-mode rows are taller and not square */
 .calendar:not(.is-month) .cal-grid { gap: 6px; }
 .calendar:not(.is-month) .cal-day {
   aspect-ratio: auto;
   min-height: 56px;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
-
-.cal-day .num { font-weight: 700; line-height: 1; }
+.cal-day .num { font-weight: 800; line-height: 1; }
 .cal-day .dow {
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 800;
-  color: var(--ink-mute);
+  color: var(--frog-deep);
+  opacity: 0.65;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
 .cal-day:hover {
-  background: var(--frog-tint);
-  transform: translateY(-1px);
-}
-[data-theme="dark"] .cal-day:hover {
   background: var(--frog-soft);
+  transform: translateY(-1px);
+  border-color: var(--frog-deep);
 }
 
-/* OUT-OF-RANGE (other-month days in month view): muted */
 .cal-day.out {
   color: var(--ink-mute);
-  background: transparent;
-  opacity: 0.5;
+  background: var(--frog-tint);
+  opacity: 0.40;
 }
 
-/* TODAY: clear hero-orange background — distinct from selected */
 .cal-day.today {
-  background: var(--hero-soft);
-  color: var(--hero-deep);
-  border-color: var(--hero);
-  font-weight: 900;
-}
-[data-theme="dark"] .cal-day.today {
-  background: rgba(255, 160, 64, 0.15);
-  color: var(--hero);
-  border-color: var(--hero);
+  background: var(--coral-tint);
+  color: var(--coral-deep);
+  border-color: var(--coral);
 }
 
-/* SELECTED: dominant frog green so it's unmistakable */
 .cal-day.selected {
-  background: var(--frog);
-  color: #07301A;
-  border-color: var(--outline);
-  box-shadow: 0 2px 0 var(--shadow-key);
-  font-weight: 900;
+  background: var(--frog-deep);
+  color: var(--on-dark);
+  border: var(--stroke-line) solid transparent;
+  box-shadow: var(--shadow-sm);
+  font-weight: 800;
+  transform: rotate(-1deg);
 }
-.cal-day.selected.today {
-  background: var(--frog);
-  color: #07301A;
-}
+.cal-day.selected.today { background: var(--frog-deep); color: var(--on-dark); }
 
-/* Marker dot (has plan) */
 .cal-day .dot {
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--frog-deep);
   display: block;
 }
-.cal-day.selected .dot { background: var(--outline); }
-[data-theme="dark"] .cal-day .dot { background: var(--frog); }
-[data-theme="dark"] .cal-day.selected .dot { background: var(--outline); }
+.cal-day.selected .dot { background: rgba(255, 255, 255, 0.78); }
 
-/* Rest day */
-.cal-day.is-rest { color: var(--cool-deep); }
-[data-theme="dark"] .cal-day.is-rest { color: var(--cool); }
-.cal-day.is-rest .rest-dot { font-size: 0.7rem; line-height: 1; }
+.cal-day.is-rest {
+  background: var(--sakura-tint);
+  color: var(--sakura-deep);
+}
 
-/* ───── Footer (mode toggle button) — centered ───────────────────── */
+/* ───── Footer — week/month toggle uses .pill-toggle.frog ───── */
 
 .cal-footer {
-  margin-top: 0.85rem;
+  margin-top: 0.9rem;
   display: flex;
   justify-content: center;
 }
-.mode-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.42rem 1rem;
-  border-radius: var(--pill);
-  background: var(--cream-deep);
-  color: var(--ink-soft);
-  border: 2px solid var(--line);
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.78rem;
-  cursor: pointer;
-  text-transform: lowercase;
-  letter-spacing: 0.02em;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.mode-toggle:hover {
-  background: var(--frog-tint);
-  color: var(--frog-text);
-  border-color: var(--frog-deep);
-}
-[data-theme="dark"] .mode-toggle { background: var(--paper); }
-[data-theme="dark"] .mode-toggle:hover { background: var(--frog-soft); color: var(--frog); }

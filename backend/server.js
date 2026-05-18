@@ -1,89 +1,92 @@
-// Streakling backend.
-//
-// Per-collection PUT endpoints (/api/sessions, /api/plans, /api/rest-days)
-// so the client only sends what changed. Versioning uses a per-collection
-// updatedAt timestamp (epoch ms) instead of a single incrementing version,
-// so the client can ask "did sessions change since X?" without coupling.
-//
-// Endpoints:
-//   GET  /api/state          -> { sessions, plans, restDays, updatedAt: {sessions,plans,restDays} }
-//   GET  /api/version        -> { updatedAt: {sessions,plans,restDays} }   (lightweight poll)
-//   PUT  /api/sessions       -> replaces sessions array, bumps sessions.updatedAt
-//   PUT  /api/plans          -> replaces plans array,    bumps plans.updatedAt
-//   PUT  /api/rest-days      -> replaces restDays array, bumps restDays.updatedAt
-//   GET  /api/health         -> { ok: true }
-
-const fs      = require('fs');
 const path    = require('path');
 const express = require('express');
 const cors    = require('cors');
 
-const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, 'data.json');
-const PORT      = process.env.PORT || 3333;
+const { db, q, sessionFromRow, planFromRow, getUpdatedAt } = require('./db');
+const { migrate } = require('./migrate'); // delete this line (and migrate.js) after first run
 
-fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+const PORT = process.env.PORT || 3333;
 
-function emptyTimes() {
-  return { sessions: 0, plans: 0, restDays: 0 };
-}
-
-function read() {
-  try {
-    if (!fs.existsSync(DATA_FILE)) {
-      return { sessions: [], plans: [], restDays: [], updatedAt: emptyTimes() };
-    }
-    const p = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-    return {
-      sessions: p.sessions || [],
-      plans:    p.plans    || [],
-      restDays: p.restDays || [],
-      updatedAt: { ...emptyTimes(), ...(p.updatedAt || {}) }
-    };
-  } catch (e) {
-    console.error('read failed:', e.message);
-    return { sessions: [], plans: [], restDays: [], updatedAt: emptyTimes() };
-  }
-}
-
-// Atomic write: tmp file + rename so a crash mid-write never corrupts data.
-function write(state) {
-  const tmp = DATA_FILE + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(state, null, 2), 'utf-8');
-  fs.renameSync(tmp, DATA_FILE);
-}
+migrate();
 
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '4mb' }));
 
-app.get('/api/health', (req, res) => res.json({ ok: true }));
+app.get('/api/health',  (_req, res) => res.json({ ok: true }));
+app.get('/api/version', (_req, res) => res.json({ updatedAt: getUpdatedAt() }));
+app.get('/api/state',   (_req, res) => res.json({
+  sessions:  q.allSessions.all().map(sessionFromRow),
+  plans:     q.allPlans.all().map(planFromRow),
+  restDays:  q.allRestDays.all().map(r => r.date),
+  updatedAt: getUpdatedAt(),
+}));
 
-// Lightweight poll — returns just per-collection timestamps (small payload).
-// Client uses this to decide what (if anything) to refetch.
-app.get('/api/version', (req, res) => {
-  const s = read();
-  res.json({ updatedAt: s.updatedAt });
+// ── Batch endpoint ───────────────────────────────────────────────────────────
+
+const VALID = new Set(['sessions', 'plans', 'restDays']);
+
+app.post('/api/batch', (req, res) => {
+  const ops = req.body;
+  if (!Array.isArray(ops) || ops.length === 0)
+    return res.status(400).json({ error: 'expected non-empty array' });
+
+  const now = Date.now();
+
+  try {
+    db.transaction(() => {
+      const touched = new Set();
+
+      for (const op of ops) {
+        if (!VALID.has(op?.collection)) continue;
+
+        if (op.op === 'upsert') {
+          if (op.collection === 'sessions' && op.item?.id) {
+            q.upsertSession.run({
+              id: op.item.id, date: op.item.date,
+              startTime: op.item.startTime ?? null, endTime: op.item.endTime ?? null,
+              durationMinutes: op.item.durationMinutes ?? 0, notes: op.item.notes ?? '',
+            });
+            touched.add('sessions');
+          } else if (op.collection === 'plans' && op.item?.id) {
+            q.upsertPlan.run({
+              id: op.item.id, date: op.item.date, text: op.item.text ?? '',
+              orderIndex: op.item.orderIndex ?? 0, checkedDate: op.item.checkedDate ?? null,
+            });
+            touched.add('plans');
+          } else if (op.collection === 'restDays' && op.date) {
+            q.upsertRestDay.run(op.date);
+            touched.add('restDays');
+          }
+
+        } else if (op.op === 'delete') {
+          if (op.collection === 'sessions' && op.id) {
+            q.deleteSession.run(op.id);
+            touched.add('sessions');
+          } else if (op.collection === 'plans' && op.id) {
+            q.deletePlan.run(op.id);
+            touched.add('plans');
+          } else if (op.collection === 'restDays' && op.date) {
+            q.deleteRestDay.run(op.date);
+            touched.add('restDays');
+          }
+        }
+      }
+
+      for (const col of touched) {
+        const key = col === 'restDays' ? 'rest_days_updated_at' : `${col}_updated_at`;
+        q.setMeta.run(key, now);
+      }
+    })();
+  } catch (e) {
+    console.error('batch failed:', e.message);
+    return res.status(500).json({ error: 'batch failed' });
+  }
+
+  res.json({ updatedAt: getUpdatedAt() });
 });
 
-// Full state (initial boot, or when version says we're stale)
-app.get('/api/state', (req, res) => res.json(read()));
-
-function putCollection(field) {
-  return (req, res) => {
-    if (!Array.isArray(req.body)) {
-      return res.status(400).json({ error: 'expected array' });
-    }
-    const s = read();
-    s[field] = req.body;
-    s.updatedAt[field] = Date.now();
-    write(s);
-    res.json({ updatedAt: s.updatedAt });
-  };
-}
-
-app.put('/api/sessions',  putCollection('sessions'));
-app.put('/api/plans',     putCollection('plans'));
-app.put('/api/rest-days', putCollection('restDays'));
+// ── Static frontend ──────────────────────────────────────────────────────────
 
 if (process.env.SERVE_FRONTEND === '1') {
   const dist = process.env.FRONTEND_DIST
@@ -97,5 +100,5 @@ if (process.env.SERVE_FRONTEND === '1') {
 }
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🐸 streakling running on :${PORT}  data: ${DATA_FILE}`);
+  console.log(`🐸 streakling running on :${PORT}`);
 });

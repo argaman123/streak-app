@@ -16,7 +16,7 @@ import { UiService } from '../../services/ui.service';
         @if (title) {
           <header class="dialog-head">
             <h2>{{ title }}</h2>
-            <button type="button" class="close" (click)="close.emit()" aria-label="Close"><span>×</span></button>
+            <button type="button" class="btn-icon sand close" (click)="close.emit()" aria-label="Close"><span>×</span></button>
           </header>
         }
         <div class="dialog-body">

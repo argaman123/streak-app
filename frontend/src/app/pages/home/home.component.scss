@@ -1,58 +1,59 @@
 /* ============================================================
- * HOME PAGE
+ * HOME PAGE — greeting, streak hero, timer, button, plans, sessions.
+ * Most surfaces come from global .card / .card-frame.
+ * Session rows come from global .session-row.
  * ============================================================ */
 
-/* ───── Greeting ─────────────────────────────────────────────────── */
-.hello { margin-bottom: 0.85rem; padding-right: 60px; /* clear theme btn */ }
+/* ───── Greeting ────────────────────────────────────────────── */
+
+.hello { margin-bottom: 1rem; }
+
 .date-line {
   margin: 0;
+  font-family: var(--font-body);
   font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-}
-.greeting {
-  margin: 0.15rem 0 0;
-  font-family: var(--font-hand);
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
 }
 
-/* ───── Streak card ──────────────────────────────────────────────── */
+.greeting {
+  margin: 0.05rem 0 0;
+  font-family: var(--font-hand);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 0.95;
+}
+
+/* ===================================================================
+ * STREAK CARD — the hero. Garden gradient (--hero-grad) over a
+ * stripe overlay, chunky outline + shadow, slight tilt for charm.
+ * =================================================================== */
 
 .streak-card-wrap {
   position: relative;
-  margin-bottom: 1.4rem;
-  padding-bottom: 32px;
+  margin-bottom: 1.5rem;
   isolation: isolate;
 }
 
 .streak-card {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
-  padding: 1.2rem 1.2rem 1.1rem;
+  padding: 1.4rem 1.4rem 1.2rem;
   border-radius: var(--r-xl);
-  /* Solid frog green with a soft warm hero blush in the corner — clearly
-     frog-themed, not a rainbow. */
   background:
-    radial-gradient(120% 90% at 0% 0%, var(--frog) 0%, var(--frog-deep) 60%, transparent 100%),
-    linear-gradient(135deg, var(--frog-deep) 0%, var(--hero) 100%);
-  box-shadow:
-          0 0 0 2.5px var(--outline),
-          0 6px 0 1px var(--shadow-key);
-  min-height: 110px;
+    var(--stripe-overlay),
+    var(--hero-grad);
+  border: var(--stroke) solid var(--outline);
+  box-shadow: var(--shadow);
+  color: var(--frog-text);
+  min-height: 118px;
   position: relative;
   z-index: 1;
   overflow: visible;
-}
-[data-theme="dark"] .streak-card {
-  background:
-    radial-gradient(120% 90% at 0% 0%, var(--frog) 0%, var(--frog-deep) 50%, transparent 100%),
-    linear-gradient(135deg, var(--frog-deep) 0%, var(--hero) 110%);
 }
 
 .streak-numbers {
@@ -60,129 +61,86 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.2rem;
+  gap: 0.3rem;
   min-width: 0;
 }
 
 .streak-main {
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex-wrap: wrap;
 }
+
 .streak-main .num {
   font-family: var(--font-display);
-  font-size: 3rem;
-  font-weight: 900;
-  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
-  color: var(--contrast);
-  line-height: 1;
+  font-size: 3.1rem;
+  font-weight: 400;
+  color: var(--frog-text);
+  line-height: 0.88;
   display: inline-block;
-  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.22);
-  animation: num-pop 0.6s cubic-bezier(0.34, 1.6, 0.64, 1);
+  text-shadow: 0 3px 0 rgba(15, 62, 31, 0.20);
+  animation: num-pop 0.65s var(--ease-spring);
 }
 @keyframes num-pop {
-  0%   { transform: scale(0.6) rotate(-6deg); }
-  60%  { transform: scale(1.18) rotate(2deg); }
+  0%   { transform: scale(0.55) rotate(-8deg); }
+  60%  { transform: scale(1.22) rotate(2deg); }
   100% { transform: scale(1) rotate(0); }
 }
 .streak-main .num-label {
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--contrast);
-  opacity: 0.92;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--frog-text);
+  opacity: 0.78;
   text-transform: lowercase;
 }
 
-/* "X in a row" — small inline accent, NOT a big stylized pill. Just a
-   nice line of text on the same row, dotted-separated from the day count. */
+/* "X in a row" — handwritten pink sticker, wonky */
 .streak-row {
-  font-family: var(--font-body);
-  font-variation-settings: "opsz" 9, "WONK" 0;
-  font-size: 0.92rem;
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
   font-weight: 700;
-  background: var(--pop-deep);
-  padding: 0.05rem 0.75rem;
+  background: var(--sakura);
+  color: var(--on-dark);
+  padding: 0.05rem 0.85rem;
   border-radius: var(--pill);
-  border: 2px solid var(--outline);
-  transform: rotate(-2deg);
-  box-shadow: 0 2px 0 var(--shadow-key);
-  animation: wiggle-in 0.6s cubic-bezier(0.34, 1.6, 0.64, 1);  color: var(--contrast);
-  margin-left: 0.1rem;
+  border: var(--stroke-thin) solid var(--outline);
+  transform: rotate(-3deg);
+  box-shadow: var(--shadow-chip);
+  animation: wiggle-in 0.6s var(--ease-spring);
+  margin-left: 0.2rem;
   display: inline-block;
 }
 
-/* Mascot peek slot */
-.streak-mascot {
+.mascot-on-btn {
   position: absolute;
-  bottom: 0;
+  top: -80px;
   right: 14px;
-  width: 102px;
-  height: 110px;
-  z-index: 2;
-}
-
-/* ───── Timer card ───────────────────────────────────────────────── */
-
-.timer-card {
-  background: var(--paper);
-  border-radius: var(--r-xl);
-  padding: 1.6rem 1.3rem;
-  text-align: center;
-  border: 2.5px solid var(--outline);
-  box-shadow: 0 6px 0 var(--shadow-key);
-  margin-bottom: 1.2rem;
-  position: relative;
-  overflow: hidden;
-}
-[data-theme="dark"] .timer-card { background: var(--paper-tint); }
-
-/* Tier inner-glow pseudo - subtle warming. Tier 1 is GENTLE so it doesn't
-   look like a weird glob in the middle. */
-.timer-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
+  left: auto;
+  width: 84px;
+  height: 84px;
+  z-index: 5;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  background: radial-gradient(120% 80% at 50% 110%, var(--frog-soft) 0%, transparent 75%);
-}
-.timer-card[data-tier="1"]::before {
-  opacity: 0.5;
-  background: radial-gradient(120% 80% at 50% 110%, var(--frog-soft) 0%, transparent 75%);
-}
-.timer-card[data-tier="2"]::before {
-  opacity: 0.55;
-  background: radial-gradient(120% 80% at 50% 110%, var(--yolk-soft) 0%, transparent 75%);
-}
-.timer-card[data-tier="3"]::before {
-  opacity: 0.6;
-  background: radial-gradient(120% 80% at 50% 110%, var(--hero-soft) 0%, transparent 75%);
-}
-.timer-card[data-tier="4"]::before {
-  opacity: 0.7;
-  background: radial-gradient(120% 80% at 50% 110%, var(--pop-soft) 0%, transparent 75%);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
-/* Tier ring on the inset border — a coloured inner ring for at-a-glance state */
-.timer-card[data-tier="1"] { box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--frog); }
-.timer-card[data-tier="2"] { box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--yolk); }
-.timer-card[data-tier="3"] { box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--hero); }
-.timer-card[data-tier="4"] {
-  box-shadow: 0 6px 0 var(--shadow-key), inset 0 0 0 3px var(--pop);
-  animation: tier4-tilt 1.6s cubic-bezier(0.34, 1.5, 0.64, 1) infinite;
-}
-@keyframes tier4-tilt {
-  0%, 100% { transform: rotate(0); }
-  50%       { transform: rotate(0.7deg); }
-}
+/* ===================================================================
+ * TIMER SECTION — ambient text on the page, no card frame
+ * =================================================================== */
 
-.timer-card > * { position: relative; z-index: 1; }
+.timer-section {
+  text-align: center;
+  margin-bottom: 0.8rem;
+  padding: 0.6rem 0;
+  position: relative;
+}
 
 .status {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
   font-weight: 800;
   display: inline-flex;
   align-items: center;
@@ -191,8 +149,8 @@
   text-transform: lowercase;
   letter-spacing: 0.04em;
 }
-[data-theme="dark"] .status { color: var(--frog); }
-.status.muted { color: var(--ink-mute); font-weight: 600; }
+.status.muted { color: var(--ink-mute); font-weight: 700; }
+
 .dot {
   width: 9px; height: 9px; border-radius: 50%;
   background: var(--frog);
@@ -201,204 +159,270 @@
 }
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.7); }
+  50%       { opacity: 0.35; transform: scale(0.65); }
 }
 
 .elapsed {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 1;
-  font-weight: 900;
-  font-size: 4rem;
+  font-weight: 400;
+  font-size: 5rem;
   color: var(--ink);
-  margin: 0 0 0.6rem;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  margin: 0 0 0.4rem;
+  line-height: 0.88;
+  letter-spacing: -0.015em;
   transition: color 0.4s ease, font-size 0.4s ease;
 }
-.timer-card[data-tier="2"] .elapsed { color: var(--yolk-deep); font-size: 4.1rem; }
-.timer-card[data-tier="3"] .elapsed { color: var(--hero-deep); font-size: 4.2rem; }
-.timer-card[data-tier="4"] .elapsed { color: var(--pop-deep);  font-size: 4.3rem; }
-[data-theme="dark"] .timer-card[data-tier="2"] .elapsed { color: var(--yolk); }
-[data-theme="dark"] .timer-card[data-tier="3"] .elapsed { color: var(--hero); }
-[data-theme="dark"] .timer-card[data-tier="4"] .elapsed { color: var(--pop); }
+.timer-section[data-tier="2"] .elapsed { color: var(--butter-deep); font-size: 5.1rem; }
+.timer-section[data-tier="3"] .elapsed { color: var(--coral-deep);  font-size: 5.2rem; }
+.timer-section[data-tier="4"] .elapsed { color: var(--sakura-deep); font-size: 5.3rem; }
 
 .timer-tier-msg {
   font-family: var(--font-hand);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--ink-soft);
-  margin: -0.25rem 0 1rem;
+  margin: -0.15rem 0 0.6rem;
   opacity: 0;
   transition: opacity 0.4s ease, color 0.4s ease;
 }
-.timer-card[data-tier="1"] .timer-tier-msg { opacity: 1; color: var(--frog-deep); }
-.timer-card[data-tier="2"] .timer-tier-msg { opacity: 1; color: var(--yolk-deep); }
-.timer-card[data-tier="3"] .timer-tier-msg { opacity: 1; color: var(--hero-deep); }
-.timer-card[data-tier="4"] .timer-tier-msg { opacity: 1; color: var(--pop-deep);  font-size: 1.25rem; }
-[data-theme="dark"] .timer-card[data-tier="2"] .timer-tier-msg { color: var(--yolk); }
-[data-theme="dark"] .timer-card[data-tier="3"] .timer-tier-msg { color: var(--hero); }
-[data-theme="dark"] .timer-card[data-tier="4"] .timer-tier-msg { color: var(--pop); }
+.timer-section[data-tier="1"] .timer-tier-msg { opacity: 1; color: var(--frog-deep); }
+.timer-section[data-tier="2"] .timer-tier-msg { opacity: 1; color: var(--butter-deep); }
+.timer-section[data-tier="3"] .timer-tier-msg { opacity: 1; color: var(--coral-deep); }
+.timer-section[data-tier="4"] .timer-tier-msg { opacity: 1; color: var(--sakura-deep); font-size: 1.4rem; }
 
 .todays-total {
+  font-family: var(--font-body);
   font-size: 1rem;
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.35rem;
   color: var(--ink-soft);
   text-transform: lowercase;
-  letter-spacing: 0.02em;
+  text-align: center;
 }
 .todays-total strong {
-  color: var(--frog-text);
+  color: var(--frog-deep);
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144;
-  font-weight: 900;
-  font-size: 1.25em;
+  font-weight: 400;
+  font-size: 1.35em;
 }
-[data-theme="dark"] .todays-total strong { color: var(--frog); }
 
-/* ───── Big button (start / stop) ────────────────────────────────── */
+.ready-line {
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink-mute);
+  margin: 0 0 0.35rem;
+}
+
+/* ===================================================================
+ * BIG START / STOP BUTTON — the hero action.
+ * Chunky rubber button, satisfying squish on press.
+ * =================================================================== */
+
+.btn-zone { margin-bottom: 1.4rem; position: relative; }
 
 .big-btn {
   width: 100%;
-  padding: 1.2rem 1.25rem;
-  border-radius: var(--r-lg);
-  background: var(--frog);
-  color: #07301A;
-  font-family: var(--font-body);
-  font-variation-settings: "opsz" 9, "WONK" 0;
-  font-weight: 800;
-  font-size: 1.35rem;
+  padding: 1.55rem 1.5rem;
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.28) 0%, transparent 65%),
+    var(--frog);
+  color: var(--frog-text);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.7rem;
   text-transform: lowercase;
-  letter-spacing: 0.04em;
-  border: 2.5px solid var(--outline);
-  box-shadow: 0 6px 0 var(--shadow-key);
-  transition: transform 0.12s cubic-bezier(0.34, 1.6, 0.64, 1),
-              box-shadow 0.12s ease;
+  letter-spacing: 0.01em;
+  border: var(--stroke) solid var(--outline);
+  box-shadow: var(--rubber-frog), var(--shadow);
+  /* Release: spring back with a small overshoot, like the cushion uncoiling */
+  transition: transform 0.28s cubic-bezier(0.22, 1.25, 0.5, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 1.25, 0.5, 1);
   -webkit-tap-highlight-color: transparent;
-  position: relative;
 }
-.big-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--shadow-key); }
-.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--shadow-key); }
+@media (hover: hover) and (pointer: fine) {
+  .big-btn:hover:not(.is-pressed) {
+    transform: translateY(-3px);
+    box-shadow: var(--rubber-frog), 0 calc(var(--depth) + 3px) 0 var(--shadow-key);
+  }
+}
+.big-btn.is-pressed,
+.big-btn:active {
+  transform: translateY(4px);
+  box-shadow: var(--rubber-frog-press), var(--shadow-press);
+  /* Press: decelerate into the pressed state — quick start, soft landing */
+  transition: transform 0.17s cubic-bezier(0.33, 0, 0.18, 1),
+              box-shadow 0.17s cubic-bezier(0.33, 0, 0.18, 1);
+}
 .big-btn:disabled { cursor: default; pointer-events: none; opacity: 0.85; }
 
+/* Stop confirmation bubble — extends the global .bubble recipe (markup
+   should set class="bubble stop-confirm-bubble"). */
+.stop-confirm-bubble {
+  position: absolute;
+  bottom: calc(100% - 6px);
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  padding: 0.55rem 1rem;
+  border-radius: 16px 16px 16px 4px;
+  text-transform: lowercase;
+  z-index: 6;
+  animation: confirm-pop 0.32s var(--ease-spring);
+  pointer-events: none;
+}
+@keyframes confirm-pop {
+  0%   { transform: translateX(-50%) scale(0.7) rotate(-5deg); }
+  60%  { transform: translateX(-50%) scale(1.06) rotate(1deg); }
+  100% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+}
+
+.big-btn.stop.confirming {
+  animation: stop-confirm-pulse 1.4s ease-in-out infinite;
+}
+@keyframes stop-confirm-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.02) translateY(-1px); }
+}
+
 .big-btn.stop {
-  background: var(--pop);
-  color: #FFFFFF;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.22) 0%, transparent 65%),
+    var(--coral);
+  color: var(--on-dark);
+  box-shadow: var(--rubber-coral), var(--shadow);
+}
+@media (hover: hover) and (pointer: fine) {
+  .big-btn.stop:hover:not(.stop-scared):not(.is-pressed) {
+    transform: translateY(-3px);
+    box-shadow: var(--rubber-coral), 0 calc(var(--depth) + 3px) 0 var(--shadow-key);
+  }
+}
+.big-btn.stop.stop-scared {
+  transform: rotate(-2deg) scale(0.95) translateY(1px) !important;
+  animation: stop-cower 0.35s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+@keyframes stop-cower {
+  0%   { transform: rotate(0) scale(1); }
+  30%  { transform: rotate(-3deg) scale(0.93) translateY(2px); }
+  60%  { transform: rotate(1.5deg) scale(0.96) translateY(0px); }
+  100% { transform: rotate(-2deg) scale(0.95) translateY(1px); }
 }
 
-/* ===== START CEREMONY ===== */
-.timer-card.is-starting {
-  animation: card-jelly 750ms cubic-bezier(0.34, 1.56, 0.64, 1);
+.btn-stop-text {
+  display: inline-block;
+  transition: opacity 0.08s ease;
 }
-@keyframes card-jelly {
-  0%   { transform: scale(1, 1); }
-  18%  { transform: scale(1.06, 0.88); }
-  36%  { transform: scale(0.92, 1.10) translateY(-4px); }
-  54%  { transform: scale(1.04, 0.96) translateY(0); }
-  72%  { transform: scale(0.98, 1.02); }
-  100% { transform: scale(1, 1); }
+.btn-stop-text.swapped { animation: plea-appear 0.18s var(--ease-soft); }
+@keyframes plea-appear {
+  0%   { opacity: 0; transform: translateY(4px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
-.timer-card.is-starting .big-btn {
-  animation: btn-fire 750ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+.big-btn.stop.is-pressed,
+.big-btn.stop:active {
+  transform: translateY(7px);
+  box-shadow: var(--rubber-coral-press), var(--shadow-press);
+  /* Press: decelerate into the pressed state — quick start, soft landing.
+     Slightly longer than the start btn to match the deeper travel (7px vs 4px). */
+  transition: transform 0.2s cubic-bezier(0.33, 0, 0.18, 1),
+              box-shadow 0.2s cubic-bezier(0.33, 0, 0.18, 1);
+}
+
+/* Ceremony squint */
+.btn-zone.is-starting .big-btn,
+.btn-zone.is-stopping .big-btn.stop {
+  animation: btn-squint 580ms cubic-bezier(0.34, 1.4, 0.64, 1);
   pointer-events: none;
 }
-@keyframes btn-fire {
-  0%   { transform: scale(1) rotate(0); box-shadow: 0 6px 0 var(--shadow-key); }
-  20%  { transform: scale(0.92, 1.08) rotate(-1deg); box-shadow: 0 2px 0 var(--shadow-key); }
-  45%  { transform: scale(1.12, 0.92) rotate(1deg); box-shadow: 0 10px 0 var(--shadow-key); }
-  70%  { transform: scale(0.98, 1.02) rotate(0); box-shadow: 0 5px 0 var(--shadow-key); }
-  100% { transform: scale(1) rotate(0); box-shadow: 0 6px 0 var(--shadow-key); }
+.btn-zone.is-stopping .big-btn.stop { animation-duration: 480ms; }
+@keyframes btn-squint {
+  0%   { transform: scaleY(1)    translateY(0); }
+  22%  { transform: scaleY(0.85) translateY(8px); }
+  100% { transform: scaleY(1)    translateY(0); }
 }
-
-/* ===== STOP — calm, not rewarding ===== */
-.timer-card.is-stopping .big-btn.stop {
-  animation: btn-stop-quiet 350ms ease;
-  pointer-events: none;
-}
-@keyframes btn-stop-quiet {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(0.96) translateY(2px); }
-  100% { transform: scale(1) translateY(0); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .timer-card.is-starting,
-  .timer-card.is-stopping,
-  .timer-card[data-tier="4"],
-  .big-btn { animation: none !important; }
+  .btn-zone.is-starting .big-btn,
+  .btn-zone.is-stopping .big-btn.stop { animation: none !important; }
 }
 
-/* ───── Plans card ───────────────────────────────────────────────── */
+/* ===================================================================
+ * PLANS CARD (uses global .card) + check rows
+ * =================================================================== */
 
 .plans-card { margin-bottom: 1rem; }
 .plans-card h3 {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  font-weight: 400;
   text-transform: lowercase;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.7rem;
+  letter-spacing: -0.005em;
+  margin: 0 0 0.8rem;
+  color: var(--ink);
 }
 
 .plan-check-row {
   display: flex;
   align-items: flex-start;
   gap: 0.7rem;
-  padding: 0.6rem 0.7rem;
+  padding: 0.55rem 0.6rem;
   border-radius: var(--r-sm);
   background: transparent;
   width: 100%;
   text-align: left;
   cursor: pointer;
-  font-family: inherit;
+  font-family: var(--font-body);
   font-size: inherit;
   border: none;
+  color: inherit;
+  margin-bottom: 0.1rem;
   transition: background 0.15s ease;
   -webkit-tap-highlight-color: transparent;
-  margin-bottom: 0.15rem;
-  color: inherit;
 }
 @media (hover: hover) {
   .plan-check-row:hover { background: var(--frog-tint); }
-  [data-theme="dark"] .plan-check-row:hover { background: var(--frog-soft); }
 }
 
 .plan-checkbox {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border-radius: 8px;
-  border: 2.5px solid var(--outline);
-  background: var(--paper);
+  border: var(--stroke) solid var(--outline);
+  background: var(--sand);
   display: grid;
   place-items: center;
   margin-top: 1px;
   transition: background 0.18s ease, transform 0.18s ease;
 }
-[data-theme="dark"] .plan-checkbox { background: var(--paper-tint); }
 
 .plan-checkbox .check-icon {
   width: 16px; height: 16px;
   fill: none;
-  stroke: var(--paper);
-  stroke-width: 3.4;
+  stroke: var(--sand);
+  stroke-width: 3.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 24;
   stroke-dashoffset: 24;
-  transition: stroke-dashoffset 0.25s ease 0.05s;
+  transition: stroke-dashoffset 0.22s ease 0.04s;
 }
+
 .plan-checkbox.checked {
   background: var(--frog);
   animation: check-pop 0.4s cubic-bezier(0.34, 1.7, 0.64, 1);
 }
 @keyframes check-pop {
   0%   { transform: scale(1); }
-  40%  { transform: scale(1.3); box-shadow: 0 0 0 8px rgba(78, 204, 113, 0.32); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(78, 204, 113, 0); }
+  40%  { transform: scale(1.35); box-shadow: 0 0 0 8px rgba(63, 190, 92, 0.30); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(63, 190, 92, 0); }
 }
-.plan-checkbox.checked .check-icon { stroke: #07301A; stroke-dashoffset: 0; }
+.plan-checkbox.checked .check-icon { stroke: var(--frog-text); stroke-dashoffset: 0; }
 
 .plan-check-text {
+  font-family: var(--font-body);
   font-size: 1rem;
+  font-weight: 600;
   line-height: 1.45;
   color: var(--ink);
   flex: 1;
@@ -413,11 +437,15 @@
 .no-plan-line {
   margin: 0 0 1rem;
   text-align: center;
-  font-size: 0.95rem;
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 .no-plan-line a { margin-left: 0.3rem; }
 
-/* ───── Today's sessions ─────────────────────────────────────────── */
+/* ===================================================================
+ * SESSIONS CARD — .session-row + friends live in styles.scss (global)
+ * =================================================================== */
 
 .sessions-card { margin-bottom: 1rem; }
 .section-head {
@@ -425,128 +453,65 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.7rem;
 }
 .section-head h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: 400;
   text-transform: lowercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
 }
 
-.session-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.7rem;
-  padding: 0.6rem 0.85rem;
-  border-radius: var(--r-sm);
-  background: transparent;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
-  border: none;
-  transition: background 0.15s ease;
-  margin-bottom: 0.1rem;
-  -webkit-tap-highlight-color: transparent;
-}
-@media (hover: hover) {
-  .session-row:hover { background: var(--frog-tint); }
-  [data-theme="dark"] .session-row:hover { background: var(--frog-soft); }
-  .session-row:hover .edit-hint { opacity: 1; transform: rotate(-12deg); }
-}
-
-.session-left { flex: 1; min-width: 0; }
-.session-headline {
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1.3;
-}
-.session-meta {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  margin-top: 0.1rem;
-  line-height: 1.4;
-}
-.dotsep { margin: 0 0.35rem; opacity: 0.6; }
-
-/* Notes — multiline block on its own line, NOT inline secondary text. */
-.session-notes {
-  margin: 0.4rem 0 0;
-  padding: 0.45rem 0.6rem;
-  background: var(--frog-tint);
-  border-radius: var(--r-sm);
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.45;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  border-left: 3px solid var(--frog);
-}
-[data-theme="dark"] .session-notes {
-  background: var(--frog-soft);
-  border-left-color: var(--frog);
-}
-
-.edit-hint {
-  flex-shrink: 0;
-  color: var(--ink-mute);
-  font-size: 1rem;
-  align-self: flex-start;
-  margin-top: 0.2rem;
-  opacity: 0.5;
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-
-/* ───── Add past session ─────────────────────────────────────────── */
+/* ───── "Add past session" link ─────────────────────────────── */
 
 .add-past { text-align: center; margin-top: 0.8rem; }
-.add-past-btn {
-  font-size: 0.92rem;
-  color: var(--ink-soft);
-}
+.add-past-btn { font-size: 0.95rem; color: var(--ink-soft); }
 
-/* ───── Skip-day mode ────────────────────────────────────────────── */
+/* ===================================================================
+ * SKIP-DAY CARD — sakura-themed, peaceful rest state.
+ * Uses the global paper-surface recipe.
+ * =================================================================== */
 
 .skip-card {
-  /* Push down past the theme toggle in the top-right corner */
   margin-top: 3rem;
   padding: 2rem 1.5rem 1.6rem;
   text-align: center;
-  background: var(--paper);
+  background: var(--paper-fill);
   border-radius: var(--r-xl);
-  border: 2.5px solid var(--outline);
-  box-shadow: 0 6px 0 var(--shadow-key);
+  border: var(--stroke) solid var(--outline);
+  box-shadow: var(--card-shadow);
+  color: var(--ink);
 }
-[data-theme="dark"] .skip-card { background: var(--paper-tint); }
 
 .skip-greeting {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144;
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--cool-deep);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--sakura);
   margin: 0 0 0.4rem;
 }
-[data-theme="dark"] .skip-greeting { color: var(--cool); }
-.skip-sub { color: var(--ink-soft); margin: 0 0 1.2rem; }
+.skip-sub {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 0 0 1.2rem;
+}
 .skip-mascot { width: 130px; height: 130px; margin: 0 auto 1rem; }
 
 .skip-link {
   display: inline-block;
   background: transparent;
   border: none;
-  font-family: inherit;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--frog-deep);
   font-weight: 800;
   text-transform: lowercase;
   cursor: pointer;
-  padding: 0.4rem 0.6rem;
+  padding: 0.4rem 0.8rem;
   border-radius: var(--pill);
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -554,13 +519,13 @@
   transition: background 0.15s ease;
 }
 .skip-link:hover { background: var(--frog-tint); }
-[data-theme="dark"] .skip-link { color: var(--frog); }
 
-/* ───── Post-stop "what did you learn" prompt ─────────────────────── */
+/* ───── Post-stop "what did you learn" prompt ───────────────── */
 
 .post-stop-form { display: flex; flex-direction: column; gap: 0.7rem; }
 .post-stop-form label {
-  font-size: 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
   text-transform: none;
   letter-spacing: 0;
   color: var(--ink);

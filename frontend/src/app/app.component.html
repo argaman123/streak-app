@@ -1,5 +1,4 @@
-<!-- Status badge: top-LEFT now (theme button took top-right on home).
-     Auto-hides after a couple seconds when status returns to idle. -->
+<!-- Status badge: top-left. Auto-hides shortly after returning to idle. -->
 <div class="status-badge"
      [class.is-local]="status() === 'local'"
      [class.is-saving]="status() === 'saving'"
@@ -13,15 +12,6 @@
     @case ('idle')    { <span class="badge-icon">✓</span><span class="badge-text">saved</span> }
   }
 </div>
-
-<!-- Theme toggle: only shows on the home page, top-right.
-     Other pages don't need it cluttering the top corner. -->
-@if (showThemeToggle()) {
-  <button class="theme-btn" [class.hidden]="modalOpen()" (click)="toggleTheme()"
-          [title]="isDark() ? T.light : T.dark">
-    {{ isDark() ? '☀️' : '🌙' }}
-  </button>
-}
 
 <div class="shell">
   <router-outlet />

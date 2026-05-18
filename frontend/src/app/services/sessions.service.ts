@@ -18,18 +18,17 @@ export class SessionsService {
 
   create(input: Omit<Session, 'id'>): Session {
     const s: Session = { ...input, id: newId() };
-    this.store.setSessions([s, ...this.store.sessions()]);
+    this.store.upsertSession(s);
     return s;
   }
 
   update(id: string, changes: Partial<Session>): void {
-    this.store.setSessions(
-      this.store.sessions().map(s => s.id === id ? { ...s, ...changes } : s)
-    );
+    const s = this.store.sessions().find(s => s.id === id);
+    if (s) this.store.upsertSession({ ...s, ...changes });
   }
 
   delete(id: string): void {
-    this.store.setSessions(this.store.sessions().filter(s => s.id !== id));
+    this.store.deleteSession(id);
   }
 
   forDate(date: string): Session[] {

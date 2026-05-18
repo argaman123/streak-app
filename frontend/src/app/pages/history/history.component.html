@@ -17,11 +17,11 @@
   <section class="day-group fade-up" [style.animation-delay.ms]="80 + i * 25">
     <div class="day-head">
       <h3>{{ day.pretty }}
-        @if (day.isSkip) { <span class="chip cool">🌿</span> }
+        @if (day.isSkip) { <span class="chip pop">🌿</span> }
       </h3>
       <div class="day-head-right">
         <span class="day-total">{{ formatDur(day.totalMinutes) }}</span>
-        <button class="day-add-btn"
+        <button class="btn-icon frog sm spin-on-hover"
                 (click)="addToDay(day.date)"
                 [attr.aria-label]="T.addToDay">+</button>
       </div>
@@ -30,9 +30,11 @@
       @for (s of day.items; track s.id) {
         <button type="button" class="session-row" (click)="openEdit(s)">
           <div class="session-left">
-            <div class="session-headline">{{ sessionHeadlineFor(s) }}</div>
-            <div class="session-meta">
-              <span>{{ sessionTimeLabel(s) }}</span>
+            <div class="session-headline">
+              <span class="session-dur">{{ sessionDuration(s) }}</span>
+              @if (sessionHours(s)) {
+                <span class="session-hrs">{{ sessionHours(s) }}</span>
+              }
             </div>
             @if (s.notes) {
               <p class="session-notes">{{ s.notes }}</p>

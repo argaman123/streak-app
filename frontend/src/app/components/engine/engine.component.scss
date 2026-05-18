@@ -1,5 +1,7 @@
 /* ============================================================
- * ENGINE BAR — sits inside the streak card
+ * ENGINE BAR — sits inside the streak hero card.
+ * Label is a paper-fill chip so it reads on any tier of the
+ * gradient fill underneath.
  * ============================================================ */
 
 .engine {
@@ -12,32 +14,30 @@
 .engine-track {
   position: relative;
   flex: 1;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.40);
+  height: 11px;
+  background: rgba(15, 62, 31, 0.22);
   border-radius: var(--pill);
-  border: 2px solid var(--outline);
+  border: var(--stroke-thin) solid var(--ink);
   overflow: visible;
 }
-[data-theme="dark"] .engine-track { background: rgba(0, 0, 0, 0.35); }
 
 .engine-fill {
   position: absolute;
   left: 0; top: 0; bottom: 0;
+  width: 100%;
   border-radius: var(--pill);
-  transition: width 0.8s cubic-bezier(0.34, 1.2, 0.64, 1),
+  transform-origin: left center;
+  transition: transform 0.8s cubic-bezier(0.34, 1.2, 0.64, 1),
               background 0.4s ease;
-  min-width: 10px;
-  background: var(--frog-deep);
+  background: rgba(15, 62, 31, 0.55);
 }
-.engine--stalled    .engine-fill { background: var(--ink-mute); }
+/* Stages: green → butter → coral → sakura as the streak grows */
+.engine--stalled    .engine-fill { background: var(--frog-deep); }
 .engine--warming    .engine-fill { background: var(--frog); }
-.engine--running    .engine-fill { background: linear-gradient(90deg, var(--frog), var(--yolk)); }
-.engine--cruising   .engine-fill { background: linear-gradient(90deg, var(--frog), var(--yolk), var(--hero)); }
-.engine--full-power .engine-fill {
-  background: linear-gradient(90deg, var(--frog), var(--yolk), var(--hero), var(--pop));
-}
+.engine--running    .engine-fill { background: linear-gradient(90deg, var(--frog), var(--butter)); }
+.engine--cruising   .engine-fill { background: linear-gradient(90deg, var(--frog), var(--butter), var(--coral)); }
+.engine--full-power .engine-fill { background: linear-gradient(90deg, var(--frog), var(--butter), var(--coral), var(--sakura)); }
 
-/* Car emoji — at the leading edge of the fill */
 .engine-car {
   position: absolute;
   top: 50%;
@@ -70,37 +70,31 @@
   50%      { transform: translate(-50%, -70%) scaleX(-1) rotate(0); }
 }
 
+/* Label pill — paper-fill chip rotated against the gradient */
 .engine-label {
   font-family: var(--font-body);
-  font-variation-settings: "opsz" 9, "WONK" 0;
   font-size: 0.72rem;
   font-weight: 800;
-  color: var(--ink);
+  color: var(--frog-text);
   text-transform: lowercase;
   letter-spacing: 0.04em;
   white-space: nowrap;
   flex-shrink: 0;
-  background: var(--paper-tint);
-  padding: 0.22rem 0.65rem;
+  background: var(--paper-fill);
+  padding: 0.24rem 0.7rem;
   border-radius: var(--pill);
-  border: 2px solid var(--outline);
+  border: var(--stroke-thin) solid var(--ink);
+  box-shadow: var(--shadow-chip);
+  transform: rotate(-2deg);
 }
-[data-theme="dark"] .engine-label {
-  color: var(--ink);
-  background: var(--paper-tint);
-}
-.engine--stalled    .engine-label { color: var(--ink-mute); }
+.engine--stalled    .engine-label { color: rgba(15, 62, 31, 0.55); }
 .engine--full-power .engine-label {
-  background: var(--outline);
-  color: var(--yolk);
-  animation: label-tilt 0.9s ease-in-out infinite;
-}
-@keyframes label-tilt {
-  0%, 100% { transform: rotate(0); }
-  50%       { transform: rotate(2deg); }
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--butter);
+  transform: rotate(2deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .engine-car { animation: none !important; }
-  .engine-label { animation: none !important; }
 }

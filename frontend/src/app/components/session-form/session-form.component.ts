@@ -58,10 +58,16 @@ export class SessionFormComponent implements OnInit {
     if (this.mode === 'times' && this.startTime && this.endTime) {
       startTime = this.startTime;
       endTime = this.endTime;
-      durationMinutes = this.computeMinutes(this.startTime, this.endTime);
+      const computed = this.computeMinutes(this.startTime, this.endTime);
+      // Keep stored duration if computed == 0 (same-minute start/end, e.g. a
+      // sub-minute session where toIsoTime rounds both times to the same "HH:mm").
+      if (computed > 0) durationMinutes = computed;
     }
 
-    if (!this.date || !durationMinutes || durationMinutes < 1) return;
+    if (!this.date) return;
+    // For new sessions require a valid duration; editing always saves since the
+    // session already exists (sub-minute sessions have durationMinutes === 0).
+    if (!this.initial && (!durationMinutes || durationMinutes < 1)) return;
 
     this.save.emit({
       date: this.date,

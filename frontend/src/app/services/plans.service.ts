@@ -14,49 +14,33 @@ export class PlansService {
   create(input: Omit<Plan, 'id'>): Plan {
     const sameDayCount = this.store.plans().filter(p => p.date === input.date).length;
     const p: Plan = { ...input, id: newId(), orderIndex: sameDayCount };
-    this.store.setPlans([p, ...this.store.plans()]);
+    this.store.upsertPlan(p);
     return p;
   }
 
   update(id: string, changes: Partial<Plan>): void {
-    this.store.setPlans(
-      this.store.plans().map(p => p.id === id ? { ...p, ...changes } : p)
-    );
+    const p = this.store.plans().find(p => p.id === id);
+    if (p) this.store.upsertPlan({ ...p, ...changes });
   }
 
   delete(id: string): void {
-    this.store.setPlans(this.store.plans().filter(p => p.id !== id));
+    this.store.deletePlan(id);
   }
 
-  /** Reorder plans for a specific day. ids must be in the desired order. */
   reorder(date: string, ids: string[]): void {
-    this.store.setPlans(
-      this.store.plans().map(p =>
-        p.date === date && ids.includes(p.id)
-          ? { ...p, orderIndex: ids.indexOf(p.id) }
-          : p
-      )
-    );
+    for (const p of this.store.plans()) {
+      if (p.date === date && ids.includes(p.id))
+        this.store.upsertPlan({ ...p, orderIndex: ids.indexOf(p.id) });
+    }
   }
 
-  /**
-   * Toggle the checked state of a plan for today.
-   * The check is stored as checkedDate = today's ISO string.
-   * Checking tomorrow automatically unsets it (different date).
-   */
   toggleCheck(id: string, today: string): void {
-    this.store.setPlans(
-      this.store.plans().map(p =>
-        p.id === id
-          ? { ...p, checkedDate: p.checkedDate === today ? undefined : today }
-          : p
-      )
-    );
+    const p = this.store.plans().find(p => p.id === id);
+    if (p) this.store.upsertPlan({ ...p, checkedDate: p.checkedDate === today ? undefined : today });
   }
 
   isChecked(id: string, today: string): boolean {
-    const p = this.store.plans().find(q => q.id === id);
-    return p?.checkedDate === today;
+    return this.store.plans().find(p => p.id === id)?.checkedDate === today;
   }
 
   forDate(date: string): Plan[] {

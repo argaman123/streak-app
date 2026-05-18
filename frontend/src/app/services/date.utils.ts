@@ -61,18 +61,8 @@ export function formatDuration(rawMinutes: number): string {
   return `${h}h ${m}m`;
 }
 
-/**
- * Primary bold label shown as session headline.
- * Always shows the duration prominently.
- *   < 15 min  → "short session · 10m"  (shortSession label + duration)
- *   15–59 min → "45m"
- *   >= 60 min → "long session · 1h 30m"
- */
 export function sessionHeadline(rawMinutes: number): string {
-  const dur = formatDuration(rawMinutes);
-  if (rawMinutes < 15) return `${T.shortSession} · ${dur}`;
-  if (rawMinutes >= 60) return `${T.longSession} · ${dur}`;
-  return dur;
+  return formatDuration(rawMinutes);
 }
 
 /**
