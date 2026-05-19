@@ -1,6 +1,16 @@
 /* ============================================================
  * PROGRESS CHART — uses global .card-frame surface.
  * .seg toggle is from the global pattern in styles.scss.
+ *
+ * Week view: chunky daily bars (130px wrapper).
+ * All-time view: a hand-drawn-feeling trail in a 130px frame —
+ * exact same outer dimensions as the bars chart. ResizeObserver
+ * in the component keeps the SVG's viewBox tied to the frame's
+ * real pixel size, so the path renders 1:1 with no squish and
+ * no letterboxing. Hand-written Caveat tags mark "best" + "today".
+ * The trail stroke uses a data-aware gradient: peaks warm up
+ * (butter → coral) while dips stay in the green family so a
+ * downward trend never reads as failure.
  * ============================================================ */
 
 .chart-card {
@@ -35,7 +45,7 @@
   color: var(--ink-mute);
 }
 
-/* ───── Bars ────────────────────────────────────────────────── */
+/* ───── Bars (week view) ────────────────────────────────────── */
 
 .bars {
   display: grid;
@@ -103,7 +113,7 @@
 .bar-col.is-rest:not(.is-rest-empty) .bar.good,
 .bar-col.is-rest:not(.is-rest-empty) .bar.zero {
   background: repeating-linear-gradient(
-    45deg,
+    -45deg,
     var(--sakura-tint) 0, var(--sakura-tint) 4px,
     var(--sakura-soft) 4px, var(--sakura-soft) 8px
   );
@@ -121,17 +131,135 @@
 }
 .bar-col.is-today .bar-label { color: var(--coral-deep); }
 
-/* ───── Line graph ──────────────────────────────────────────── */
+/* ───── Line graph (all-time view) ──────────────────────────── */
 
-.line-chart { padding-top: 0.4rem; }
-.line-svg { width: 100%; height: 130px; display: block; }
+.line-chart {
+  padding: 0;
+}
 
+/* Same 130px wrapper as .bars. The SVG fills this; date labels overlay
+   the bottom strip that PAD_BOTTOM reserves inside the SVG. */
+.line-frame {
+  position: relative;
+  width: 100%;
+  height: 130px;
+}
+.line-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;            /* let the today-halo bleed out cleanly */
+}
+
+/* Subtle entrance — the trail draws itself in like an ink line. */
+.line-svg .trail {
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400;
+  animation: trail-draw 2s var(--ease-out) 0.05s forwards;
+}
+@keyframes trail-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Hand-written Caveat tags pinned to data points. Position via JS
+   in %; CSS picks which side of the dot the tag extends to so it
+   never overflows the card on narrow screens. */
+.trail-tag {
+  position: absolute;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.005em;
+  text-shadow: 0 1px 0 var(--paper);
+  z-index: 2;
+}
+.trail-tag.peak-tag  { color: var(--coral-deep); }
+.trail-tag.today-tag { color: var(--frog-deep); }
+
+/* Side controls horizontal alignment of the tag relative to its dot AND
+   the rotation angle. All three sit just above the dot.
+   Y offset uses calc(-100% - 6px) — a *length*, not a %. Keeps the gap
+   between tag-bottom and dot-top constant at every screen size. */
+.trail-tag.side-left {
+  transform: translate(0, calc(-100% - 6px)) rotate(-4deg);
+  transform-origin: left center;
+}
+.trail-tag.side-center {
+  transform: translate(-50%, calc(-100% - 6px)) rotate(-3deg);
+}
+.trail-tag.side-right {
+  transform: translate(-100%, calc(-100% - 6px)) rotate(3deg);
+  transform-origin: right center;
+}
+/* Today tilts the opposite way from peak so the two never read as
+   the same label when they sit close together. */
+.trail-tag.today-tag.side-left   { transform: translate(0, calc(-100% - 6px)) rotate(4deg); }
+.trail-tag.today-tag.side-center { transform: translate(-50%, calc(-100% - 6px)) rotate(3deg); }
+.trail-tag.today-tag.side-right  { transform: translate(-100%, calc(-100% - 6px)) rotate(-3deg); }
+
+/* Date labels overlay the PAD_BOTTOM strip at the bottom of the frame.
+   Absolute positioning keeps the frame at exactly 130px without growing
+   the chart card. */
 .line-labels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
+  align-items: baseline;
+  padding: 0 0.25rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.line-label {
+  font-family: var(--font-hand);
   font-weight: 700;
-  margin-top: 0.4rem;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--ink-soft);
+}
+.line-label.start { transform: rotate(-3deg); transform-origin: left center; }
+.line-label.end   { transform: rotate(2deg);  transform-origin: right center; }
+
+/* Empty state — no learning days yet. Same 130px footprint. */
+.line-empty {
+  width: 100%;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
   color: var(--ink-mute);
+}
+.line-empty-hand {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--ink-soft);
+  transform: rotate(-2deg);
+}
+.line-empty-sub {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink-mute);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 380px) {
+  .trail-tag { font-size: 0.95rem; }
+  .line-label { font-size: 0.95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line-svg .trail {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none;
+  }
 }

@@ -1,1 +1,816 @@
-{"nodes":[{"id":"sessions_service","label":"SessionsService","file_type":"code","source_file":"frontend/src/app/services/sessions.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"settings_service","label":"SettingsService","file_type":"code","source_file":"frontend/src/app/services/settings.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"store_service","label":"StoreService","file_type":"code","source_file":"frontend/src/app/services/store.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"strings_t","label":"T Strings Constant","file_type":"code","source_file":"frontend/src/app/services/strings.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"timer_service","label":"TimerService","file_type":"code","source_file":"frontend/src/app/services/timer.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"ui_service","label":"UiService","file_type":"code","source_file":"frontend/src/app/services/ui.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"claude_md","label":"CLAUDE.md Design Guidelines","file_type":"document","source_file":"CLAUDE.md","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"context_md","label":"CONTEXT.md Project Context","file_type":"document","source_file":"CONTEXT.md","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"docker_compose","label":"docker-compose.yml","file_type":"document","source_file":"docker-compose.yml","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"readme_md","label":"README.md","file_type":"document","source_file":"README.md","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"index_html","label":"index.html App Entry","file_type":"code","source_file":"frontend/src/index.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"app_component_html","label":"AppComponent Template","file_type":"code","source_file":"frontend/src/app/app.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"calendar_component_html","label":"CalendarComponent Template","file_type":"code","source_file":"frontend/src/app/components/calendar/calendar.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"engine_component_html","label":"EngineComponent Template","file_type":"code","source_file":"frontend/src/app/components/engine/engine.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"mascot_component_html","label":"MascotComponent Template","file_type":"code","source_file":"frontend/src/app/components/mascot/mascot.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"progress_chart_component_html","label":"ProgressChartComponent Template","file_type":"code","source_file":"frontend/src/app/components/progress-chart/progress-chart.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"session_form_component_html","label":"SessionFormComponent Template","file_type":"code","source_file":"frontend/src/app/components/session-form/session-form.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"history_component_html","label":"HistoryPage Template","file_type":"code","source_file":"frontend/src/app/pages/history/history.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"home_component_html","label":"HomePage Template","file_type":"code","source_file":"frontend/src/app/pages/home/home.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"planner_component_html","label":"PlannerPage Template","file_type":"code","source_file":"frontend/src/app/pages/planner/planner.component.html","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"engine_metaphor","label":"Engine Metaphor (Streak as Learning Engine)","file_type":"rationale","source_file":"CONTEXT.md","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"offline_first_pattern","label":"Offline-First Sync Pattern","file_type":"rationale","source_file":"frontend/src/app/services/store.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"localStorage_persistence","label":"localStorage Persistence Strategy","file_type":"rationale","source_file":"frontend/src/app/services/store.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"theme_light_dark","label":"Light/Dark Theme System","file_type":"rationale","source_file":"frontend/src/app/services/settings.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"streak_rules","label":"Streak Rules (session/skip/break logic)","file_type":"rationale","source_file":"CONTEXT.md","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"mascot_lines_concept","label":"Mascot Lines (Argaman Frog Voice)","file_type":"rationale","source_file":"frontend/src/app/services/strings.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"timer_ceremony","label":"Timer Start/Stop Ceremony Animation","file_type":"rationale","source_file":"CONTEXT.md","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"debounce_sync","label":"Debounced Dirty-Collection Sync","file_type":"rationale","source_file":"frontend/src/app/services/store.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"session_model","label":"Session Model Interface","file_type":"code","source_file":"frontend/src/app/models/session.model.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"plan_model","label":"Plan Model Interface","file_type":"code","source_file":"frontend/src/app/models/plan.model.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null}],"edges":[{"source":"sessions_service","target":"store_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/sessions.service.ts","source_location":"line 16","weight":1.0},{"source":"sessions_service","target":"session_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/sessions.service.ts","source_location":"line 2","weight":1.0},{"source":"store_service","target":"session_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/store.service.ts","source_location":"line 5","weight":1.0},{"source":"store_service","target":"plan_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/store.service.ts","source_location":"line 6","weight":1.0},{"source":"store_service","target":"offline_first_pattern","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/store.service.ts","source_location":"lines 60-76","weight":1.0},{"source":"store_service","target":"localStorage_persistence","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/store.service.ts","source_location":"lines 99-118","weight":1.0},{"source":"store_service","target":"debounce_sync","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/store.service.ts","source_location":"lines 92-97","weight":1.0},{"source":"settings_service","target":"theme_light_dark","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/settings.service.ts","source_location":"lines 13-36","weight":1.0},{"source":"settings_service","target":"localStorage_persistence","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/services/settings.service.ts","source_location":"line 3","weight":0.8},{"source":"timer_service","target":"localStorage_persistence","relation":"shares_data_with","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/timer.service.ts","source_location":"lines 29-31","weight":0.8},{"source":"timer_service","target":"timer_ceremony","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"frontend/src/app/services/timer.service.ts","source_location":"lines 57-68","weight":0.8},{"source":"strings_t","target":"mascot_lines_concept","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/strings.ts","source_location":"lines 57-74","weight":1.0},{"source":"engine_metaphor","target":"context_md","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"CONTEXT.md","source_location":"lines 48-68","weight":1.0},{"source":"streak_rules","target":"context_md","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"CONTEXT.md","source_location":"lines 152-158","weight":1.0},{"source":"claude_md","target":"context_md","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"CLAUDE.md","source_location":"line 3","weight":1.0},{"source":"readme_md","target":"context_md","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"README.md","source_location":"line 5","weight":1.0},{"source":"docker_compose","target":"readme_md","relation":"references","confidence":"INFERRED","confidence_score":0.85,"source_file":"docker-compose.yml","source_location":"line 1","weight":0.7},{"source":"app_component_html","target":"ui_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.component.html","source_location":"line 30","weight":1.0},{"source":"app_component_html","target":"strings_t","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.component.html","source_location":"lines 21-45","weight":1.0},{"source":"app_component_html","target":"settings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.component.html","source_location":"line 20","weight":1.0},{"source":"app_component_html","target":"store_service","relation":"references","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/app.component.html","source_location":"lines 4-8","weight":0.9},{"source":"calendar_component_html","target":"strings_t","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/calendar/calendar.component.html","source_location":"lines 10,27,38,39","weight":1.0},{"source":"engine_component_html","target":"engine_metaphor","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/engine/engine.component.html","source_location":"lines 1-7","weight":1.0},{"source":"mascot_component_html","target":"mascot_lines_concept","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/mascot/mascot.component.html","source_location":"lines 3-5","weight":1.0},{"source":"progress_chart_component_html","target":"strings_t","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/progress-chart/progress-chart.component.html","source_location":"lines 6,9,10","weight":1.0},{"source":"session_form_component_html","target":"strings_t","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/session-form/session-form.component.html","source_location":"lines 3,11,15,24,27,30,36,40,44,52,56,57","weight":1.0},{"source":"history_component_html","target":"strings_t","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.html","source_location":"lines 3,21,26,49,59","weight":1.0},{"source":"history_component_html","target":"session_form_component_html","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.html","source_location":"lines 50-55,60-62","weight":1.0},{"source":"history_component_html","target":"progress_chart_component_html","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.html","source_location":"line 7","weight":1.0},{"source":"home_component_html","target":"strings_t","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.html","source_location":"lines 5,15,44,47,49,58,64,66,82,90,116,125,133","weight":1.0},{"source":"home_component_html","target":"engine_component_html","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.html","source_location":"line 28","weight":1.0},{"source":"home_component_html","target":"mascot_component_html","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.html","source_location":"lines 4,33","weight":1.0},{"source":"home_component_html","target":"session_form_component_html","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.html","source_location":"lines 126-128,131-137","weight":1.0},{"source":"home_component_html","target":"timer_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.html","source_location":"line 38","weight":1.0},{"source":"home_component_html","target":"timer_ceremony","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.html","source_location":"lines 39-40","weight":1.0},{"source":"home_component_html","target":"streak_rules","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"frontend/src/app/pages/home/home.component.html","source_location":"lines 1-7","weight":0.7},{"source":"planner_component_html","target":"strings_t","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.html","source_location":"lines 2,16,17,18,24,25,28,47,49,54,55,68,70","weight":1.0},{"source":"planner_component_html","target":"calendar_component_html","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.html","source_location":"lines 6-10","weight":1.0},{"source":"planner_component_html","target":"streak_rules","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"frontend/src/app/pages/planner/planner.component.html","source_location":"lines 22-29","weight":0.7},{"source":"index_html","target":"app_component_html","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/index.html","source_location":"line 25","weight":1.0},{"source":"index_html","target":"settings_service","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"frontend/src/index.html","source_location":"lines 8-9","weight":0.6},{"source":"offline_first_pattern","target":"debounce_sync","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/services/store.service.ts","source_location":null,"weight":0.9},{"source":"offline_first_pattern","target":"localStorage_persistence","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/services/store.service.ts","source_location":null,"weight":0.9},{"source":"claude_md","target":"timer_ceremony","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"CLAUDE.md","source_location":"lines 42-56","weight":1.0},{"source":"context_md","target":"mascot_lines_concept","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"CONTEXT.md","source_location":"lines 40-43","weight":1.0},{"source":"strings_t","target":"session_form_component_html","relation":"shares_data_with","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/strings.ts","source_location":null,"weight":1.0},{"source":"strings_t","target":"home_component_html","relation":"shares_data_with","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/strings.ts","source_location":null,"weight":1.0},{"source":"strings_t","target":"planner_component_html","relation":"shares_data_with","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/strings.ts","source_location":null,"weight":1.0},{"source":"context_md","target":"streak_rules","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"CONTEXT.md","source_location":"lines 152-158","weight":1.0},{"source":"readme_md","target":"streak_rules","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"README.md","source_location":"lines 112-119","weight":1.0}],"hyperedges":[{"id":"offline_sync_triad","label":"Offline-First Sync: LocalStorage + Debounce + Server Push","nodes":["store_service","localStorage_persistence","debounce_sync"],"relation":"implement","confidence":"EXTRACTED","confidence_score":0.95,"source_file":"frontend/src/app/services/store.service.ts"},{"id":"timer_ceremony_flow","label":"Timer Ceremony Flow: TimerService + HomeTemplate + CeremonyState","nodes":["timer_service","home_component_html","timer_ceremony"],"relation":"participate_in","confidence":"INFERRED","confidence_score":0.85,"source_file":"frontend/src/app/pages/home/home.component.html"},{"id":"global_ui_strings_pattern","label":"Global UI Strings: T Constant consumed by all page/component templates","nodes":["strings_t","home_component_html","planner_component_html"],"relation":"participate_in","confidence":"EXTRACTED","confidence_score":0.95,"source_file":"frontend/src/app/services/strings.ts"}],"input_tokens":0,"output_tokens":0}
+{
+  "nodes": [
+    {
+      "id": "sessions_service_SessionsService",
+      "label": "SessionsService",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sessions_service_newId",
+      "label": "newId (session id generator)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sessions_service_timeToMin",
+      "label": "timeToMin (HH:MM parser)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "settings_service_SettingsService",
+      "label": "SettingsService (no-op stub)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/settings.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_StoreService",
+      "label": "StoreService",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_Op",
+      "label": "Op union type (batch operation)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_compact",
+      "label": "compact (last-write-wins op collapser)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_diffToOps",
+      "label": "diffToOps (recovery diff)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_FullState",
+      "label": "FullState (full snapshot)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_local_wins_policy",
+      "label": "Local-wins conflict policy",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_debounce_batch_sync",
+      "label": "Debounced batched sync model",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_service_exponential_backoff",
+      "label": "Exponential backoff on failure",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "strings_T",
+      "label": "T (string table / i18n constants)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/strings.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "strings_mascotLines",
+      "label": "mascotLines (mascot bubble copy)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/strings.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "index_html_root",
+      "label": "index.html (Streakling shell)",
+      "file_type": "code",
+      "source_file": "frontend/src/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "index_html_ios_pwa_statusbar",
+      "label": "iOS PWA status-bar 'default' workaround",
+      "file_type": "rationale",
+      "source_file": "frontend/src/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "index_html_fonts",
+      "label": "Caprasimo / Caveat / Nunito font load",
+      "file_type": "code",
+      "source_file": "frontend/src/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_component_html_root",
+      "label": "AppComponent template (shell + nav)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/app.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_component_html_status_badge",
+      "label": "Status badge (saving/loading/local/idle)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/app.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_component_html_nav_anchor",
+      "label": "Fixed inset:0 nav anchor (iOS PWA fix)",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/app.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "calendar_component_html",
+      "label": "Calendar template (week/month grid)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/calendar/calendar.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "engine_component_html",
+      "label": "Engine template (progress car track)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/engine/engine.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mascot_component_html",
+      "label": "Mascot template (peek/bubble/jump)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/mascot/mascot.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progress_chart_component_html",
+      "label": "ProgressChart template (bars + trail SVG)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progress_chart_hatch_pattern",
+      "label": "Hand-drawn hatch fill pattern",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progress_chart_trail_gradient",
+      "label": "Data-aware trail gradient (butter/frog)",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "session_form_component_html",
+      "label": "SessionForm template (times/duration toggle)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/session-form/session-form.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "history_component_html",
+      "label": "History page template (grouped sessions)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/history/history.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_component_html",
+      "label": "Home page template (today / streak / timer)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_skip_day_branch",
+      "label": "Skip-day alternate hero",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "planner_component_html",
+      "label": "Planner page template (calendar + plans)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/planner/planner.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "sessions_service_SessionsService",
+      "target": "store_service_StoreService",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sessions_service_SessionsService",
+      "target": "sessions_service_newId",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sessions_service_SessionsService",
+      "target": "sessions_service_timeToMin",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sessions_service_SessionsService",
+      "target": "store_service_StoreService",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_StoreService",
+      "target": "store_service_compact",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_StoreService",
+      "target": "store_service_diffToOps",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_compact",
+      "target": "store_service_Op",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_diffToOps",
+      "target": "store_service_Op",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_diffToOps",
+      "target": "store_service_FullState",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_local_wins_policy",
+      "target": "store_service_StoreService",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_debounce_batch_sync",
+      "target": "store_service_StoreService",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_exponential_backoff",
+      "target": "store_service_StoreService",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_service_debounce_batch_sync",
+      "target": "store_service_compact",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/services/store.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "index_html_root",
+      "target": "index_html_fonts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "index_html_ios_pwa_statusbar",
+      "target": "index_html_root",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_component_html_root",
+      "target": "app_component_html_status_badge",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/app.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_component_html_status_badge",
+      "target": "store_service_StoreService",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/app.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_component_html_nav_anchor",
+      "target": "app_component_html_root",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/app.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "app_component_html_root",
+      "target": "strings_T",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/app.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "calendar_component_html",
+      "target": "strings_T",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/calendar/calendar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "session_form_component_html",
+      "target": "strings_T",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/session-form/session-form.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "history_component_html",
+      "target": "strings_T",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "home_component_html",
+      "target": "strings_T",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "planner_component_html",
+      "target": "strings_T",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/planner/planner.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "progress_chart_component_html",
+      "target": "strings_T",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "mascot_component_html",
+      "target": "strings_mascotLines",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/components/mascot/mascot.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "history_component_html",
+      "target": "progress_chart_component_html",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "history_component_html",
+      "target": "session_form_component_html",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "home_component_html",
+      "target": "engine_component_html",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "home_component_html",
+      "target": "mascot_component_html",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "home_component_html",
+      "target": "session_form_component_html",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "planner_component_html",
+      "target": "calendar_component_html",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/planner/planner.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "home_skip_day_branch",
+      "target": "home_component_html",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "progress_chart_hatch_pattern",
+      "target": "progress_chart_component_html",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "progress_chart_trail_gradient",
+      "target": "progress_chart_component_html",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "calendar_component_html",
+      "target": "planner_component_html",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/components/calendar/calendar.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sessions_service_SessionsService",
+      "target": "store_service_FullState",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/services/sessions.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "home_component_html",
+      "target": "sessions_service_SessionsService",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "frontend/src/app/pages/home/home.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "history_component_html",
+      "target": "sessions_service_SessionsService",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "frontend/src/app/pages/history/history.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "settings_service_SettingsService",
+      "target": "store_service_StoreService",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "frontend/src/app/services/settings.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "strings_mascotLines",
+      "target": "strings_T",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/strings.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "progress_chart_component_html",
+      "target": "calendar_component_html",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "offline_sync_pipeline",
+      "label": "Offline-first sync pipeline (debounce + compact + batch + diff)",
+      "nodes": [
+        "store_service_StoreService",
+        "store_service_compact",
+        "store_service_diffToOps",
+        "store_service_Op",
+        "store_service_debounce_batch_sync"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/services/store.service.ts"
+    },
+    {
+      "id": "home_today_hero",
+      "label": "Home 'today' hero composition (streak + engine + mascot + timer)",
+      "nodes": [
+        "home_component_html",
+        "engine_component_html",
+        "mascot_component_html",
+        "session_form_component_html"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/pages/home/home.component.html"
+    },
+    {
+      "id": "i18n_copy_layer",
+      "label": "Centralized copy layer used across pages",
+      "nodes": [
+        "strings_T",
+        "home_component_html",
+        "planner_component_html",
+        "history_component_html",
+        "calendar_component_html",
+        "session_form_component_html"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/services/strings.ts"
+    }
+  ],
+  "input_tokens": 74318,
+  "output_tokens": 0
+}

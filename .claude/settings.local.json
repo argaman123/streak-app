@@ -13,7 +13,9 @@
       "PowerShell(cd \"C:\\\\Users\\\\argam\\\\Desktop\\\\streak-app\\\\frontend\"; npx ng build --watch=$false 2>&1 | Select-Object -Last 15)",
       "PowerShell(cd \"C:\\\\Users\\\\argam\\\\Desktop\\\\streak-app\\\\frontend\"; npx ng build --watch=$false 2>&1 | Select-Object -Last 8)",
       "Bash(npm run *)",
-      "Bash(git stash *)"
+      "Bash(git stash *)",
+      "Bash(git *)",
+      "Bash(curl -s -o NUL -w \"%{http_code}\\\\n\" http://localhost:4200 --max-time 2)"
     ]
   },
   "remote": {

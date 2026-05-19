@@ -3,6 +3,18 @@
  * paper-surface treatment (see styles.scss --paper-fill + --card-shadow).
  * ============================================================ */
 
+/* Force the Angular host element to fill the viewport. Custom elements
+ * default to display:inline (so min-height is a no-op), and an inline
+ * app-root collapses to its content height — on iOS PWA cold load that
+ * makes the fixed bottom nav anchor to the short content box instead of
+ * the screen. See the matching html/body viewport lock in styles.scss. */
+:host {
+  display: block;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+}
+
 /* ───── Status badge (top-left) ─────────────────────────────── */
 
 .status-badge {
@@ -51,23 +63,38 @@
 
 /* ───── Bottom nav ──────────────────────────────────────────── */
 
-.bottom-nav {
+/* The viewport-anchored shell for the nav. iOS PWA standalone reliably
+ * resolves `position: fixed; inset: 0` against the visual viewport (it's
+ * the well-trodden full-screen-overlay pattern). Past attempts using
+ * `position: fixed; bottom: env(safe-area-inset-bottom)` on the pill
+ * itself drifted to a per-page Y-offset on cold load. We let this anchor
+ * claim the whole viewport instead, then flex-end the pill inside it. */
+.nav-anchor {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  /* Bottom gap = home-indicator inset PLUS visual breathing room. */
+  padding: 0 0 calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  /* Anchor itself swallows no clicks; the pill inside re-enables them. */
+  pointer-events: none;
+  transition: transform 0.32s var(--ease-soft);
+}
+.nav-anchor.hidden {
+  transform: translateY(calc(100% + 3rem));
+  pointer-events: none;
+}
+
+.bottom-nav {
   display: flex;
   padding: 0.4rem;
   background: var(--paper-fill);
   border: var(--stroke) solid var(--outline);
   border-radius: var(--pill);
   box-shadow: var(--card-shadow);
-  z-index: 50;
-  transition: transform 0.32s var(--ease-soft);
-}
-.bottom-nav.hidden {
-  transform: translate(-50%, calc(100% + 3rem));
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .bottom-nav a {

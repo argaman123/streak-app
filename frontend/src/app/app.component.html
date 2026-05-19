@@ -17,20 +17,27 @@
   <router-outlet />
 </div>
 
-<nav class="bottom-nav" [class.hidden]="modalOpen()">
-  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-     #navTodayLink (click)="onNavPress(navTodayLink)">
-    <span class="nav-emoji">🐸</span>
-    <span class="label">{{ T.navToday }}</span>
-  </a>
-  <a routerLink="/planner" routerLinkActive="active"
-     #navPlannerLink (click)="onNavPress(navPlannerLink)">
-    <span class="nav-emoji">📒</span>
-    <span class="label">{{ T.navPlanner }}</span>
-  </a>
-  <a routerLink="/history" routerLinkActive="active"
-     #navHistoryLink (click)="onNavPress(navHistoryLink)">
-    <span class="nav-emoji">🛣️</span>
-    <span class="label">{{ T.navHistory }}</span>
-  </a>
-</nav>
+<!-- inset:0 wrapper is the load-bearing trick on iOS PWA: `position: fixed`
+     with `inset: 0` is consistently resolved against the viewport (it's the
+     pattern every full-screen overlay uses), whereas `position: fixed; bottom:
+     X` ends up resolved against the document on short cold-loaded pages. The
+     pill itself is just a flex-end child of this overlay. -->
+<div class="nav-anchor" [class.hidden]="modalOpen()" aria-hidden="false">
+  <nav class="bottom-nav">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+       #navTodayLink (click)="onNavPress(navTodayLink)">
+      <span class="nav-emoji">🐸</span>
+      <span class="label">{{ T.navToday }}</span>
+    </a>
+    <a routerLink="/planner" routerLinkActive="active"
+       #navPlannerLink (click)="onNavPress(navPlannerLink)">
+      <span class="nav-emoji">📒</span>
+      <span class="label">{{ T.navPlanner }}</span>
+    </a>
+    <a routerLink="/history" routerLinkActive="active"
+       #navHistoryLink (click)="onNavPress(navHistoryLink)">
+      <span class="nav-emoji">🛣️</span>
+      <span class="label">{{ T.navHistory }}</span>
+    </a>
+  </nav>
+</div>

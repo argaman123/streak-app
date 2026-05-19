@@ -1,8 +1,14 @@
 /* ============================================================
- * CALENDAR — frame card (paper-fill + frog-deep border + shadow).
- * Arrows use the global .btn-icon.frog-frame recipe (markup-level).
- * Mode toggle uses .pill-toggle.frog.
- * Tiles do the color work: frog default · coral today · sakura rest.
+ * CALENDAR — paper card frame · sticker-tile day cells.
+ *
+ * Day cells read as soft paper chips at rest; today / selected /
+ * rest-day all "pop off the page" with the chunky offset-shadow
+ * recipe shared across the app (ink stroke + hard offset).
+ *
+ * Selected uses bright --frog (not --frog-deep) so the dark ink
+ * shadow reads as a shadow, not a duplicated dark blob below the
+ * cell. Wonky rotation lives only on the active states so the
+ * grid stays legible while still feeling hand-made.
  * ============================================================ */
 
 /* ───── Header ──────────────────────────────────────────────── */
@@ -12,134 +18,279 @@
   grid-template-columns: 38px 1fr 38px;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.55rem;
 }
 
 .cal-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   text-transform: lowercase;
   text-align: center;
   background: transparent;
   border: none;
   cursor: pointer;
   color: var(--ink);
-  padding: 0.4rem;
-  border-radius: var(--r-sm);
-  transition: background 0.15s ease;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--pill);
+  transition: background 0.15s ease, transform 0.18s var(--ease-spring);
+  -webkit-tap-highlight-color: transparent;
 }
-.cal-title:hover { background: var(--frog-tint); }
+.cal-title:hover  { background: var(--frog-tint); transform: rotate(-1deg); }
+.cal-title:active { transform: rotate(-1deg) translateY(1px); }
 
-/* ───── Weekday row ─────────────────────────────────────────── */
+/* ───── Weekday row — handwritten Caveat, friendlier than uppercase Nunito ─ */
 
 .cal-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-  margin-bottom: 5px;
+  gap: 4px;
+  margin: 0.15rem 0 0.45rem;
+  padding: 0 2px;
 }
 .cal-weekday {
   text-align: center;
-  font-family: var(--font-body);
-  font-size: 0.62rem;
-  font-weight: 800;
-  color: var(--ink-mute);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.2rem 0;
+  font-family: var(--font-hand);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  line-height: 1;
+  padding: 0.1rem 0 0.2rem;
 }
+/* Pop weekend labels in coral so the grid has a tiny rhythm */
+.cal-weekday:first-child,
+.cal-weekday:last-child { color: var(--coral-deep); }
 
 /* ───── Day grid ────────────────────────────────────────────── */
 
 .cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 5px;
+  /* leave room for lifted/rotated cells so shadows aren't clipped */
+  padding: 4px 2px 8px;
+  margin: -4px -2px -8px;
 }
 
+/* Base day cell — soft ghost chip. Almost invisible chrome at rest;
+   chrome shows up on hover / active / today / selected. */
 .cal-day {
+  position: relative;
   aspect-ratio: 1;
-  border-radius: 10px;
+  border-radius: 13px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 1px;
   font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  color: var(--frog-deep);
-  background: var(--frog-tint);
+  color: var(--ink);
+  background: rgba(255, 246, 230, 0.55);
   cursor: pointer;
-  border: var(--stroke-line) solid transparent;
+  border: var(--stroke-line) solid rgba(26, 46, 28, 0.10);
   padding: 3px 2px;
-  min-height: 38px;
-  transition: transform 0.15s var(--ease-soft),
-              background 0.15s ease,
-              border-color 0.15s ease;
+  min-height: 40px;
+  transition:
+    transform 0.16s var(--ease-spring),
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.14s ease,
+    color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
-.calendar:not(.is-month) .cal-grid { gap: 6px; }
+
+/* Week-mode cells are taller and roomier (single row, more breathing room). */
+.calendar:not(.is-month) .cal-grid { gap: 7px; padding-bottom: 10px; }
 .calendar:not(.is-month) .cal-day {
   aspect-ratio: auto;
-  min-height: 56px;
-  font-size: 1.1rem;
+  min-height: 64px;
+  font-size: 1.18rem;
+  border-radius: 16px;
 }
-.cal-day .num { font-weight: 800; line-height: 1; }
-.cal-day .dow {
-  font-size: 0.58rem;
+
+.cal-day .num {
   font-weight: 800;
-  color: var(--frog-deep);
-  opacity: 0.65;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.cal-day .dow {
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  line-height: 1;
+  text-transform: lowercase;
+  margin-bottom: 1px;
 }
 
-.cal-day:hover {
-  background: var(--frog-soft);
-  transform: translateY(-1px);
-  border-color: var(--frog-deep);
+/* Hover — gentle lift + frog hint. Mouse only; touch devices skip the hover. */
+@media (hover: hover) {
+  .cal-day:hover {
+    background: var(--frog-tint);
+    border-color: var(--frog-deep);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-frog-sm);
+    z-index: 1;
+  }
+  .cal-day:hover .dow { color: var(--frog-deep); }
 }
+.cal-day:active { transform: translateY(0); box-shadow: none; }
 
+/* Out-of-range (month-view spillover days) — barely there. */
 .cal-day.out {
   color: var(--ink-mute);
-  background: var(--frog-tint);
-  opacity: 0.40;
+  background: transparent;
+  border-color: transparent;
+  opacity: 0.34;
+}
+@media (hover: hover) {
+  .cal-day.out:hover {
+    background: rgba(255, 246, 230, 0.5);
+    border-color: rgba(26, 46, 28, 0.10);
+    box-shadow: none;
+    transform: translateY(-1px);
+  }
 }
 
+/* ─── Today — coral sticker, slight CCW tilt ──────────────────── */
 .cal-day.today {
-  background: var(--coral-tint);
-  color: var(--coral-deep);
-  border-color: var(--coral);
-}
-
-.cal-day.selected {
-  background: var(--frog-deep);
+  background: var(--coral);
   color: var(--on-dark);
-  border: var(--stroke-line) solid transparent;
+  border: var(--stroke-thin) solid var(--outline);
   box-shadow: var(--shadow-sm);
-  font-weight: 800;
-  transform: rotate(-1deg);
+  transform: rotate(-2deg);
+  z-index: 1;
 }
-.cal-day.selected.today { background: var(--frog-deep); color: var(--on-dark); }
+.cal-day.today .dow { color: rgba(255, 255, 255, 0.86); }
+@media (hover: hover) {
+  .cal-day.today:hover {
+    background: var(--coral-bright);
+    border-color: var(--outline);
+    transform: rotate(-2deg) translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .cal-day.today:hover .dow { color: rgba(255, 255, 255, 0.92); }
+}
 
+/* ─── Rest day — sakura paper with a static stripe overlay ────── */
+.cal-day.is-rest {
+  background:
+    repeating-linear-gradient(
+      -52deg,
+      transparent 0 9px,
+      rgba(154, 47, 61, 0.10) 9px 11px
+    ),
+    var(--sakura-tint);
+  color: var(--sakura-deep);
+  border-color: rgba(154, 47, 61, 0.32);
+}
+.cal-day.is-rest .dow { color: var(--sakura-deep); opacity: 0.78; }
+@media (hover: hover) {
+  .cal-day.is-rest:hover {
+    background:
+      repeating-linear-gradient(
+        -52deg,
+        transparent 0 9px,
+        rgba(154, 47, 61, 0.14) 9px 11px
+      ),
+      var(--sakura-soft);
+    border-color: var(--sakura-deep);
+    box-shadow: var(--shadow-sakura-sm);
+  }
+}
+/* Today AND rest: coral wins on color, sakura stripes hidden. */
+.cal-day.today.is-rest {
+  background: var(--coral);
+  color: var(--on-dark);
+  border-color: var(--outline);
+}
+
+/* ─── Selected — bright frog sticker, lifted + wonky-tilted ────── */
+/* Bright --frog (not --frog-deep) so the dark ink offset shadow
+   contrasts cleanly and reads as a shadow, not a duplicate cell. */
+.cal-day.selected {
+  background: var(--frog);
+  color: var(--frog-text);
+  border: var(--stroke-thin) solid var(--outline);
+  box-shadow: var(--shadow);
+  transform: rotate(1.5deg) translateY(-2px);
+  font-weight: 900;
+  z-index: 2;
+  animation: cal-stamp 0.36s var(--ease-spring) both;
+}
+.cal-day.selected .dow { color: var(--frog-text); opacity: 0.78; }
+@media (hover: hover) {
+  .cal-day.selected:hover {
+    background: var(--frog-bright);
+    border-color: var(--outline);
+    transform: rotate(1.5deg) translateY(-4px);
+    box-shadow: 0 calc(var(--depth) + 2px) 0 var(--shadow-key);
+  }
+}
+
+/* Selected on today — keep the coral fill (it IS today, that color is
+   meaningful), but inherit the lift / tilt / shadow of selected. */
+.cal-day.selected.today {
+  background: var(--coral);
+  color: var(--on-dark);
+}
+.cal-day.selected.today .dow { color: rgba(255, 255, 255, 0.88); }
+@media (hover: hover) {
+  .cal-day.selected.today:hover { background: var(--coral-bright); }
+}
+
+/* Selected on a rest day — sakura wins on color, selected adds the chrome. */
+.cal-day.selected.is-rest {
+  background:
+    repeating-linear-gradient(
+      -52deg,
+      transparent 0 9px,
+      rgba(154, 47, 61, 0.18) 9px 11px
+    ),
+    var(--sakura-soft);
+  color: var(--sakura-deep);
+  border-color: var(--sakura-deep);
+  box-shadow: var(--shadow-sakura);
+}
+
+/* ─── Marker dot — corner sticker · butter sticks on every state ── */
 .cal-day .dot {
-  width: 5px; height: 5px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--frog-deep);
+  background: var(--butter);
+  border: 1.5px solid var(--outline);
+  box-shadow: 0 1px 0 var(--shadow-key);
   display: block;
 }
-.cal-day.selected .dot { background: rgba(255, 255, 255, 0.78); }
+.calendar:not(.is-month) .cal-day .dot {
+  top: 6px;
+  right: 6px;
+  width: 9px;
+  height: 9px;
+}
+/* On out-of-range days the marker fades with the cell */
+.cal-day.out .dot { opacity: 0.55; }
 
-.cal-day.is-rest {
-  background: var(--sakura-tint);
-  color: var(--sakura-deep);
+/* ─── Stamp animation when a day gets picked ─────────────────── */
+@keyframes cal-stamp {
+  0%   { transform: rotate(2.5deg) translateY(0)    scale(0.86); }
+  55%  { transform: rotate(2deg)   translateY(-5px) scale(1.10); }
+  100% { transform: rotate(1.5deg) translateY(-2px) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cal-day.selected { animation: none; }
 }
 
-/* ───── Footer — week/month toggle uses .pill-toggle.frog ───── */
+/* ───── Footer — pill-toggle.frog handles itself (markup-level) ─ */
 
 .cal-footer {
-  margin-top: 0.9rem;
+  margin-top: 0.85rem;
   display: flex;
   justify-content: center;
 }

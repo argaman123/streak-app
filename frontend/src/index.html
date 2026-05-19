@@ -9,7 +9,15 @@
 
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- "default" (not "black-translucent"): iOS draws the status bar in its
+       own area instead of having web content extend underneath it. The
+       translucent variant has a long-standing iOS PWA bug where
+       env(safe-area-inset-top) reads 0 on cold load until the first user
+       scroll / route change, jamming the header under the dynamic island.
+       With "default" the status bar lives in iOS's own strip (tinted by
+       theme-color below) and our viewport is the clean visible area from
+       frame 1 — no env() race. -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Streakling">
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">

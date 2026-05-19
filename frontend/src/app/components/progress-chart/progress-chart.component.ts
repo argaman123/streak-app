@@ -1,4 +1,6 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component, ElementRef, computed, effect, inject, signal, viewChild
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SessionsService } from '../../services/sessions.service';
@@ -14,7 +16,13 @@ interface DayData {
 /** One point on the line graph — only for non-rest learning days. */
 interface LinePoint { x: number; y: number; d: DayData; }
 
-const W = 600, H = 120, PAD = 10;
+// The frame is sized in CSS to match the week-view's 130px bars wrapper.
+// A ResizeObserver feeds the actual pixel size into a signal so the SVG
+// viewBox always equals the frame's real pixel dimensions — no
+// preserveAspectRatio="none" squish, no letterboxing.
+const PAD_X = 18;        // horizontal breathing room inside the frame
+const PAD_TOP = 18;      // headroom for the "best" tag bleed
+const PAD_BOTTOM = 26;   // clearance for the date labels overlaid at the bottom
 
 /** Build a smooth cubic-bezier path through a list of [x,y] points. */
 function smoothPath(pts: [number, number][]): string {
@@ -43,6 +51,45 @@ export class ProgressChartComponent {
   protected restDays = inject(RestDaysService);
   protected T = T;
   protected range = signal<'week' | 'all'>('week');
+
+  // Inner padding constants exposed for the template.
+  protected readonly padX      = PAD_X;
+  protected readonly padTop    = PAD_TOP;
+  protected readonly padBottom = PAD_BOTTOM;
+
+  // Live frame size in real pixels — fed by the ResizeObserver below.
+  // Initial values are sensible defaults so SSR / first-paint don't divide
+  // by zero before the observer fires.
+  protected frameSize = signal({ w: 600, h: 130 });
+
+  // Convenience derived values for the template.
+  protected readonly frameW   = computed(() => this.frameSize().w);
+  protected readonly frameH   = computed(() => this.frameSize().h);
+  protected readonly baseY    = computed(() => this.frameSize().h - PAD_BOTTOM);
+  protected readonly viewBoxAttr = computed(() => {
+    const { w, h } = this.frameSize();
+    return `0 0 ${w} ${h}`;
+  });
+
+  private frameEl = viewChild<ElementRef<HTMLElement>>('frame');
+
+  constructor() {
+    // Re-attach the observer whenever the frame element appears / disappears
+    // (it lives inside an @if block that toggles with the range switch).
+    effect((onCleanup) => {
+      const el = this.frameEl()?.nativeElement;
+      if (!el) return;
+      const obs = new ResizeObserver(entries => {
+        for (const e of entries) {
+          const w = Math.max(120, Math.round(e.contentRect.width));
+          const h = Math.max(80,  Math.round(e.contentRect.height));
+          this.frameSize.set({ w, h });
+        }
+      });
+      obs.observe(el);
+      onCleanup(() => obs.disconnect());
+    });
+  }
 
   protected readonly days = computed<DayData[]>(() => {
     const totals = new Map<string, number>();
@@ -118,38 +165,122 @@ export class ProgressChartComponent {
   // ── Line graph (all-time view) ─────────────────────────────────────
   // Rest days are SKIPPED entirely. The line connects only learning days,
   // spaced evenly across the SVG width based on their position in the
-  // non-rest-day sequence.
+  // non-rest-day sequence. All math is in real pixels (viewBox = frame
+  // pixel size), so dots and stroke widths look identical at every screen
+  // width without any aspect-ratio tricks.
 
   /** Only days with actual learning, for building the line graph. */
   private readonly learningDays = computed(() =>
     this.days().filter(d => d.minutes > 0)
   );
 
-  private toLinePoints(): LinePoint[] {
+  protected readonly linePoints = computed<LinePoint[]>(() => {
     const data = this.learningDays();
-    if (data.length < 2) return [];
+    if (data.length === 0) return [];
+    const { w, h } = this.frameSize();
     const max = this.maxMinutes();
+    const baseY = h - PAD_BOTTOM;
+    const innerH = h - PAD_TOP - PAD_BOTTOM;
+    const innerW = w - PAD_X * 2;
+    if (data.length === 1) {
+      return [{
+        x: w / 2,
+        y: baseY - (data[0].minutes / max) * innerH,
+        d: data[0]
+      }];
+    }
     return data.map((d, i) => ({
-      x: PAD + (i / (data.length - 1)) * (W - PAD * 2),
-      y: H - PAD - (d.minutes / max) * (H - PAD * 2),
+      x: PAD_X + (i / (data.length - 1)) * innerW,
+      y: baseY - (d.minutes / max) * innerH,
       d
     }));
-  }
-
-  protected readonly linePoints = computed<LinePoint[]>(() => this.toLinePoints());
+  });
 
   protected readonly linePath = computed(() => {
-    const pts = this.toLinePoints().map(p => [p.x, p.y] as [number, number]);
+    const pts = this.linePoints().map(p => [p.x, p.y] as [number, number]);
     return smoothPath(pts);
   });
 
   protected readonly fillPath = computed(() => {
-    const pts = this.toLinePoints().map(p => [p.x, p.y] as [number, number]);
+    const pts = this.linePoints().map(p => [p.x, p.y] as [number, number]);
     if (pts.length < 2) return '';
+    const baseY = this.baseY();
     const line = smoothPath(pts);
     const lastX = pts[pts.length - 1][0];
-    return `${line} L ${lastX} ${H} L ${PAD} ${H} Z`;
+    return `${line} L ${lastX} ${baseY} L ${PAD_X} ${baseY} Z`;
   });
+
+  /** The day with the most learning — gets a coral chunky marker + "best" tag. */
+  protected readonly peakPoint = computed<LinePoint | null>(() => {
+    const pts = this.linePoints();
+    if (pts.length === 0) return null;
+    let best = pts[0];
+    for (const p of pts) if (p.d.minutes > best.d.minutes) best = p;
+    return best;
+  });
+
+  /** Today's point on the line — gets the halo marker + "today" tag. */
+  protected readonly todayPoint = computed<LinePoint | null>(() =>
+    this.linePoints().find(p => p.d.isToday) ?? null
+  );
+
+  /** Hide the peak tag when "best" and "today" are the same point. */
+  protected readonly showPeakTag = computed(() => {
+    const p = this.peakPoint();
+    const t = this.todayPoint();
+    return p !== null && p !== t;
+  });
+
+  // Dots for non-peak/non-today learning days. When there are lots of
+  // points we sample so the chart doesn't get cluttered — the line itself
+  // still traces every single day; we just skip drawing every dot.
+  protected readonly minorDots = computed<LinePoint[]>(() => {
+    const pts = this.linePoints();
+    if (pts.length === 0) return [];
+    const peak = this.peakPoint();
+    const today = this.todayPoint();
+    const maxDots = 24;
+    const stride = Math.max(1, Math.ceil(pts.length / maxDots));
+    const out: LinePoint[] = [];
+    for (let i = 0; i < pts.length; i++) {
+      if (i % stride !== 0) continue;
+      const p = pts[i];
+      if (p === peak || p === today) continue;
+      out.push(p);
+    }
+    return out;
+  });
+
+  /** Position helpers — turn pixel coords into container percentages. */
+  protected leftPct(x: number): number { return (x / this.frameSize().w) * 100; }
+  protected topPct(y: number): number  { return (y / this.frameSize().h) * 100; }
+
+  /** Pick which side a trail tag sits on so it doesn't run off the card.
+   *  - dot near left  → tag extends right (its left edge anchors to dot.x)
+   *  - dot near right → tag extends left  (its right edge anchors to dot.x)
+   *  - otherwise      → tag is centered above the dot.
+   */
+  protected tagSide(p: LinePoint | null): 'left' | 'center' | 'right' {
+    if (!p) return 'center';
+    const pct = (p.x / this.frameSize().w) * 100;
+    if (pct < 25) return 'left';
+    if (pct > 75) return 'right';
+    return 'center';
+  }
+
+  protected readonly startLabel = computed(() => {
+    const pts = this.linePoints();
+    return pts.length > 0 ? this.shortDate(pts[0].d.iso) : '';
+  });
+  protected readonly endLabel = computed(() => {
+    const pts = this.linePoints();
+    return pts.length > 0 ? this.shortDate(pts[pts.length - 1].d.iso) : '';
+  });
+  private shortDate(iso: string): string {
+    return parseIsoDate(iso).toLocaleDateString(undefined, {
+      month: 'short', day: 'numeric'
+    });
+  }
 
   protected formatDur   = formatDuration;
   protected roundedMins = roundMinutesUp5;

@@ -41,36 +41,135 @@
     </div>
   }
 
-  <!-- All-time view: smooth line graph (only learning days, free days skipped) -->
+  <!-- All-time view: a hand-drawn-feeling trail through her learning days.
+       Rest days are skipped; the line only connects days with sessions.
+       Same 130px height as the week-view bars chart. -->
   @if (range() === 'all') {
     <div class="line-chart">
-      <svg viewBox="0 0 600 120" preserveAspectRatio="none" class="line-svg">
-        <defs>
-          <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="var(--frog)"  stop-opacity="0.25"/>
-            <stop offset="100%" stop-color="var(--frog)"  stop-opacity="0.02"/>
-          </linearGradient>
-        </defs>
-        <path [attr.d]="fillPath()" fill="url(#lineGrad)" />
-        <path [attr.d]="linePath()"
-              fill="none"
-              stroke="var(--frog)"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round" />
-        @for (pt of linePoints(); track pt.d.iso) {
-          <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="3.5"
-                  fill="var(--frog)" />
-          @if (pt.d.isToday) {
-            <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="6"
-                    fill="none" stroke="var(--frog)" stroke-width="1.5" opacity="0.7" />
+      @if (linePoints().length === 0) {
+        <div class="line-empty">
+          <div class="line-empty-hand">no journey yet…</div>
+          <div class="line-empty-sub">a couple of sessions and the trail starts here</div>
+        </div>
+      } @else {
+        <div #frame class="line-frame">
+          <svg [attr.viewBox]="viewBoxAttr()"
+               class="line-svg"
+               preserveAspectRatio="xMidYMid meet"
+               aria-hidden="true">
+            <defs>
+              <!-- Diagonal frog-green hatch — gives the fill a hand-drawn feel
+                   instead of a flat tech-y gradient. -->
+              <pattern id="hatchFrog" patternUnits="userSpaceOnUse"
+                       width="9" height="9" patternTransform="rotate(40)">
+                <line x1="0" y1="0" x2="0" y2="9"
+                      stroke="var(--frog)" stroke-width="2" stroke-opacity="0.22"/>
+              </pattern>
+
+              <!-- Data-aware trail gradient. Mapped to the actual data range
+                   (padTop → baseY) in user space.
+                   Base sits at frog (same hue as the week-view bar fill,
+                   so the two charts read as one family). Mid is frog-bright;
+                   peaks crest into butter — the "rewards" colour the
+                   palette already reserves for highlights. No frog-deep,
+                   no reds — dips just settle back into the bar-green. -->
+              <linearGradient id="trailGrad" gradientUnits="userSpaceOnUse"
+                              x1="0" [attr.y1]="padTop"
+                              x2="0" [attr.y2]="baseY()">
+                <stop offset="0%"   stop-color="var(--butter)"/>
+                <stop offset="55%"  stop-color="var(--frog-bright)"/>
+                <stop offset="100%" stop-color="var(--frog)"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Faint horizontal gridlines for scale (25 / 50 / 75 %). -->
+            @for (frac of [0.25, 0.5, 0.75]; track frac) {
+              <line [attr.x1]="padX" [attr.x2]="frameW() - padX"
+                    [attr.y1]="baseY() - frac * (frameH() - padTop - padBottom)"
+                    [attr.y2]="baseY() - frac * (frameH() - padTop - padBottom)"
+                    stroke="var(--ink)" stroke-width="1"
+                    stroke-dasharray="1 7" stroke-opacity="0.14"/>
+            }
+
+            <!-- Dotted "ground" baseline -->
+            <line [attr.x1]="padX - 4" [attr.x2]="frameW() - padX + 4"
+                  [attr.y1]="baseY()" [attr.y2]="baseY()"
+                  stroke="var(--frog-deep)" stroke-width="2"
+                  stroke-dasharray="3 6" stroke-opacity="0.45"
+                  stroke-linecap="round"/>
+
+            <!-- Filled area under the trail (hatched, not a flat gradient) -->
+            @if (fillPath()) {
+              <path [attr.d]="fillPath()" fill="url(#hatchFrog)" stroke="none"/>
+            }
+
+            <!-- The trail itself: data-aware gradient stroke. Peaks warm up;
+                 downhills stay in the green-and-gold range. -->
+            @if (linePath()) {
+              <path [attr.d]="linePath()"
+                    fill="none"
+                    stroke="url(#trailGrad)"
+                    stroke-width="3.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="trail"/>
+            }
+
+            <!-- Quiet minor dots for sampled learning days. Same gradient as
+                 the line so each dot reads as a beat in the trend. -->
+            @for (pt of minorDots(); track pt.d.iso) {
+              <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="2.5"
+                      fill="url(#trailGrad)"/>
+            }
+
+            <!-- Peak day: chunky coral marker with hard ink outline -->
+            @if (peakPoint(); as peak) {
+              <circle [attr.cx]="peak.x" [attr.cy]="peak.y" r="6"
+                      fill="var(--coral)"
+                      stroke="var(--outline)" stroke-width="2.5"/>
+            }
+
+            <!-- Today: halo + bright frog dot with chunky outline -->
+            @if (todayPoint(); as today) {
+              <circle [attr.cx]="today.x" [attr.cy]="today.y" r="11"
+                      fill="var(--frog)" opacity="0.22"/>
+              <circle [attr.cx]="today.x" [attr.cy]="today.y" r="6"
+                      fill="var(--frog-bright)"
+                      stroke="var(--outline)" stroke-width="2.5"/>
+            }
+          </svg>
+
+          <!-- Handwritten tags positioned over the SVG using %.
+               The side class keeps the tag inside the chart bounds even
+               when its dot is near an edge. -->
+          @if (showPeakTag() && peakPoint(); as peak) {
+            <span class="trail-tag peak-tag"
+                  [class.side-left]="tagSide(peak) === 'left'"
+                  [class.side-center]="tagSide(peak) === 'center'"
+                  [class.side-right]="tagSide(peak) === 'right'"
+                  [style.left.%]="leftPct(peak.x)"
+                  [style.top.%]="topPct(peak.y)">
+              best
+            </span>
           }
-        }
-      </svg>
-      @if (linePoints().length > 0) {
-        <div class="line-labels">
-          <span class="muted">{{ linePoints()[0].d.weekday }} {{ linePoints()[0].d.iso.slice(5) }}</span>
-          <span class="muted">{{ linePoints()[linePoints().length-1].d.weekday }} {{ linePoints()[linePoints().length-1].d.iso.slice(5) }}</span>
+          @if (todayPoint(); as today) {
+            <span class="trail-tag today-tag"
+                  [class.side-left]="tagSide(today) === 'left'"
+                  [class.side-center]="tagSide(today) === 'center'"
+                  [class.side-right]="tagSide(today) === 'right'"
+                  [style.left.%]="leftPct(today.x)"
+                  [style.top.%]="topPct(today.y)">
+              today
+            </span>
+          }
+
+          <!-- Date labels overlay the bottom strip reserved by PAD_BOTTOM. -->
+          <div class="line-labels">
+            <span class="line-label start">{{ startLabel() }}</span>
+            @if (linePoints().length > 1) {
+              <span class="line-label end">{{ endLabel() }}</span>
+            }
+          </div>
         </div>
       }
     </div>

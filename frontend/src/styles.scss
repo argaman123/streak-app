@@ -135,7 +135,36 @@
 /* ───── Reset ──────────────────────────────────────────────────────── */
 
 *, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; min-height: 100%; }
+
+/* iOS PWA viewport lock.
+ *
+ * On iOS standalone, position:fixed's containing block isn't fully established
+ * on cold load — until the first real scroll, fixed children anchor to the
+ * document, not the screen. So a short page (Today) shows the bottom nav
+ * floating mid-screen until you force-scroll or visit a taller page.
+ *
+ * Fix in three layers, all needed together:
+ *  1. html gets an *explicit* viewport-locked height (not min-height). The
+ *     `-webkit-fill-available` line is the load-bearing one on iOS — it's the
+ *     only height value iOS resolves against the standalone visible area
+ *     before scroll, and it falls through the cascade in this order: modern
+ *     browsers ignore it (use 100dvh below), iOS uses it.
+ *  2. body min-heights match, so content can still grow past the viewport.
+ *  3. app-root is declared block + viewport-tall in app.component.scss so the
+ *     Angular host actually extends — otherwise it collapses to content height
+ *     and the fixed nav re-anchors to that shorter box on iOS.
+ */
+html, body { margin: 0; padding: 0; }
+html {
+  height: 100vh;
+  height: -webkit-fill-available;
+  height: 100dvh;
+}
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+}
 html { background: var(--paper); }
 body {
   font-family: var(--font-body);
@@ -148,8 +177,16 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  overflow-x: hidden;
+  /* `clip` (not `hidden`) avoids creating a scroll container — iOS Safari has
+     historically tied fixed-positioning containing block to scroll containers
+     on the body. */
+  overflow-x: clip;
   background: transparent;
+}
+/* Safari < 16 fallback: `overflow-x: clip` is unsupported and ignored, so the
+   pre-existing horizontal-scroll guard is preserved on older WebKit. */
+@supports not (overflow-x: clip) {
+  body { overflow-x: hidden; }
 }
 input, textarea, .selectable, .plan-check-text, .plan-text, .session-notes,
 .elapsed, .bubble-text {

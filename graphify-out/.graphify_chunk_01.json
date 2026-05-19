@@ -1,1 +1,1292 @@
-{"nodes":[{"id":"server_backend","label":"Express Backend Server","file_type":"code","source_file":"backend/server.js","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"server_read_fn","label":"read() - Load State from Disk","file_type":"code","source_file":"backend/server.js","source_location":"line 30","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"server_write_fn","label":"write() - Atomic Write to Disk","file_type":"code","source_file":"backend/server.js","source_location":"line 49","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"server_putcollection_fn","label":"putCollection() - Generic PUT Handler","file_type":"code","source_file":"backend/server.js","source_location":"line 71","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"server_atomic_write_pattern","label":"Atomic Write Pattern (tmp+rename)","file_type":"rationale","source_file":"backend/server.js","source_location":"line 48","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"server_per_collection_versioning","label":"Per-Collection updatedAt Versioning","file_type":"rationale","source_file":"backend/server.js","source_location":"line 4","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"main_ts","label":"Angular Bootstrap Entry Point","file_type":"code","source_file":"frontend/src/main.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"app_component","label":"AppComponent - Root Shell","file_type":"code","source_file":"frontend/src/app/app.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"app_config","label":"Angular Application Config","file_type":"code","source_file":"frontend/src/app/app.config.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"app_routes","label":"Application Routes","file_type":"code","source_file":"frontend/src/app/app.routes.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"calendar_component","label":"CalendarComponent - Date Picker","file_type":"code","source_file":"frontend/src/app/components/calendar/calendar.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"dragdrop_directive_list","label":"DragListDirective","file_type":"code","source_file":"frontend/src/app/components/dragdrop/dragdrop.directive.ts","source_location":"line 30","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"dragdrop_directive_item","label":"DragItemDirective","file_type":"code","source_file":"frontend/src/app/components/dragdrop/dragdrop.directive.ts","source_location":"line 41","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"engine_component","label":"EngineComponent - Learning Momentum Bar","file_type":"code","source_file":"frontend/src/app/components/engine/engine.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"engine_state_type","label":"EngineState Type (stalled/warming/running/cruising/full-power)","file_type":"code","source_file":"frontend/src/app/components/engine/engine.component.ts","source_location":"line 4","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"mascot_component","label":"MascotComponent - Argaman the Frog","file_type":"code","source_file":"frontend/src/app/components/mascot/mascot.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"modal_component","label":"ModalComponent - Modal Wrapper","file_type":"code","source_file":"frontend/src/app/components/modal/modal.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"progress_chart_component","label":"ProgressChartComponent - Bar + Line Chart","file_type":"code","source_file":"frontend/src/app/components/progress-chart/progress-chart.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"progress_chart_smooth_path","label":"smoothPath() - Cubic Bezier Line Path Builder","file_type":"code","source_file":"frontend/src/app/components/progress-chart/progress-chart.component.ts","source_location":"line 20","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"session_form_component","label":"SessionFormComponent - Add/Edit Session Form","file_type":"code","source_file":"frontend/src/app/components/session-form/session-form.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"plan_model","label":"Plan Interface (id, date, text, orderIndex, checkedDate)","file_type":"code","source_file":"frontend/src/app/models/plan.model.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"session_model","label":"Session Interface (id, date, startTime, endTime, durationMinutes, notes)","file_type":"code","source_file":"frontend/src/app/models/session.model.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"history_component","label":"HistoryComponent - Session History Page","file_type":"code","source_file":"frontend/src/app/pages/history/history.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"home_component","label":"HomeComponent - Main Dashboard Page","file_type":"code","source_file":"frontend/src/app/pages/home/home.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"planner_component","label":"PlannerComponent - Plans & Calendar Page","file_type":"code","source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"api_config","label":"API_BASE Config (base URL constant)","file_type":"code","source_file":"frontend/src/app/services/api.config.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"date_utils","label":"Date Utilities (toIsoDate, todayIso, parseIsoDate, formatDuration, calculateStreak, etc.)","file_type":"code","source_file":"frontend/src/app/services/date.utils.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"date_utils_calculate_streak","label":"calculateStreak() - Streak Computation Logic","file_type":"code","source_file":"frontend/src/app/services/date.utils.ts","source_location":"line 121","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"date_utils_streak_rules","label":"Streak Rules (rest days don't break, unplanned days neutral, missed plans break)","file_type":"rationale","source_file":"frontend/src/app/services/date.utils.ts","source_location":"line 107","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"plans_service","label":"PlansService - Plan CRUD + Check/Reorder","file_type":"code","source_file":"frontend/src/app/services/plans.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"rest_days_service","label":"RestDaysService - Rest Day Toggle/Check","file_type":"code","source_file":"frontend/src/app/services/rest-days.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"strings_service","label":"T - Strings / i18n Object","file_type":"code","source_file":"frontend/src/app/services/strings.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"store_service","label":"StoreService - Reactive State Store","file_type":"code","source_file":"frontend/src/app/services/store.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"ui_service","label":"UiService - Modal/Nav Visibility State","file_type":"code","source_file":"frontend/src/app/services/ui.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"settings_service","label":"SettingsService - Theme Toggle","file_type":"code","source_file":"frontend/src/app/services/settings.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"sessions_service","label":"SessionsService - Session CRUD + Queries","file_type":"code","source_file":"frontend/src/app/services/sessions.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"timer_service","label":"TimerService - Running Session Timer","file_type":"code","source_file":"frontend/src/app/services/timer.service.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"engine_metaphor","label":"Engine Metaphor - Learning Momentum as Car Engine","file_type":"rationale","source_file":"frontend/src/app/components/engine/engine.component.ts","source_location":"line 9","source_url":null,"captured_at":null,"author":null,"contributor":null},{"id":"streak_info_interface","label":"StreakInfo Interface (total, inRow)","file_type":"code","source_file":"frontend/src/app/services/date.utils.ts","source_location":"line 119","source_url":null,"captured_at":null,"author":null,"contributor":null}],"edges":[{"source":"server_putcollection_fn","target":"server_read_fn","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"backend/server.js","source_location":"line 76","weight":1.0},{"source":"server_putcollection_fn","target":"server_write_fn","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"backend/server.js","source_location":"line 79","weight":1.0},{"source":"server_write_fn","target":"server_atomic_write_pattern","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"backend/server.js","source_location":"line 49","weight":1.0},{"source":"server_atomic_write_pattern","target":"server_backend","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"backend/server.js","source_location":"line 48","weight":1.0},{"source":"server_per_collection_versioning","target":"server_backend","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"backend/server.js","source_location":"line 4","weight":1.0},{"source":"main_ts","target":"app_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/main.ts","source_location":"line 5","weight":1.0},{"source":"main_ts","target":"app_config","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/main.ts","source_location":"line 5","weight":1.0},{"source":"app_config","target":"app_routes","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.config.ts","source_location":"line 9","weight":1.0},{"source":"app_routes","target":"home_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.routes.ts","source_location":"line 6","weight":1.0},{"source":"app_routes","target":"history_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.routes.ts","source_location":"line 11","weight":1.0},{"source":"app_routes","target":"planner_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.routes.ts","source_location":"line 16","weight":1.0},{"source":"app_component","target":"settings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.component.ts","source_location":"line 21","weight":1.0},{"source":"app_component","target":"store_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.component.ts","source_location":"line 22","weight":1.0},{"source":"app_component","target":"ui_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.component.ts","source_location":"line 23","weight":1.0},{"source":"app_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/app.component.ts","source_location":"line 11","weight":1.0},{"source":"calendar_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/calendar/calendar.component.ts","source_location":"line 4","weight":1.0},{"source":"calendar_component","target":"date_utils","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/calendar/calendar.component.ts","source_location":"line 5","weight":1.0},{"source":"dragdrop_directive_item","target":"dragdrop_directive_list","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/dragdrop/dragdrop.directive.ts","source_location":"line 44","weight":1.0},{"source":"dragdrop_directive_item","target":"dragdrop_directive_list","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/dragdrop/dragdrop.directive.ts","source_location":"line 126","weight":1.0},{"source":"mascot_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/mascot/mascot.component.ts","source_location":"line 3","weight":1.0},{"source":"modal_component","target":"ui_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/modal/modal.component.ts","source_location":"line 3","weight":1.0},{"source":"modal_component","target":"ui_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/modal/modal.component.ts","source_location":"line 36","weight":1.0},{"source":"progress_chart_component","target":"sessions_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/progress-chart/progress-chart.component.ts","source_location":"line 4","weight":1.0},{"source":"progress_chart_component","target":"rest_days_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/progress-chart/progress-chart.component.ts","source_location":"line 5","weight":1.0},{"source":"progress_chart_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/progress-chart/progress-chart.component.ts","source_location":"line 6","weight":1.0},{"source":"progress_chart_component","target":"date_utils","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/progress-chart/progress-chart.component.ts","source_location":"line 7","weight":1.0},{"source":"progress_chart_component","target":"progress_chart_smooth_path","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/progress-chart/progress-chart.component.ts","source_location":"line 142","weight":1.0},{"source":"session_form_component","target":"session_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/session-form/session-form.component.ts","source_location":"line 5","weight":1.0},{"source":"session_form_component","target":"date_utils","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/session-form/session-form.component.ts","source_location":"line 6","weight":1.0},{"source":"session_form_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/session-form/session-form.component.ts","source_location":"line 7","weight":1.0},{"source":"history_component","target":"sessions_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 4","weight":1.0},{"source":"history_component","target":"rest_days_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 5","weight":1.0},{"source":"history_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 6","weight":1.0},{"source":"history_component","target":"date_utils","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 7","weight":1.0},{"source":"history_component","target":"modal_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 9","weight":1.0},{"source":"history_component","target":"session_form_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 10","weight":1.0},{"source":"history_component","target":"progress_chart_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 11","weight":1.0},{"source":"history_component","target":"session_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 12","weight":1.0},{"source":"history_component","target":"sessions_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/history/history.component.ts","source_location":"line 56","weight":1.0},{"source":"home_component","target":"sessions_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 6","weight":1.0},{"source":"home_component","target":"plans_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 7","weight":1.0},{"source":"home_component","target":"timer_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 8","weight":1.0},{"source":"home_component","target":"rest_days_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 9","weight":1.0},{"source":"home_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 10","weight":1.0},{"source":"home_component","target":"date_utils","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 11","weight":1.0},{"source":"home_component","target":"modal_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 17","weight":1.0},{"source":"home_component","target":"session_form_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 18","weight":1.0},{"source":"home_component","target":"mascot_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 19","weight":1.0},{"source":"home_component","target":"session_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 20","weight":1.0},{"source":"home_component","target":"engine_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 22","weight":1.0},{"source":"home_component","target":"date_utils_calculate_streak","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 62","weight":1.0},{"source":"home_component","target":"timer_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 107","weight":1.0},{"source":"home_component","target":"sessions_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 122","weight":1.0},{"source":"planner_component","target":"plans_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 5","weight":1.0},{"source":"planner_component","target":"rest_days_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 6","weight":1.0},{"source":"planner_component","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 7","weight":1.0},{"source":"planner_component","target":"date_utils","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 8","weight":1.0},{"source":"planner_component","target":"plan_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 10","weight":1.0},{"source":"planner_component","target":"calendar_component","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 11","weight":1.0},{"source":"planner_component","target":"dragdrop_directive_list","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 12","weight":1.0},{"source":"planner_component","target":"dragdrop_directive_item","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 12","weight":1.0},{"source":"planner_component","target":"plans_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 100","weight":1.0},{"source":"planner_component","target":"rest_days_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts","source_location":"line 106","weight":1.0},{"source":"plans_service","target":"store_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/plans.service.ts","source_location":"line 2","weight":1.0},{"source":"plans_service","target":"plan_model","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/plans.service.ts","source_location":"line 1","weight":1.0},{"source":"plans_service","target":"store_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/plans.service.ts","source_location":"line 17","weight":1.0},{"source":"rest_days_service","target":"store_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/rest-days.service.ts","source_location":"line 2","weight":1.0},{"source":"rest_days_service","target":"store_service","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/rest-days.service.ts","source_location":"line 16","weight":1.0},{"source":"date_utils","target":"strings_service","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/date.utils.ts","source_location":"line 4","weight":1.0},{"source":"date_utils_calculate_streak","target":"date_utils","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/date.utils.ts","source_location":"line 121","weight":1.0},{"source":"date_utils_calculate_streak","target":"streak_info_interface","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/date.utils.ts","source_location":"line 121","weight":1.0},{"source":"date_utils_streak_rules","target":"date_utils_calculate_streak","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/services/date.utils.ts","source_location":"line 107","weight":1.0},{"source":"engine_metaphor","target":"engine_component","relation":"rationale_for","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/engine/engine.component.ts","source_location":"line 9","weight":1.0},{"source":"engine_component","target":"engine_state_type","relation":"references","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/components/engine/engine.component.ts","source_location":"line 4","weight":1.0},{"source":"home_component","target":"streak_info_interface","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/pages/home/home.component.ts","source_location":"line 62","weight":1.0},{"source":"engine_component","target":"streak_info_interface","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.85,"source_file":"frontend/src/app/components/engine/engine.component.ts","source_location":null,"weight":1.0},{"source":"engine_state_type","target":"home_component","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"frontend/src/app/components/engine/engine.component.ts","source_location":null,"weight":0.75},{"source":"plans_service","target":"sessions_service","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"frontend/src/app/services/plans.service.ts","source_location":null,"weight":0.85},{"source":"rest_days_service","target":"plans_service","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"frontend/src/app/services/rest-days.service.ts","source_location":null,"weight":0.75},{"source":"calendar_component","target":"planner_component","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/components/calendar/calendar.component.ts","source_location":null,"weight":1.0},{"source":"dragdrop_directive_item","target":"planner_component","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/components/dragdrop/dragdrop.directive.ts","source_location":null,"weight":1.0},{"source":"session_form_component","target":"history_component","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/components/session-form/session-form.component.ts","source_location":null,"weight":1.0},{"source":"session_form_component","target":"home_component","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.95,"source_file":"frontend/src/app/components/session-form/session-form.component.ts","source_location":null,"weight":1.0},{"source":"mascot_component","target":"streak_info_interface","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.85,"source_file":"frontend/src/app/components/mascot/mascot.component.ts","source_location":null,"weight":1.0},{"source":"server_backend","target":"store_service","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"backend/server.js","source_location":null,"weight":0.75}],"hyperedges":[{"id":"store_sync_triad","label":"StoreService + PlansService + RestDaysService form the client-side reactive state layer","nodes":["store_service","plans_service","rest_days_service","sessions_service"],"relation":"implement","confidence":"INFERRED","confidence_score":0.9,"source_file":"frontend/src/app/services/plans.service.ts"},{"id":"streak_computation_flow","label":"calculateStreak consumes sessions, plans, restDays to produce StreakInfo displayed in HomeComponent","nodes":["date_utils_calculate_streak","streak_info_interface","home_component","sessions_service","plans_service","rest_days_service"],"relation":"participate_in","confidence":"INFERRED","confidence_score":0.9,"source_file":"frontend/src/app/services/date.utils.ts"},{"id":"planner_drag_calendar","label":"PlannerComponent, CalendarComponent, and DragListDirective/DragItemDirective collectively implement the drag-to-reorder date-bound plan management UI","nodes":["planner_component","calendar_component","dragdrop_directive_list","dragdrop_directive_item"],"relation":"implement","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"frontend/src/app/pages/planner/planner.component.ts"}],"input_tokens":0,"output_tokens":0}
+{
+  "nodes": [
+    {
+      "id": "db_sqlite_schema",
+      "label": "SQLite Schema (sessions/plans/rest_days/meta)",
+      "file_type": "code",
+      "source_file": "backend/db.js",
+      "source_location": "L12-L38",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "db_prepared_statements",
+      "label": "Prepared Statement Registry (q)",
+      "file_type": "code",
+      "source_file": "backend/db.js",
+      "source_location": "L40-L61",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "db_sessionFromRow",
+      "label": "sessionFromRow (snake_case to camelCase)",
+      "file_type": "code",
+      "source_file": "backend/db.js",
+      "source_location": "L63-L72",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "db_planFromRow",
+      "label": "planFromRow (snake_case to camelCase)",
+      "file_type": "code",
+      "source_file": "backend/db.js",
+      "source_location": "L74-L78",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "db_getUpdatedAt",
+      "label": "getUpdatedAt (meta key reader)",
+      "file_type": "code",
+      "source_file": "backend/db.js",
+      "source_location": "L80-L88",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "migrate_migrate",
+      "label": "migrate() data.json to data.db",
+      "file_type": "code",
+      "source_file": "backend/migrate.js",
+      "source_location": "L10-L42",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "server_express_app",
+      "label": "Express App / Streakling Server",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L12-L104",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "server_api_state",
+      "label": "GET /api/state endpoint",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L18-L23",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "server_api_version",
+      "label": "GET /api/version endpoint",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L17",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "server_api_batch",
+      "label": "POST /api/batch endpoint (upsert/delete ops)",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L29-L87",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "server_static_frontend",
+      "label": "Static frontend SPA fallback",
+      "file_type": "code",
+      "source_file": "backend/server.js",
+      "source_location": "L91-L100",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_AppComponent",
+      "label": "AppComponent (root shell)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/app.component.ts",
+      "source_location": "L19-L54",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_statusTitle",
+      "label": "AppComponent.statusTitle (saving/loading/local/idle)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/app.component.ts",
+      "source_location": "L30-L37",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_onBeforeUnload",
+      "label": "AppComponent.onBeforeUnload (flush on unload)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/app.component.ts",
+      "source_location": "L52-L53",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "appconfig_appConfig",
+      "label": "appConfig (router + http + service worker)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/app.config.ts",
+      "source_location": "L8-L17",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mascot_MascotComponent",
+      "label": "MascotComponent (frog mascot with bubble)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/mascot/mascot.component.ts",
+      "source_location": "L14-L118",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mascot_triggerJumpIn",
+      "label": "MascotComponent.triggerJumpIn (animation ceremony)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/mascot/mascot.component.ts",
+      "source_location": "L77-L91",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mascot_scheduleBob",
+      "label": "MascotComponent.scheduleBob (recurring bob)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/mascot/mascot.component.ts",
+      "source_location": "L110-L117",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "modal_ModalComponent",
+      "label": "ModalComponent (overlay dialog wrapper)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/modal/modal.component.ts",
+      "source_location": "L30-L42",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progresschart_ProgressChartComponent",
+      "label": "ProgressChartComponent (bars + line graph)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L49-L287",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progresschart_smoothPath",
+      "label": "smoothPath (cubic-bezier path builder)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L28-L40",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progresschart_days",
+      "label": "ProgressChartComponent.days (per-day rollup)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L94-L130",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progresschart_linePoints",
+      "label": "ProgressChartComponent.linePoints (pixel points)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L177-L197",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progresschart_barHeight",
+      "label": "ProgressChartComponent.barHeight (rest-day-aware)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L159-L163",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sessionform_SessionFormComponent",
+      "label": "SessionFormComponent (add/edit session)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/session-form/session-form.component.ts",
+      "source_location": "L23-L89",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sessionform_computeMinutes",
+      "label": "SessionFormComponent.computeMinutes (HH:mm diff, wraps overnight)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/components/session-form/session-form.component.ts",
+      "source_location": "L82-L88",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "history_HistoryComponent",
+      "label": "HistoryComponent (grouped past sessions)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L25-L85",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "history_grouped",
+      "label": "HistoryComponent.grouped (sessions grouped by date)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L33-L50",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_HomeComponent",
+      "label": "HomeComponent (today's streak + timer)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L30-L240",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_streak",
+      "label": "HomeComponent.streak (computed StreakInfo)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L92-L97",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_ceremony",
+      "label": "HomeComponent timer ceremony (starting/stopping)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L117-L173",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_stopTimer",
+      "label": "HomeComponent.stopTimer (save session, prompt notes)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L179-L195",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_setMascotLift",
+      "label": "HomeComponent.setMascotLift (frog sits on streak card)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L46-L59",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "home_timerTier",
+      "label": "HomeComponent.timerTier (warming/in it/cooking/dont stop)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L101-L115",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_toIsoDate",
+      "label": "toIsoDate (Date to YYYY-MM-DD local)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L7-L12",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_todayIso",
+      "label": "todayIso",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L15-L17",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_toIsoTime",
+      "label": "toIsoTime (Date to HH:mm local)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L20-L24",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_parseIsoDate",
+      "label": "parseIsoDate",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L27-L30",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_prettyDate",
+      "label": "prettyDate",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L33-L39",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_roundMinutesUp5",
+      "label": "roundMinutesUp5",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L46-L49",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_formatDuration",
+      "label": "formatDuration",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L54-L62",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_formatElapsed",
+      "label": "formatElapsed (timer-safe, no seconds)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L84-L92",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dateutils_calculateStreak",
+      "label": "calculateStreak (rest-day-aware streak engine)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L111-L152",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plansservice_PlansService",
+      "label": "PlansService (CRUD + checked toggle)",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/plans.service.ts",
+      "source_location": "L10-L51",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plansservice_toggleCheck",
+      "label": "PlansService.toggleCheck",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/plans.service.ts",
+      "source_location": "L37-L40",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "restdaysservice_RestDaysService",
+      "label": "RestDaysService",
+      "file_type": "code",
+      "source_file": "frontend/src/app/services/rest-days.service.ts",
+      "source_location": "L5-L20",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_camelcase_snakecase_boundary",
+      "label": "camelCase/snake_case boundary (DB rows to API shape)",
+      "file_type": "rationale",
+      "source_file": "backend/db.js",
+      "source_location": "L63-L78",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_updatedat_meta",
+      "label": "updatedAt meta versioning (per-collection timestamps)",
+      "file_type": "rationale",
+      "source_file": "backend/db.js",
+      "source_location": "L31-L37",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_offline_first_sync",
+      "label": "Offline-first batch sync (status: saving/loading/local/idle)",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/app.component.ts",
+      "source_location": "L30-L37",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_ceremony_gating",
+      "label": "Ceremony gating (visual swap lags state change)",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L117-L173",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_rest_day_semantics",
+      "label": "Rest day semantics (no break, no extend, allow learning)",
+      "file_type": "rationale",
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L94-L152",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "db_prepared_statements",
+      "target": "db_sqlite_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/db.js",
+      "source_location": "L40-L61",
+      "weight": 1.0
+    },
+    {
+      "source": "db_getUpdatedAt",
+      "target": "db_prepared_statements",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/db.js",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "migrate_migrate",
+      "target": "db_prepared_statements",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/migrate.js",
+      "source_location": "L20-L36",
+      "weight": 1.0
+    },
+    {
+      "source": "server_express_app",
+      "target": "migrate_migrate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/server.js",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "server_api_state",
+      "target": "db_sessionFromRow",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/server.js",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "server_api_state",
+      "target": "db_planFromRow",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/server.js",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "server_api_state",
+      "target": "db_getUpdatedAt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/server.js",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "server_api_version",
+      "target": "db_getUpdatedAt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/server.js",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "server_api_batch",
+      "target": "db_prepared_statements",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/server.js",
+      "source_location": "L45-L70",
+      "weight": 1.0
+    },
+    {
+      "source": "server_api_batch",
+      "target": "db_getUpdatedAt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/server.js",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "server_api_batch",
+      "target": "concept_updatedat_meta",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "backend/server.js",
+      "source_location": "L76-L79",
+      "weight": 1.0
+    },
+    {
+      "source": "db_sqlite_schema",
+      "target": "concept_updatedat_meta",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "backend/db.js",
+      "source_location": "L31-L37",
+      "weight": 1.0
+    },
+    {
+      "source": "db_sessionFromRow",
+      "target": "concept_camelcase_snakecase_boundary",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "backend/db.js",
+      "source_location": "L63-L72",
+      "weight": 1.0
+    },
+    {
+      "source": "db_planFromRow",
+      "target": "concept_camelcase_snakecase_boundary",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "backend/db.js",
+      "source_location": "L74-L78",
+      "weight": 1.0
+    },
+    {
+      "source": "app_AppComponent",
+      "target": "app_onBeforeUnload",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/app.component.ts",
+      "source_location": "L52-L53",
+      "weight": 1.0
+    },
+    {
+      "source": "app_statusTitle",
+      "target": "concept_offline_first_sync",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/app.component.ts",
+      "source_location": "L30-L37",
+      "weight": 1.0
+    },
+    {
+      "source": "app_AppComponent",
+      "target": "modal_ModalComponent",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/app.component.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "appconfig_appConfig",
+      "target": "app_AppComponent",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/app.config.ts",
+      "source_location": "L8-L17",
+      "weight": 1.0
+    },
+    {
+      "source": "mascot_MascotComponent",
+      "target": "mascot_triggerJumpIn",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/mascot/mascot.component.ts",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "mascot_triggerJumpIn",
+      "target": "mascot_scheduleBob",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/mascot/mascot.component.ts",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_ProgressChartComponent",
+      "target": "progresschart_days",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_days",
+      "target": "dateutils_todayIso",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_days",
+      "target": "dateutils_parseIsoDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_days",
+      "target": "dateutils_toIsoDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_days",
+      "target": "restdaysservice_RestDaysService",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_linePoints",
+      "target": "progresschart_smoothPath",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_ProgressChartComponent",
+      "target": "progresschart_smoothPath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_ProgressChartComponent",
+      "target": "dateutils_formatDuration",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L285",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_ProgressChartComponent",
+      "target": "dateutils_roundMinutesUp5",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L286",
+      "weight": 1.0
+    },
+    {
+      "source": "sessionform_SessionFormComponent",
+      "target": "sessionform_computeMinutes",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/session-form/session-form.component.ts",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "sessionform_SessionFormComponent",
+      "target": "dateutils_todayIso",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/session-form/session-form.component.ts",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "history_HistoryComponent",
+      "target": "history_grouped",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "history_grouped",
+      "target": "dateutils_prettyDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "history_grouped",
+      "target": "restdaysservice_RestDaysService",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "history_HistoryComponent",
+      "target": "modal_ModalComponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "history_HistoryComponent",
+      "target": "sessionform_SessionFormComponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "history_HistoryComponent",
+      "target": "progresschart_ProgressChartComponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "home_streak",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "home_streak",
+      "target": "dateutils_calculateStreak",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "home_streak",
+      "target": "plansservice_PlansService",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "home_streak",
+      "target": "restdaysservice_RestDaysService",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "home_ceremony",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L117-L173",
+      "weight": 1.0
+    },
+    {
+      "source": "home_ceremony",
+      "target": "home_stopTimer",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L163",
+      "weight": 1.0
+    },
+    {
+      "source": "home_stopTimer",
+      "target": "dateutils_toIsoDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "home_stopTimer",
+      "target": "dateutils_toIsoTime",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L186-L187",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "home_setMascotLift",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "mascot_MascotComponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "modal_ModalComponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "sessionform_SessionFormComponent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "plansservice_PlansService",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "home_HomeComponent",
+      "target": "home_timerTier",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "home_ceremony",
+      "target": "concept_ceremony_gating",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/pages/home/home.component.ts",
+      "source_location": "L117-L173",
+      "weight": 1.0
+    },
+    {
+      "source": "dateutils_formatDuration",
+      "target": "dateutils_roundMinutesUp5",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "dateutils_prettyDate",
+      "target": "dateutils_parseIsoDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "dateutils_todayIso",
+      "target": "dateutils_toIsoDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "dateutils_calculateStreak",
+      "target": "dateutils_parseIsoDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "dateutils_calculateStreak",
+      "target": "dateutils_toIsoDate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "dateutils_calculateStreak",
+      "target": "concept_rest_day_semantics",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": "L111-L152",
+      "weight": 1.0
+    },
+    {
+      "source": "restdaysservice_RestDaysService",
+      "target": "concept_rest_day_semantics",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/services/rest-days.service.ts",
+      "source_location": "L5-L20",
+      "weight": 1.0
+    },
+    {
+      "source": "progresschart_barHeight",
+      "target": "concept_rest_day_semantics",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts",
+      "source_location": "L159-L163",
+      "weight": 1.0
+    },
+    {
+      "source": "plansservice_PlansService",
+      "target": "plansservice_toggleCheck",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/services/plans.service.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "db_sqlite_schema",
+      "target": "server_api_state",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "backend/db.js",
+      "source_location": "L12-L38",
+      "weight": 1.0
+    },
+    {
+      "source": "db_sqlite_schema",
+      "target": "server_api_batch",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "backend/db.js",
+      "source_location": "L12-L38",
+      "weight": 1.0
+    },
+    {
+      "source": "history_HistoryComponent",
+      "target": "home_HomeComponent",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "frontend/src/app/pages/history/history.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plansservice_PlansService",
+      "target": "restdaysservice_RestDaysService",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "frontend/src/app/services/plans.service.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dateutils_formatDuration",
+      "target": "dateutils_formatElapsed",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/app/services/date.utils.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "db_sessionFromRow",
+      "target": "db_planFromRow",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "backend/db.js",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sessionform_SessionFormComponent",
+      "target": "home_stopTimer",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "frontend/src/app/components/session-form/session-form.component.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "hyper_batch_sync_loop",
+      "label": "Batch sync round-trip (client ops to server to meta version)",
+      "nodes": [
+        "server_api_batch",
+        "db_prepared_statements",
+        "db_getUpdatedAt",
+        "concept_updatedat_meta"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "backend/server.js"
+    },
+    {
+      "id": "hyper_streak_calculation_inputs",
+      "label": "Streak calculation inputs (sessions + plans + rest days)",
+      "nodes": [
+        "home_streak",
+        "dateutils_calculateStreak",
+        "plansservice_PlansService",
+        "restdaysservice_RestDaysService"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/pages/home/home.component.ts"
+    },
+    {
+      "id": "hyper_progress_chart_pipeline",
+      "label": "Progress chart pixel pipeline (rollup to points to bezier path)",
+      "nodes": [
+        "progresschart_days",
+        "progresschart_linePoints",
+        "progresschart_smoothPath"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/app/components/progress-chart/progress-chart.component.ts"
+    }
+  ],
+  "input_tokens": 108401,
+  "output_tokens": 0
+}
